@@ -23,7 +23,7 @@ int parseHidoku(char* path, vector<int>* values) {
 	// read out size
 	myfile.ignore(17);
 	myfile >> size;
-	linesize = (3 + ceil(log10(size * size))) * size + 2;
+	linesize = (3 + ceil(log10(size * size + 0.5))) * size + 2;
 	// ignore heading
 	myfile.ignore(1); // ignore linebreak
 	myfile.ignore(linesize * 2); // ignore next two lines
@@ -78,20 +78,53 @@ void drawLine(int linesize, char c) {
  * @param size Number of cells in a row of the Hidoku
  */
 void drawCellBody(int numbersize, int cellCount) {
+	for (int i = 0; i < cellCount; i++) {
+		cout.put('|');
+		for (int j = 0; j < (numbersize + 2); j++) {
+			cout.put(' ');
+		}
+	}
+	cout << '|' << endl;
+}
 
+void drawNumbers(int numsize, int size, vector<int>* values, int linenumber) {
+	for (int i = 0; i < size; i++) {
+		cout << "| ";
+		int number = values->at(i + (linenumber * size));
+		if (number != 0) {
+			cout << number;
+			int numberLength = ceil(log10(number + 0.5));
+			while (numberLength < numsize) {
+				cout.put(' ');
+				numberLength++;
+			}
+		} else {
+			for (int j = 0; j < (numsize); j++) {
+				cout.put(' ');
+			}
+		}
+		cout << " ";
+//		cout << values->at(i);
+	}
+	cout << '|' << endl;
 }
 
 int drawBoard(vector<int>* values, int size) {
-	int linesize = (3 + ceil(log10(size * size))) * size + 1;
+	int linesize = (3 + ceil(log10(size * size + 0.5))) * size + 1;
 	cout << "hidoku with size " << size << endl;
 	drawLine(linesize, '-');
-	drawCellBody(ceil(log10(size * size)), size);
+	for (int i = 0; i < size; i++) {
+		drawCellBody(ceil(log10(size * size + 0.5)), size);
+		drawNumbers(ceil(log10(size * size + 0.5)), size, values, i);
+		drawCellBody(ceil(log10(size * size + 0.5)), size);
+		drawLine(linesize, '-');
+	}
 	return 0;
 }
 
 int main() {
 	vector<int>* values = new vector<int>();
-	int size = parseHidoku("easy/hidoku-4-6-1.txt", values);
+	int size = parseHidoku("easy/hidoku-3-6-1.txt", values);
 	drawBoard(values, size);
 	return 10;
 }
