@@ -36,18 +36,18 @@ int parseHidoku(char* path, vector<int>* values) {
 		if (c == '|') {
 			myfile >> number;
 			switch (number[0]) {
-			case '|':
-				values->push_back(0);
-				flags |= EMPTY_FIELD;
-				lineIndex++;
-				count++;
-				break;
-			default:
-				flags = 0;
-				values->push_back(atoi(number.c_str()));
-				lineIndex++;
-				count++;
-				break;
+				case '|':
+					values->push_back(0);
+					flags |= EMPTY_FIELD;
+					lineIndex++;
+					count++;
+					break;
+				default:
+					flags = 0;
+					values->push_back(atoi(number.c_str()));
+					lineIndex++;
+					count++;
+					break;
 			}
 			if (lineIndex == size) {
 				myfile.ignore(linesize * 3 + 1);
@@ -104,7 +104,7 @@ void drawNumbers(int numsize, int size, vector<int>* values, int linenumber) {
 			}
 		}
 		cout << " ";
-//		cout << values->at(i);
+		//		cout << values->at(i);
 	}
 	cout << '|' << endl;
 }
