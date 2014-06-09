@@ -5,60 +5,81 @@
 #include <vector>
 using namespace std;
 
-int parseHidoku(char* filename) {
-/* /	string line;
-	ifstream myfile(filename);
+/**
+ * returns the number of the field that is "steps" steps in the left direction of "from"
+ * if there is no such field in this direction simply 0 will be returned
+ */
+int left(int size, int from, int steps) {
+	int mod = from%size;
 
-	if (myfile.is_open()) {
-		//erste Zeile
-		getline(myfile,line);
-		int size;
-		sscanf (line.c_str(), "hidoku with size %d",&size);
-		cout << size;
-
-		vector<int> result;
-		int i=0, linecounter = 1;
-		while ( getline (myfile,line) )	{
-			linecounter++;
-			//nur die zeilen in denen zahlen kodiert sind
-			if(linecounter%4 != 0) {
-				continue;
-			}
-			
-			//zahlen extrahieren
-			for(int j=0;j<size;j++) {
-				
-	
-			}
-			result[i] = line;
-			cout << line << '\n';
-		}
-
-		myfile.close();
+	//prevents from "overflow, which means that you can substract 3 from 7, get 4, 
+	//and 4 would be left of 4, but not in the same row
+	if(mod > size) {
+		return 0;
 	}
-*/
+	int left = from-steps;
+	if(left > from - mod ){
+		return left;
+	} else if(mod == 0) { //special case for the last entries in each row
+		int d = from / steps;
+		if(left > from - d*size) {
+			return left;
+		}
+	}
+	return 0;
 }
+
+int right(int size, int from, int steps) {
+	int right = from+steps, d = from / size;
+
+	if(from%size == 0) {
+		return 0;
+	} else if(right <= (d+1)*size){
+		return right;
+	}
+	return 0;
+}
+
+int top(int size, int from, int steps) {
+	int top = from-steps*size;
+	if(top > 0) {
+		return top;
+	}
+	return 0;
+}
+
+int bottom(int size, int from, int steps) {
+	int bottom = from + steps * size;
+	if(bottom <= size*size) {
+		return bottom;
+	}
+	return 0;
+}
+
 
 int computeClauses(int size) {
 	int n = size*size;
-	//schritt 1: Jede Zahl kommt im Spielfeld genau einmal vor
-	//es fehlt noch einiges, bis jetzt kann im Feld 1 nur die 1 stehen, im Feld 2 nur die 2, etc.
-	for(int i=1; i<=n; i++) {
-		for(int j=1; j<=n; j++) {
-			printf("(");
-			if(i == j) {
-				printf(" (%d, %d) ∧ ", j,i);
-			} else {
-				printf("¬(%d, %d) ∧ ", j,i);
+
+	printf("schritt 1: jede zahl kommt im Spielfeld genau einmal vor\n");
+	for(int k=1; k<=n; k++) {
+		for(int i=1; i<=n; i++) {
+			for(int j=1; j<=n; j++) {
+				printf("(");
+				if(k == j) {
+					printf(" (%d, %d) ∧ ", j,i);
+				} else {
+					printf("¬(%d, %d) ∧ ", j,i);
+				}
 			}
+			//remove last ∧ 
+			printf(") ∨ \n");
 		}
-		//remove last ∧ 
-		printf(") ∨ \n");
+		printf("\n");
 	}
 
 	printf("\n");
 
-	//schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:
+	printf("schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:\n");
 	for(int i=1; i<=n; i++) {
 		for(int j=1; j<=n; j++) {
 			printf("(%d, %d) → (", i, j);
@@ -71,14 +92,14 @@ int computeClauses(int size) {
 			if(i-size+1>0)
 				printf("(%d, %d) ∨ ");
 			if(i-1>0)
-			if(i+1>0)
-				printf("hi");
+				if(i+1>0)
+					printf("hi");
 		}
 	}
 
 	printf("\n");
 
-	//schritt 3: Nur 1 Zahl pro Feld
+	printf("schritt 3: Nur 1 Zahl pro Feld\n");
 	for(int i=1; i<=n; i++) {
 		printf("( (%d, %d) ∧ ", i, i);
 		for(int j=1; j<=n; j++) {
@@ -94,9 +115,7 @@ int computeClauses(int size) {
 }
 
 int main() {
-	//	parseHidoku("easy/hidoku-3-6-1.txt");
-	computeClauses(3);
+	printf("%d", bottom(3, 9, 1));
+	//computeClauses(3);
 	return 10;
 }
-
-
