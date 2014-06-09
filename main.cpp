@@ -15,6 +15,7 @@ int parseHidoku(char* filename) {
 		int size;
 		sscanf (line.c_str(), "hidoku with size %d",&size);
 		cout << size;
+
 		vector<int> result;
 		int i=0, linecounter = 1;
 		while ( getline (myfile,line) )	{

@@ -1,0 +1,40 @@
+#Bedingungen für ein gültiges Hidoku
+n=Länge des Hidokus
+i=Zelle
+-------------
+|   |   |   |
+| 1 | 2 | 3 |
+|   |   |   |
+-------------
+|   |   |   |
+| 4 | 5 | 6 |
+|   |   |   |
+-------------
+|   |   |   |
+| 7 | 8 | 9 |
+|   |   |   |
+-------------
+j=Wert der aktuellen Zelle
+
+1. Für j!=n^2: Genau 1 Nachbar(links, rechts, oben, unten, diagonal) hat eine um eins größere Zahl als die aktuelle Zelle selbst
+2. Für j!=1: Genau 1 Nachbar hat eine um eins kleiner Zahl als die aktuelle Zelle selbst
+3. 1<=j<=n^2; j e N\{0}
+4. Kein Wert von j darf doppelt vorkommen
+
+
+#Kodierung nach dem Parsen des Hidokus
+hidoku[a][b][1] = 0
+.
+.
+.
+hidoku[a][b][j] = 1 //i=b*(n-1)+a oder so
+.
+.
+.
+hidoku[a][b][n^2] = 0
+
+#Kodierung von hidouku[a][b] = j für den Sat Solver
+Kodierung jedes Feldes als Binärzahl, d.h. m=ceil(ld(n^2)) Variablen werder pro Zelle benötigt //ceil ist obere Gaußklammer
+
+
+
