@@ -37,26 +37,30 @@ struct Hidoku {
 	vector<int> emptyFields;
 };
 
-void fillData(Hidoku h, int size, vector<int> data){
-	h.size = size;
-	//fill all Values in possible Values field
-	for (int j=0; j< size*size; j++){
-		h.possibleValues.push_back(j);
-	}
-	for (int i=0; i< size*size; i++){
-		int value = data.at(i);
-		//if field is empty add it to emptyField
-		if (value == 0){
-			h.emptyFields.push_back(value);        
-		}
-		//if not empty create a Point and save it to values and remove it from possible values
-		else {
-			Field p = {i,value};
-			h.values.push_back(p); 
-			//h.possibleValues.erase(value);
-		}
-	}
-}
+Hidoku fillData(Hidoku h, int size, vector<int> data){
+     h.size = size;
+     //fill all Values in possible Values field
+     for (int j=1; j < size*size+1; j++){
+         h.possibleValues.push_back(j);
+         }
+     //erasecounter necessary because of erasing elements is changing the index
+     int erasecounter = 1;
+     for (int i=1; i < size*size+1; i++){
+         int value = data.at(i);
+         //if field is empty add it to emptyField
+         if (value == 0){
+             h.emptyFields.push_back(i);       
+             }
+         //if not empty create a Point and save it to values and remove it from possible values
+         else {
+              Punkt p = {i,value};
+              h.values.push_back(p); 
+              h.possibleValues.erase(h.possibleValues.begin()+value-erasecounter);
+              erasecounter++;
+             }
+         }
+     return h;
+     }
 
 int parseHidoku(char* path, vector<int>* values) {
 	ifstream myfile(path);
