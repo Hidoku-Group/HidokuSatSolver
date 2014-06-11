@@ -11,6 +11,23 @@
 
 using namespace std;
 
+struct Punkt
+{
+	int x;
+	int y;
+};
+
+int encode(int number, int value, int n){
+    return n*n*number+value;
+}
+
+Punkt decode(int number, int n){
+      int newvalue = number % (n*n);
+      int newnumber = floor(number / (n*n));
+      Punkt p = {newnumber, newvalue};
+      return p;
+      }
+
 int parseHidoku(char* path, vector<int>* values) {
 	ifstream myfile(path);
 	char c;
