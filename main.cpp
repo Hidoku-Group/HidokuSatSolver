@@ -198,20 +198,51 @@ int computeClauses(int size) {
 	printf("\n");
 
 	printf("schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:\n");
-	for(int i=1; i<=n; i++) {
-		for(int j=1; j<=n; j++) {
+	for(int i=1; i<=n; i++) { //i represents the field index
+		for(int j=1; j<=n; j++) { // j stands for the value of the field i
 			printf("(%d, %d) → (", i, j);
+			
 
-			//test mit größer null klappt nur für den linken rand, für den rechten muss was geschickteres her!
-			if(i-size-1 > 0)
-				printf("(%d, %d) ∨ ");
-			if(i-size>0)
-				printf("(%d, %d) ∨ ");
-			if(i-size+1>0)
-				printf("(%d, %d) ∨ ");
-			if(i-1>0)
-				if(i+1>0)
-					printf("hi");
+			//replace i and j with top, left and so on!
+			int top =
+				int left= 4
+			if(top(size, left(size, i, 1), 1) != 0) {
+				printf("(%d, %d) ∨ ", i, j);
+			}
+
+
+			if(top(size, i, 1) != 0) {
+				printf("(%d, %d) ∨ ", i, j);
+			}
+
+
+			if(top(size, right(size, i, 1), 1) != 0) {
+				printf("(%d, %d) ∨ ", i, j);
+			}
+
+			if(left(size, i, 1)!= 0) {
+				printf("(%d, %d) ∨ ", i, j);
+			}
+
+			if(right(size, i, 1) != 0) {
+				printf("(%d, %d) ∨ ", i, j);
+			}
+
+
+			if(bottom(size, left(size, i, 1), 1) != 0) {
+				printf("(%d, %d) ∨ ", i, j);
+			}
+
+
+			if( bottom(size, i, 1) != 0) {
+				printf("(%d, %d) ∨ ", i, j);
+			}
+
+
+			if(bottom(size, right(size, i, 1), 1) != 0) {
+				printf("(%d, %d) ∨ ", i, j);
+			}
+			printf("\n");
 		}
 	}
 
