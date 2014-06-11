@@ -109,7 +109,7 @@ void drawNumbers(int numsize, int size, vector<int>* values, int linenumber) {
 	cout << '|' << endl;
 }
 
-int drawBoard(vector<int>* values, int size) {
+void drawBoard(vector<int>* values, int size) {
 	int linesize = (3 + ceil(log10(size * size + 0.5))) * size + 1;
 	cout << "hidoku with size " << size << endl;
 	drawLine(linesize, '-');
@@ -119,7 +119,6 @@ int drawBoard(vector<int>* values, int size) {
 		drawCellBody(ceil(log10(size * size + 0.5)), size);
 		drawLine(linesize, '-');
 	}
-	return 0;
 }
 
 
@@ -190,21 +189,24 @@ int bottom(int size, int from, int steps) {
 }
 
 
-int computeClauses(int size) {
+int computeClauses(vector<int>* values, int size) {
 	int n = size*size;
 
 	printf("schritt 1: jede zahl kommt im Spielfeld genau einmal vor\n");
-	for(int k=1; k<=n; k++) {
-		for(int i=1; i<=n; i++) {
-			for(int j=1; j<=n; j++) {
-				printf("(");
+	for(int k=0; k<n; k++) {//toggle of ¬
+			printf("k: %d val[k]: %d \n", k, values->at(k));
+	//	if(values->at(k) != 0) {
+	//	}
+		for(int i=1; i<=n; i++) { //value
+			printf("(");
+			for(int j=0; j<n; j++) { //field index
 				if(k == j) {
 					printf(" (%d, %d) ∧ ", j,i);
 				} else {
 					printf("¬(%d, %d) ∧ ", j,i);
 				}
 			}
-			//remove last ∧ 
+			//remove last ∧
 			printf(") ∨ \n");
 		}
 		printf("\n");
@@ -213,7 +215,7 @@ int computeClauses(int size) {
 	printf("\n");
 
 	printf("schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:\n");
-	for(int i=1; i<=n; i++) { //i represents the field index
+	for(int i=0; i<n; i++) { //i represents the field index
 		for(int j=1; j<=n; j++) { // j stands for the value of the field i
 			printf("(%d, %d) → (", i, j);
 
@@ -260,7 +262,7 @@ int computeClauses(int size) {
 					printf("(%d, %d) ∨ ", br, j-1);
 				}
 			}
-		
+
 			printf("\n");
 		}
 
@@ -269,7 +271,7 @@ int computeClauses(int size) {
 
 	printf("\n");
 	printf("schritt 3: Nur 1 Zahl pro Feld\n");
-	for(int i=1; i<=n; i++) { //index of field
+	for(int i=0; i<n; i++) { //index of field
 		for(int j=1; j<=n; j++) { //value of field
 			printf("( (%d, %d) ∧ ", i, j);
 			for(int k=1; k<=n; k++) { //value of other fields
@@ -278,8 +280,8 @@ int computeClauses(int size) {
 				}
 				printf("¬(%d, %d) ∧ ", i, k);
 			}
-		//remove last ∧
-		printf(") ∨ \n");
+			//remove last ∧
+			printf(") ∨ \n");
 		}
 	}
 
@@ -291,7 +293,7 @@ int main() {
 	vector<int>* values = new vector<int>();
 	int size = parseHidoku("easy/hidoku-3-6-1.txt", values);
 	drawBoard(values, size);
-	computeClauses(2);
+	computeClauses(values, size);
 	return 10;
 }
 
