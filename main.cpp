@@ -210,30 +210,40 @@ int bottom(int size, int from, int steps) {
 int computeClauses(vector<int>* values, int size) {
 	int n = size*size;
 
+
+	string result;
+
 	printf("schritt 1: jede zahl kommt im Spielfeld genau einmal vor\n");
-	for(int k=0; k<n; k++) {//toggle of ¬
-		printf("k: %d val[k]: %d \n", k, values->at(k));
-		//	if(values->at(k) != 0) {
-		//	}
+	for(int k=1; k<=n; k++) {//toggle of ¬
+		printf("k: %d val[k]: %d \n", k, values->at(k-1));
+		if(values->at(k-1) != 0) {
+			continue;
+		}
 		for(int i=1; i<=n; i++) { //value
 			printf("(");
-			for(int j=0; j<n; j++) { //field index
+			for(int j=1; j<=n; j++) { //field index
 				if(k == j) {
-					printf(" (%d, %d) ∧ ", j,i);
+					result += " (" + j + ", " + i + ") ∧ ";
+				//	printf(" (%d, %d) ∧ ", j,i);
 				} else {
-					printf("¬(%d, %d) ∧ ", j,i);
+					result += "¬(" + j + ", " + i + ") ∧ ";
+				//	printf("¬(%d, %d) ∧ ", j,i);
 				}
 			}
 			//remove last ∧
-			printf(") ∨ \n");
+			result += ") ∨ \n";
+			//printf(") ∨ \n");
 		}
-		printf("\n");
+		result += "\n";
+		//printf("\n");
 	}
+
+	cout << result << endl;
 
 	printf("\n");
 
 	printf("schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:\n");
-	for(int i=0; i<n; i++) { //i represents the field index
+	for(int i=1; i<=n; i++) { //i represents the field index
 		for(int j=1; j<=n; j++) { // j stands for the value of the field i
 			printf("(%d, %d) → (", i, j);
 
@@ -289,7 +299,7 @@ int computeClauses(vector<int>* values, int size) {
 
 	printf("\n");
 	printf("schritt 3: Nur 1 Zahl pro Feld\n");
-	for(int i=0; i<n; i++) { //index of field
+	for(int i=1; i<=n; i++) { //index of field
 		for(int j=1; j<=n; j++) { //value of field
 			printf("( (%d, %d) ∧ ", i, j);
 			for(int k=1; k<=n; k++) { //value of other fields
@@ -311,8 +321,7 @@ int main() {
 	vector<int>* values = new vector<int>();
 	int size = parseHidoku("easy/hidoku-3-6-1.txt", values);
 	drawBoard(values, size);
-//	computeClauses(values, size);
-	printf("%d", encode(1,4,3));
+	computeClauses(values, size);
 	return 10;
 }
 
