@@ -269,15 +269,18 @@ int computeClauses(int size) {
 
 	printf("\n");
 	printf("schritt 3: Nur 1 Zahl pro Feld\n");
-	for(int i=1; i<=n; i++) {
-		printf("( (%d, %d) ∧ ", i, i);
-		for(int j=1; j<=n; j++) {
-			if(i == j)
-				continue;
-			printf("¬(%d, %d) ∧ ", i, j);
-		}
+	for(int i=1; i<=n; i++) { //index of field
+		for(int j=1; j<=n; j++) { //value of field
+			printf("( (%d, %d) ∧ ", i, j);
+			for(int k=1; k<=n; k++) { //value of other fields
+				if(k==j) {
+					continue;
+				}
+				printf("¬(%d, %d) ∧ ", i, k);
+			}
 		//remove last ∧
 		printf(") ∨ \n");
+		}
 	}
 
 
@@ -288,7 +291,7 @@ int main() {
 	vector<int>* values = new vector<int>();
 	int size = parseHidoku("easy/hidoku-3-6-1.txt", values);
 	drawBoard(values, size);
-	computeClauses(3);
+	computeClauses(2);
 	return 10;
 }
 
