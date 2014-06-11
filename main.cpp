@@ -29,6 +29,34 @@ Field decode(int number, int size){
 	return f;
 }
 
+struct Hidoku {
+int size;
+vector<Field> values;
+vector<int> possibleValues;
+vector<int> emptyFields;
+};
+
+void fillData(Hidoku h, int size, vector<int> data){
+     h.size = size;
+     //fill all Values in possible Values field
+     for (int j=0; j< size*size; j++){
+         h.possibleValues.push_back(j);
+         }
+     for (int i=0; i< size*size; i++){
+         int value = data.at(i);
+         //if field is empty add it to emptyField
+         if (value == 0){
+             h.emptyFields.push_back(value);        
+             }
+         //if not empty create a Point and save it to values and remove it from possible values
+         else {
+              Field p = {i,value};
+              h.values.push_back(p); 
+              h.possibleValues.erase(value);
+             }
+         }
+     }
+
 int parseHidoku(char* path, vector<int>* values) {
 	ifstream myfile(path);
 	char c;
