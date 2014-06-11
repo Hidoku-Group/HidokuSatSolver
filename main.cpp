@@ -30,32 +30,32 @@ Field decode(int number, int size){
 }
 
 struct Hidoku {
-int size;
-vector<Field> values;
-vector<int> possibleValues;
-vector<int> emptyFields;
+	int size;
+	vector<Field> values;
+	vector<int> possibleValues;
+	vector<int> emptyFields;
 };
 
 void fillData(Hidoku h, int size, vector<int> data){
-     h.size = size;
-     //fill all Values in possible Values field
-     for (int j=0; j< size*size; j++){
-         h.possibleValues.push_back(j);
-         }
-     for (int i=0; i< size*size; i++){
-         int value = data.at(i);
-         //if field is empty add it to emptyField
-         if (value == 0){
-             h.emptyFields.push_back(value);        
-             }
-         //if not empty create a Point and save it to values and remove it from possible values
-         else {
-              Field p = {i,value};
-              h.values.push_back(p); 
-              h.possibleValues.erase(value);
-             }
-         }
-     }
+	h.size = size;
+	//fill all Values in possible Values field
+	for (int j=0; j< size*size; j++){
+		h.possibleValues.push_back(j);
+	}
+	for (int i=0; i< size*size; i++){
+		int value = data.at(i);
+		//if field is empty add it to emptyField
+		if (value == 0){
+			h.emptyFields.push_back(value);        
+		}
+		//if not empty create a Point and save it to values and remove it from possible values
+		else {
+			Field p = {i,value};
+			h.values.push_back(p); 
+			//h.possibleValues.erase(value);
+		}
+	}
+}
 
 int parseHidoku(char* path, vector<int>* values) {
 	ifstream myfile(path);
@@ -239,8 +239,6 @@ int computeClauses(vector<int>* values, int size) {
 	int n = size*size;
 
 
-	string result;
-
 	printf("schritt 1: jede zahl kommt im Spielfeld genau einmal vor\n");
 	for(int k=1; k<=n; k++) {//toggle of ¬
 		printf("k: %d val[k]: %d \n", k, values->at(k-1));
@@ -251,22 +249,16 @@ int computeClauses(vector<int>* values, int size) {
 			printf("(");
 			for(int j=1; j<=n; j++) { //field index
 				if(k == j) {
-					result += " (" + j + ", " + i + ") ∧ ";
-				//	printf(" (%d, %d) ∧ ", j,i);
+					printf(" (%d, %d) ∧ ", j,i);
 				} else {
-					result += "¬(" + j + ", " + i + ") ∧ ";
-				//	printf("¬(%d, %d) ∧ ", j,i);
+					printf("¬(%d, %d) ∧ ", j,i);
 				}
 			}
 			//remove last ∧
-			result += ") ∨ \n";
-			//printf(") ∨ \n");
+			printf(") ∨ \n");
 		}
-		result += "\n";
-		//printf("\n");
+		printf("\n");
 	}
-
-	cout << result << endl;
 
 	printf("\n");
 
