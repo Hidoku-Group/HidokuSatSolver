@@ -126,8 +126,14 @@ int drawBoard(vector<int>* values, int size) {
 /**
  * returns the number of the field that is "steps" steps in the left direction of "from"
  * if there is no such field in this direction simply 0 will be returned
+ *
+ * performance hint: if ever the left top (which means a combination of two funcitions is needed) 
+ * try to store the result of left (it's slow in computing) and use top twice (it's fast :D )
  */
 int left(int size, int from, int steps) {
+	if(from == 0) {
+		return from;
+	}
 	int mod = from%size;
 
 	//prevents from "overflow, which means that you can substract 3 from 7, get 4, 
@@ -148,6 +154,9 @@ int left(int size, int from, int steps) {
 }
 
 int right(int size, int from, int steps) {
+	if(from == 0) {
+		return from;
+	}
 	int right = from+steps, d = from / size;
 
 	if(from%size == 0) {
@@ -159,6 +168,9 @@ int right(int size, int from, int steps) {
 }
 
 int top(int size, int from, int steps) {
+	if(from == 0) {
+		return from;
+	}
 	int top = from-steps*size;
 	if(top > 0) {
 		return top;
@@ -167,6 +179,9 @@ int top(int size, int from, int steps) {
 }
 
 int bottom(int size, int from, int steps) {
+	if(from == 0) {
+		return from;
+	}
 	int bottom = from + steps * size;
 	if(bottom <= size*size) {
 		return bottom;
@@ -201,53 +216,58 @@ int computeClauses(int size) {
 	for(int i=1; i<=n; i++) { //i represents the field index
 		for(int j=1; j<=n; j++) { // j stands for the value of the field i
 			printf("(%d, %d) → (", i, j);
-			
 
-			//replace i and j with top, left and so on!
-			int top =
-				int left= 4
-			if(top(size, left(size, i, 1), 1) != 0) {
-				printf("(%d, %d) ∨ ", i, j);
+			int t = top(size, i, 1);
+			int l = left(size, i, 1);
+			int r = right(size, i, 1);
+			int b = bottom(size, i, 1);
+			int tl = top(size, l, 1);
+			int tr = top(size, r, 1);
+			int bl = bottom(size, l, 1);
+			int br = bottom(size, r, 1);
+
+			if(t != 0) {
+				printf("(%d, %d) ∨ ", t, j-1);
+
+				if(tl != 0) {
+					printf("(%d, %d) ∨ ", tl, j-1);
+				}
+
+				if(tr != 0) {
+					printf("(%d, %d) ∨ ", tr, j-1);
+				}
+
+
 			}
 
-
-			if(top(size, i, 1) != 0) {
-				printf("(%d, %d) ∨ ", i, j);
+			if(l != 0) {
+				printf("(%d, %d) ∨ ", l, j-1);
 			}
 
-
-			if(top(size, right(size, i, 1), 1) != 0) {
-				printf("(%d, %d) ∨ ", i, j);
+			if(r != 0) {
+				printf("(%d, %d) ∨ ", r, j-1);
 			}
 
-			if(left(size, i, 1)!= 0) {
-				printf("(%d, %d) ∨ ", i, j);
+			if( b != 0) {
+				printf("(%d, %d) ∨ ", b, j-1);
+
+
+				if(bl != 0) {
+					printf("(%d, %d) ∨ ", bl, j-1);
+				}
+
+				if(br != 0) {
+					printf("(%d, %d) ∨ ", br, j-1);
+				}
 			}
-
-			if(right(size, i, 1) != 0) {
-				printf("(%d, %d) ∨ ", i, j);
-			}
-
-
-			if(bottom(size, left(size, i, 1), 1) != 0) {
-				printf("(%d, %d) ∨ ", i, j);
-			}
-
-
-			if( bottom(size, i, 1) != 0) {
-				printf("(%d, %d) ∨ ", i, j);
-			}
-
-
-			if(bottom(size, right(size, i, 1), 1) != 0) {
-				printf("(%d, %d) ∨ ", i, j);
-			}
+		
 			printf("\n");
 		}
+
+
 	}
 
 	printf("\n");
-
 	printf("schritt 3: Nur 1 Zahl pro Feld\n");
 	for(int i=1; i<=n; i++) {
 		printf("( (%d, %d) ∧ ", i, i);
@@ -268,7 +288,6 @@ int main() {
 	vector<int>* values = new vector<int>();
 	int size = parseHidoku("easy/hidoku-3-6-1.txt", values);
 	drawBoard(values, size);
-
 	computeClauses(3);
 	return 10;
 }
