@@ -37,6 +37,7 @@ struct Hidoku {
 	vector<int> emptyFields;
 };
 
+//the vector need to have the first element on position with index 1 -> write 0 in index 0
 Hidoku fillData(Hidoku h, int size, vector<int> data){
      h.size = size;
      //fill all Values in possible Values field
