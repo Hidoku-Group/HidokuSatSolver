@@ -11,22 +11,23 @@
 
 using namespace std;
 
-struct Punkt
+struct Field 
 {
 	int x;
 	int y;
 };
 
-int encode(int number, int value, int n){
-    return n*n*number+value;
+int encode(int index, int value, int size) {
+	return size*size*index+value;
 }
 
-Punkt decode(int number, int n){
-      int newvalue = number % (n*n);
-      int newnumber = floor(number / (n*n));
-      Punkt p = {newnumber, newvalue};
-      return p;
-      }
+Field decode(int number, int size){
+	int n = size*size;
+	int newValue = number % n;
+	int newNumber = floor(number / n);
+	Field f = {newNumber, newValue};
+	return f;
+}
 
 int parseHidoku(char* path, vector<int>* values) {
 	ifstream myfile(path);
@@ -211,9 +212,9 @@ int computeClauses(vector<int>* values, int size) {
 
 	printf("schritt 1: jede zahl kommt im Spielfeld genau einmal vor\n");
 	for(int k=0; k<n; k++) {//toggle of ¬
-			printf("k: %d val[k]: %d \n", k, values->at(k));
-	//	if(values->at(k) != 0) {
-	//	}
+		printf("k: %d val[k]: %d \n", k, values->at(k));
+		//	if(values->at(k) != 0) {
+		//	}
 		for(int i=1; i<=n; i++) { //value
 			printf("(");
 			for(int j=0; j<n; j++) { //field index
@@ -310,7 +311,8 @@ int main() {
 	vector<int>* values = new vector<int>();
 	int size = parseHidoku("easy/hidoku-3-6-1.txt", values);
 	drawBoard(values, size);
-	computeClauses(values, size);
+//	computeClauses(values, size);
+	printf("%d", encode(1,4,3));
 	return 10;
 }
 
