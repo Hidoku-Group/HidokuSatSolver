@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 #define EMPTY_FIELD 1
 #define BOTTOM_LINE 2
@@ -238,10 +239,11 @@ int bottom(int size, int from, int steps) {
 int computeClauses(vector<int>* values, int size) {
 	int n = size*size;
 
-
-	printf("schritt 1: jede zahl kommt im Spielfeld genau einmal vor\n");
+	std:ostringstream result;
+ 
+	result << "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
 	for(int k=1; k<=n; k++) {//toggle of ¬
-		printf("k: %d val[k]: %d \n", k, values->at(k-1));
+		result << "k: " << k << " val[k]:" << values->at(k-1) << " \n";
 		if(values->at(k-1) != 0) {
 			continue;
 		}
@@ -259,7 +261,7 @@ int computeClauses(vector<int>* values, int size) {
 		}
 		printf("\n");
 	}
-
+cout << result;
 	printf("\n");
 
 	printf("schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:\n");
