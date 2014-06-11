@@ -239,35 +239,37 @@ int bottom(int size, int from, int steps) {
 int computeClauses(vector<int>* values, int size) {
 	int n = size*size;
 
-	std:ostringstream result;
- 
+	ostringstream result;
+
 	result << "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
 	for(int k=1; k<=n; k++) {//toggle of ¬
-		result << "k: " << k << " val[k]:" << values->at(k-1) << " \n";
+		result << "k: " << k << " val[k]:" << values->at(k-1) << endl;
 		if(values->at(k-1) != 0) {
 			continue;
 		}
 		for(int i=1; i<=n; i++) { //value
-			printf("(");
+			result << "(";
 			for(int j=1; j<=n; j++) { //field index
 				if(k == j) {
-					printf(" (%d, %d) ∧ ", j,i);
+					result << " (" << j << ", " << i << ") ∧ ";
 				} else {
-					printf("¬(%d, %d) ∧ ", j,i);
+					result << "¬(" << j << ", " << i << ") ∧ ";
 				}
 			}
 			//remove last ∧
-			printf(") ∨ \n");
+			result << ") ∨" << endl;
 		}
-		printf("\n");
+		result << endl;
 	}
-cout << result;
-	printf("\n");
 
-	printf("schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:\n");
+	result << endl;
+
+
+	result << "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" << endl;
 	for(int i=1; i<=n; i++) { //i represents the field index
 		for(int j=1; j<=n; j++) { // j stands for the value of the field i
-			printf("(%d, %d) → (", i, j);
+			result << "(" << i << ", " << j << ") → (";
+			//printf("(%d, %d) → (", i, j);
 
 			int t = top(size, i, 1);
 			int l = left(size, i, 1);
@@ -279,46 +281,46 @@ cout << result;
 			int br = bottom(size, r, 1);
 
 			if(t != 0) {
-				printf("(%d, %d) ∨ ", t, j-1);
+				result << "(" << t << ", " << j-1 << " ∨ ";
 
 				if(tl != 0) {
-					printf("(%d, %d) ∨ ", tl, j-1);
+					result << "(" << tl << ", " << j-1 << " ∨ ";
 				}
 
 				if(tr != 0) {
-					printf("(%d, %d) ∨ ", tr, j-1);
+					result << "(" << tr << ", " << j-1 << " ∨ ";
 				}
 
 
 			}
 
 			if(l != 0) {
-				printf("(%d, %d) ∨ ", l, j-1);
+				result << "(" << l << ", " << j-1 <<" ∨ ";
 			}
 
 			if(r != 0) {
-				printf("(%d, %d) ∨ ", r, j-1);
+				result << "(" << r << ", " << j-1 << " ∨ ";
 			}
 
 			if( b != 0) {
-				printf("(%d, %d) ∨ ", b, j-1);
+				result << "(" << b << ", " << j-1 << " ∨ ";
 
 
 				if(bl != 0) {
-					printf("(%d, %d) ∨ ", bl, j-1);
+					result << "(" << bl << ", " << j-1 << " ∨ ";
 				}
 
 				if(br != 0) {
-					printf("(%d, %d) ∨ ", br, j-1);
+					result << "(" << br << ", " << j-1 << " ∨ ";
 				}
 			}
-
-			printf("\n");
+			result << endl;
 		}
 
 
 	}
 
+	cout << result.str();
 	printf("\n");
 	printf("schritt 3: Nur 1 Zahl pro Feld\n");
 	for(int i=1; i<=n; i++) { //index of field
