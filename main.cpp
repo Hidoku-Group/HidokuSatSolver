@@ -29,8 +29,9 @@ struct Hidoku {
 	vector<int> emptyFields;
 };
 
-int encode(int index, int value, int size) {
-	return size*size*index+value;
+string encode(int index, int value, int size) {
+	int e = size*size*index + value;
+	return "a" + to_string(e);
 }
 
 Field decode(int number, int size) {
@@ -44,7 +45,7 @@ Field decode(int number, int size) {
 //the vector need to have the first element on position with index 1 -> write 0 in index 0
 Hidoku fillData(Hidoku h, int size, vector<int> data) {
 	h.size = size;
-	
+
 	//fill all Values in possible Values field
 	for (int j=1; j < size*size+1; j++) {
 		h.possibleValues.push_back(j);
@@ -96,18 +97,18 @@ int parseHidoku(char* path, vector<int>* values) {
 		if (c == '|') {
 			myfile >> number;
 			switch (number[0]) {
-				case '|':
-					values->push_back(0);
-					flags |= EMPTY_FIELD;
-					lineIndex++;
-					count++;
-					break;
-				default:
-					flags = 0;
-					values->push_back(atoi(number.c_str()));
-					lineIndex++;
-					count++;
-					break;
+			case '|':
+				values->push_back(0);
+				flags |= EMPTY_FIELD;
+				lineIndex++;
+				count++;
+				break;
+			default:
+				flags = 0;
+				values->push_back(atoi(number.c_str()));
+				lineIndex++;
+				count++;
+				break;
 			}
 			if (lineIndex == size) {
 				myfile.ignore(linesize * 3 + 1);
@@ -251,41 +252,43 @@ int bottom(int size, int from, int steps) {
 string computeClauses(vector<int>* values, int size) {
 	int n = size*size;
 
-	ostringstream result;
+	string result;
 
-	result << "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
+	//result = "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
 	for(int k=1; k<=n; k++) { //toggle of ¬
-		result << "k: " << k << " val[k]:" << values->at(k-1) << endl;
+	//	result = result + "k: " + to_string(k) + " val[k]:"  + to_string( values->at(k-1)) + "\n";
 		if(values->at(k-1) != 0) {
 			continue;
 		}
 		for(int i=1; i<=n; i++) { //value
-			result << "(";
+			result = result + "(";
 			for(int j=1; j<=n; j++) { //field index
 				if(k == j) {
-					result << " (" << j << ", " << i << ") ";
+					result = result + encode(j, i, size);
+					//	result = result + " ("  + to_string( j ) +  ", "  + to_string( i ) +  ") ";
 				} else {
-					result << NOT + "(" << j << ", " << i << ") ";
+					result = result + NOT + encode(j, i, size);
+					//	result = result + NOT + "("  + to_string( j ) +  ", "  + to_string( i ) +  ") ";
 				}
 				if(j != n) {
-					result << AND + " ";
+					result = result + AND + " ";
 				}
 			}
-			//remove last AND
 
-			result << ") " + OR << endl;
+			result = result + ") " + OR + "\n";
 		}
-		result << endl;
+		result = result + "\n";
 	}
 
-	result << endl;
+	result = result + "\n";
 
 
-	result << "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" << endl;
+	//result = result + "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" + "\n";
 	for(int i=1; i<=n; i++) { //i represents the field index
 		for(int j=1; j<=n; j++) { // j stands for the value of the field i
-			result << "( " + NOT + "(" << i << ", " << j << ") ";
-			//printf("(%d, %d) → (", i, j);
+			//  result = result + "( " + NOT + "("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
+
+			result = result + "( " + NOT +  encode(i, j, size) + " ";
 
 			int t = top(size, i, 1);
 			int l = left(size, i, 1);
@@ -297,61 +300,76 @@ string computeClauses(vector<int>* values, int size) {
 			int br = bottom(size, r, 1);
 
 			if(t != 0) {
-				result << OR + " (" << t << ", " << j-1 << ") ";
+				//result = result + OR + " ("  + to_string( t ) +  ", "  + to_string( j-1 ) +  ") ";
+				result = result + OR + encode(t, j-1, size) + " ";
 
 				if(tl != 0) {
-					result << OR + " (" << tl << ", " << j-1 << ") ";
+					//result = result + OR + " ("  + to_string( tl ) +  ", "  + to_string( j-1 ) +  ") ";
+					result = result + OR + encode(tl, j-1, size) + " ";
 				}
 
 				if(tr != 0) {
-					result << OR + " (" << tr << ", " << j-1 << ") ";
+					//result = result + OR + " ("  + to_string( tr ) +  ", "  + to_string( j-1 ) +  ") ";
+					result = result + OR + encode(tr, j-1, size) + " ";
 				}
 
 
 			}
 
 			if(l != 0) {
-				result << OR + " (" << l << ", " << j-1 <<") ";
+				//result = result + OR + " ("  + to_string( l ) +  ", "  + to_string( j-1 ) + ") ";
+				result = result + OR + encode(l, j-1, size) + " ";
 			}
 
 			if(r != 0) {
-				result << OR + " (" << r << ", " << j-1 << ") ";
+				//result = result + OR + " ("  + to_string( r ) +  ", "  + to_string( j-1 ) +  ") ";
+				result = result + OR + encode(r, j-1, size) + " ";
 			}
 
 			if( b != 0) {
-				result << OR + " (" << b << ", " << j-1 << ") ";
+				//result = result + OR + " ("  + to_string( b ) +  ", "  + to_string( j-1 ) +  ") ";
+				result = result + OR + encode(b, j-1, size) + " ";
 
 
 				if(bl != 0) {
-					result << OR + " (" << bl << ", " << j-1 << ") ";
+					//result = result + OR + " ("  + to_string( bl ) +  ", "  + to_string( j-1 ) +  ") ";
+					result = result + OR + encode(bl, j-1, size) + " ";
 				}
 
 				if(br != 0) {
-					result << OR + " (" << br << ", " << j-1 << ") ";
+					//result = result + OR + " ("  + to_string( br ) +  ", "  + to_string( j-1 ) +  ") ";
+					result = result + OR + encode(br, j-1, size) + " ";
 				}
 			}
 
-			result << " )" + AND << endl;
+			result = result + " )" + AND + "\n";
 		}
 
 
 	}
-	result << endl << "schritt 3: Nur 1 Zahl pro Feld" << endl;
+	
+	//result = result + "\n" + "schritt 3: Nur 1 Zahl pro Feld" + "\n";
 
 	for(int i=1; i<=n; i++) { //index of field
 		for(int j=1; j<=n; j++) { //value of field
-			result << "( (" << i << ", " << j << ") ";
+			//result = result + "( ("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
+			result = result + "( " + encode(i, j, size);
 			for(int k=1; k<=n; k++) { //value of other fields
 				if(k==j) {
 					continue;
 				}
-				result << AND + " " + NOT << "(" << i << ", " << k << ") ";
+				//result = result + AND + " " + NOT + "("  + to_string( i ) +  ", "  + to_string( k ) +  ") ";
+				result = result + AND + NOT + encode(i, k, size);
 			}
-			result << ") " + OR << endl;
+			if(i == n && j== n) { 
+				result = result + ") " + "\n";
+			} else {
+			    result = result + ") " + OR + "\n";
+			}
 		}
 	}
 
-	return result.str();
+	return result;
 
 }
 
@@ -359,8 +377,13 @@ string computeClauses(vector<int>* values, int size) {
 int main() {
 	vector<int>* values = new vector<int>();
 	int size = parseHidoku("easy/hidoku-3-6-1.txt", values);
-	drawBoard(values, size);
-	cout << computeClauses(values, size);
+	//drawBoard(values, size);
+	cout << "def ";
+	for(int i=9; i<=90; i++) {
+		cout << "a" << i << " ";
+	}
+	cout << ";";
+	cout << computeClauses(values, size) << ";";
 	return 10;
 }
 
