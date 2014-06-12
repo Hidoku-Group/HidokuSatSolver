@@ -17,8 +17,7 @@ extern const string AND = ".";
 extern const string OR = "+";
 extern const string NOT = "~";
 
-struct Field 
-{
+struct Field {
 	int x;
 	int y;
 };
@@ -34,7 +33,7 @@ int encode(int index, int value, int size) {
 	return size*size*index+value;
 }
 
-Field decode(int number, int size){
+Field decode(int number, int size) {
 	int n = size*size;
 	int newValue = number % n;
 	int newNumber = floor(number / n);
@@ -43,30 +42,32 @@ Field decode(int number, int size){
 }
 
 //the vector need to have the first element on position with index 1 -> write 0 in index 0
-Hidoku fillData(Hidoku h, int size, vector<int> data){
-     h.size = size;
-     //fill all Values in possible Values field
-     for (int j=1; j < size*size+1; j++){
-         h.possibleValues.push_back(j);
-         }
-     //erasecounter necessary because of erasing elements is changing the index
-     int erasecounter = 1;
-     for (int i=1; i < size*size+1; i++){
-         int value = data.at(i);
-         //if field is empty add it to emptyField
-         if (value == 0){
-             h.emptyFields.push_back(i);       
-             }
-         //if not empty create a Point and save it to values and remove it from possible values
-         else {
-              Field p = {i,value};
-              h.values.push_back(p); 
-              h.possibleValues.erase(h.possibleValues.begin()+value-erasecounter);
-              erasecounter++;
-             }
-         }
-     return h;
-     }
+Hidoku fillData(Hidoku h, int size, vector<int> data) {
+	h.size = size;
+	
+	//fill all Values in possible Values field
+	for (int j=1; j < size*size+1; j++) {
+		h.possibleValues.push_back(j);
+	}
+
+	//erasecounter necessary because of erasing elements is changing the index
+	int erasecounter = 1;
+	for (int i=1; i < size*size+1; i++) {
+		int value = data.at(i);
+		//if field is empty add it to emptyField
+		if (value == 0) {
+			h.emptyFields.push_back(i);
+		}
+		//if not empty create a Point and save it to values and remove it from possible values
+		else {
+			Field p = {i,value};
+			h.values.push_back(p);
+			h.possibleValues.erase(h.possibleValues.begin()+value-erasecounter);
+			erasecounter++;
+		}
+	}
+	return h;
+}
 
 int parseHidoku(char* path, vector<int>* values) {
 	ifstream myfile(path);
@@ -77,10 +78,12 @@ int parseHidoku(char* path, vector<int>* values) {
 	int lineIndex = 0;
 	int linesize = 0;
 	int count;
+
 	// read out size
 	myfile.ignore(17);
 	myfile >> size;
 	linesize = (3 + ceil(log10(size * size + 0.5))) * size + 2;
+
 	// ignore heading
 	myfile.ignore(1); // ignore linebreak
 	myfile.ignore(linesize * 2); // ignore next two lines
@@ -183,7 +186,7 @@ void drawBoard(vector<int>* values, int size) {
  * returns the number of the field that is "steps" steps in the left direction of "from"
  * if there is no such field in this direction simply 0 will be returned
  *
- * performance hint: if ever the left top (which means a combination of two funcitions is needed) 
+ * performance hint: if ever the left top (which means a combination of two funcitions is needed)
  * try to store the result of left (it's slow in computing) and use top twice (it's fast :D )
  */
 int left(int size, int from, int steps) {
@@ -192,13 +195,13 @@ int left(int size, int from, int steps) {
 	}
 	int mod = from%size;
 
-	//prevents from "overflow, which means that you can substract 3 from 7, get 4, 
+	//prevents from "overflow, which means that you can substract 3 from 7, get 4,
 	//and 4 would be left of 4, but not in the same row
 	if(mod > size) {
 		return 0;
 	}
 	int left = from-steps;
-	if(left > from - mod ){
+	if(left > from - mod ) {
 		return left;
 	} else if(mod == 0) { //special case for the last entries in each row
 		int d = from / steps;
@@ -217,7 +220,7 @@ int right(int size, int from, int steps) {
 
 	if(from%size == 0) {
 		return 0;
-	} else if(right <= (d+1)*size){
+	} else if(right <= (d+1)*size) {
 		return right;
 	}
 	return 0;
@@ -251,7 +254,7 @@ string computeClauses(vector<int>* values, int size) {
 	ostringstream result;
 
 	result << "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
-	for(int k=1; k<=n; k++) {//toggle of ¬
+	for(int k=1; k<=n; k++) { //toggle of ¬
 		result << "k: " << k << " val[k]:" << values->at(k-1) << endl;
 		if(values->at(k-1) != 0) {
 			continue;
@@ -342,7 +345,7 @@ string computeClauses(vector<int>* values, int size) {
 				if(k==j) {
 					continue;
 				}
-				result << AND + " " + NOT << "(" << i << ", " << k << ") "; 
+				result << AND + " " + NOT << "(" << i << ", " << k << ") ";
 			}
 			result << ") " + OR << endl;
 		}
@@ -360,4 +363,7 @@ int main() {
 	cout << computeClauses(values, size);
 	return 10;
 }
+
+
+
 
