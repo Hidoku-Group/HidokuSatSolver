@@ -1,1 +1,0 @@
-schritt 1: jede zahl kommt im Spielfeld genau einmal vor

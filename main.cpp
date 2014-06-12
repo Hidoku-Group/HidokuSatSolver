@@ -12,10 +12,22 @@
 
 using namespace std;
 
+extern const string XOR = "@";
+extern const string AND = ".";
+extern const string OR = "+";
+extern const string NOT = "~";
+
 struct Field 
 {
 	int x;
 	int y;
+};
+
+struct Hidoku {
+	int size;
+	vector<Field> values;
+	vector<int> possibleValues;
+	vector<int> emptyFields;
 };
 
 int encode(int index, int value, int size) {
@@ -29,13 +41,6 @@ Field decode(int number, int size){
 	Field f = {newNumber, newValue};
 	return f;
 }
-
-struct Hidoku {
-	int size;
-	vector<Field> values;
-	vector<int> possibleValues;
-	vector<int> emptyFields;
-};
 
 //the vector need to have the first element on position with index 1 -> write 0 in index 0
 Hidoku fillData(Hidoku h, int size, vector<int> data){
@@ -54,7 +59,7 @@ Hidoku fillData(Hidoku h, int size, vector<int> data){
              }
          //if not empty create a Point and save it to values and remove it from possible values
          else {
-              Punkt p = {i,value};
+              Field p = {i,value};
               h.values.push_back(p); 
               h.possibleValues.erase(h.possibleValues.begin()+value-erasecounter);
               erasecounter++;
@@ -240,8 +245,7 @@ int bottom(int size, int from, int steps) {
 	return 0;
 }
 
-
-int computeClauses(vector<int>* values, int size) {
+string computeClauses(vector<int>* values, int size) {
 	int n = size*size;
 
 	ostringstream result;
@@ -256,13 +260,17 @@ int computeClauses(vector<int>* values, int size) {
 			result << "(";
 			for(int j=1; j<=n; j++) { //field index
 				if(k == j) {
-					result << " (" << j << ", " << i << ") ∧ ";
+					result << " (" << j << ", " << i << ") ";
 				} else {
-					result << "¬(" << j << ", " << i << ") ∧ ";
+					result << NOT + "(" << j << ", " << i << ") ";
+				}
+				if(j != n) {
+					result << AND + " ";
 				}
 			}
-			//remove last ∧
-			result << ") ∨" << endl;
+			//remove last AND
+
+			result << ") " + OR << endl;
 		}
 		result << endl;
 	}
@@ -273,7 +281,7 @@ int computeClauses(vector<int>* values, int size) {
 	result << "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" << endl;
 	for(int i=1; i<=n; i++) { //i represents the field index
 		for(int j=1; j<=n; j++) { // j stands for the value of the field i
-			result << "(" << i << ", " << j << ") → (";
+			result << "( " + NOT + "(" << i << ", " << j << ") ";
 			//printf("(%d, %d) → (", i, j);
 
 			int t = top(size, i, 1);
@@ -286,62 +294,61 @@ int computeClauses(vector<int>* values, int size) {
 			int br = bottom(size, r, 1);
 
 			if(t != 0) {
-				result << "(" << t << ", " << j-1 << " ∨ ";
+				result << OR + " (" << t << ", " << j-1 << ") ";
 
 				if(tl != 0) {
-					result << "(" << tl << ", " << j-1 << " ∨ ";
+					result << OR + " (" << tl << ", " << j-1 << ") ";
 				}
 
 				if(tr != 0) {
-					result << "(" << tr << ", " << j-1 << " ∨ ";
+					result << OR + " (" << tr << ", " << j-1 << ") ";
 				}
 
 
 			}
 
 			if(l != 0) {
-				result << "(" << l << ", " << j-1 <<" ∨ ";
+				result << OR + " (" << l << ", " << j-1 <<") ";
 			}
 
 			if(r != 0) {
-				result << "(" << r << ", " << j-1 << " ∨ ";
+				result << OR + " (" << r << ", " << j-1 << ") ";
 			}
 
 			if( b != 0) {
-				result << "(" << b << ", " << j-1 << " ∨ ";
+				result << OR + " (" << b << ", " << j-1 << ") ";
 
 
 				if(bl != 0) {
-					result << "(" << bl << ", " << j-1 << " ∨ ";
+					result << OR + " (" << bl << ", " << j-1 << ") ";
 				}
 
 				if(br != 0) {
-					result << "(" << br << ", " << j-1 << " ∨ ";
+					result << OR + " (" << br << ", " << j-1 << ") ";
 				}
 			}
-			result << endl;
+
+			result << " )" + AND << endl;
 		}
 
 
 	}
+	result << endl << "schritt 3: Nur 1 Zahl pro Feld" << endl;
 
-	cout << result.str();
-	printf("\n");
-	printf("schritt 3: Nur 1 Zahl pro Feld\n");
 	for(int i=1; i<=n; i++) { //index of field
 		for(int j=1; j<=n; j++) { //value of field
-			printf("( (%d, %d) ∧ ", i, j);
+			result << "( (" << i << ", " << j << ") ";
 			for(int k=1; k<=n; k++) { //value of other fields
 				if(k==j) {
 					continue;
 				}
-				printf("¬(%d, %d) ∧ ", i, k);
+				result << AND + " " + NOT << "(" << i << ", " << k << ") "; 
 			}
-			//remove last ∧
-			printf(") ∨ \n");
+			result << ") " + OR << endl;
 		}
 	}
 
+	return result.str();
 
 }
 
@@ -350,7 +357,7 @@ int main() {
 	vector<int>* values = new vector<int>();
 	int size = parseHidoku("easy/hidoku-3-6-1.txt", values);
 	drawBoard(values, size);
-	computeClauses(values, size);
+	cout << computeClauses(values, size);
 	return 10;
 }
 
