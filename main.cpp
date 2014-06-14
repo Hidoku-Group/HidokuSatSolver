@@ -97,18 +97,18 @@ int parseHidoku(char* path, vector<int>* values) {
 		if (c == '|') {
 			myfile >> number;
 			switch (number[0]) {
-			case '|':
-				values->push_back(0);
-				flags |= EMPTY_FIELD;
-				lineIndex++;
-				count++;
-				break;
-			default:
-				flags = 0;
-				values->push_back(atoi(number.c_str()));
-				lineIndex++;
-				count++;
-				break;
+				case '|':
+					values->push_back(0);
+					flags |= EMPTY_FIELD;
+					lineIndex++;
+					count++;
+					break;
+				default:
+					flags = 0;
+					values->push_back(atoi(number.c_str()));
+					lineIndex++;
+					count++;
+					break;
 			}
 			if (lineIndex == size) {
 				myfile.ignore(linesize * 3 + 1);
@@ -183,6 +183,12 @@ void drawBoard(vector<int>* values, int size) {
 }
 
 
+void parseSolution(string solution, vector<int> * values, int size) {
+    
+}
+
+
+
 /**
  * returns the number of the field that is "steps" steps in the left direction of "from"
  * if there is no such field in this direction simply 0 will be returned
@@ -254,39 +260,56 @@ string computeClauses(vector<int>* values, int size) {
 
 	string result;
 
+	for(int i=1; i<=n; i++) {
+		if(values->at(i-1) != 0) {
+			result = result + encode(i, values->at(i-1), size) + AND + " ";
+		}
+	}
+
+	result = result + "(";
+
 	//result = "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
 	for(int k=1; k<=n; k++) { //toggle of ¬
-	//	result = result + "k: " + to_string(k) + " val[k]:"  + to_string( values->at(k-1)) + "\n";
+		//result = result + "k: " + to_string(k) + " val[k]:"  + to_string( values->at(k-1)) + "\n";
 		if(values->at(k-1) != 0) {
 			continue;
 		}
+		
+        result = result + "(";
+
 		for(int i=1; i<=n; i++) { //value
 			result = result + "(";
 			for(int j=1; j<=n; j++) { //field index
 				if(k == j) {
 					result = result + encode(j, i, size);
-					//	result = result + " ("  + to_string( j ) +  ", "  + to_string( i ) +  ") ";
+					//result = result + " ("  + to_string( j ) +  ", "  + to_string( i ) +  ") ";
 				} else {
 					result = result + NOT + encode(j, i, size);
-					//	result = result + NOT + "("  + to_string( j ) +  ", "  + to_string( i ) +  ") ";
+					//result = result + NOT + "("  + to_string( j ) +  ", "  + to_string( i ) +  ") ";
 				}
 				if(j != n) {
 					result = result + AND + " ";
 				}
 			}
-
-			result = result + ") " + OR + "\n";
+			
+			if(i == n) {
+			   result = result + ") " + "\n";
+			} else {
+			   result = result + ") " + OR + "\n";
+				
+			}
 		}
-		result = result + "\n";
+		result = result + ")" + AND + "\n";
+
 	}
 
 	result = result + "\n";
 
 
-	//result = result + "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" + "\n";
+	//	result = result + "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" + "\n";
 	for(int i=1; i<=n; i++) { //i represents the field index
-		for(int j=1; j<=n; j++) { // j stands for the value of the field i
-			//  result = result + "( " + NOT + "("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
+		for(int j=2; j<=n; j++) { // j stands for the value of the field i
+			//result = result + "( " + NOT + "("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
 
 			result = result + "( " + NOT +  encode(i, j, size) + " ";
 
@@ -300,16 +323,16 @@ string computeClauses(vector<int>* values, int size) {
 			int br = bottom(size, r, 1);
 
 			if(t != 0) {
-				//result = result + OR + " ("  + to_string( t ) +  ", "  + to_string( j-1 ) +  ") ";
+				//	result = result + OR + " ("  + to_string( t ) +  ", "  + to_string( j-1 ) +  ") ";
 				result = result + OR + encode(t, j-1, size) + " ";
 
 				if(tl != 0) {
-					//result = result + OR + " ("  + to_string( tl ) +  ", "  + to_string( j-1 ) +  ") ";
+					//	result = result + OR + " ("  + to_string( tl ) +  ", "  + to_string( j-1 ) +  ") ";
 					result = result + OR + encode(tl, j-1, size) + " ";
 				}
 
 				if(tr != 0) {
-					//result = result + OR + " ("  + to_string( tr ) +  ", "  + to_string( j-1 ) +  ") ";
+					//	result = result + OR + " ("  + to_string( tr ) +  ", "  + to_string( j-1 ) +  ") ";
 					result = result + OR + encode(tr, j-1, size) + " ";
 				}
 
@@ -337,7 +360,7 @@ string computeClauses(vector<int>* values, int size) {
 				}
 
 				if(br != 0) {
-					//result = result + OR + " ("  + to_string( br ) +  ", "  + to_string( j-1 ) +  ") ";
+					//	result = result + OR + " ("  + to_string( br ) +  ", "  + to_string( j-1 ) +  ") ";
 					result = result + OR + encode(br, j-1, size) + " ";
 				}
 			}
@@ -347,10 +370,11 @@ string computeClauses(vector<int>* values, int size) {
 
 
 	}
-	
+
 	//result = result + "\n" + "schritt 3: Nur 1 Zahl pro Feld" + "\n";
 
 	for(int i=1; i<=n; i++) { //index of field
+		result = result + "(";
 		for(int j=1; j<=n; j++) { //value of field
 			//result = result + "( ("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
 			result = result + "( " + encode(i, j, size);
@@ -358,32 +382,40 @@ string computeClauses(vector<int>* values, int size) {
 				if(k==j) {
 					continue;
 				}
-				//result = result + AND + " " + NOT + "("  + to_string( i ) +  ", "  + to_string( k ) +  ") ";
+				//	result = result + AND + " " + NOT + "("  + to_string( i ) +  ", "  + to_string( k ) +  ") ";
 				result = result + AND + NOT + encode(i, k, size);
 			}
-			if(i == n && j== n) { 
+			if(j == n ) { 
 				result = result + ") " + "\n";
 			} else {
-			    result = result + ") " + OR + "\n";
+				result = result + ") " + OR + "\n";
 			}
+		}
+		if(i != n) {
+			result = result + ") " + AND + "\n";
+		} else {
+			result = result + ")";
 		}
 	}
 
-	return result;
+	return result + ")";
 
 }
 
 
+
 int main() {
 	vector<int>* values = new vector<int>();
-	int size = parseHidoku("easy/hidoku-3-6-1.txt", values);
+	int size = parseHidoku("easy/hidoku-6-6-4.txt", values);
+
 	//drawBoard(values, size);
 	cout << "def ";
-	for(int i=9; i<=90; i++) {
+	for(int i=size*size+1; i<=size*size*size*size+size*size; i++) {
 		cout << "a" << i << " ";
 	}
 	cout << ";";
 	cout << computeClauses(values, size) << ";";
+
 	return 10;
 }
 
