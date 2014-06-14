@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <algorithm>
 
 #define EMPTY_FIELD 1
 #define BOTTOM_LINE 2
@@ -22,25 +23,21 @@ struct Field {
 	int y;
 };
 
-struct Hidoku {
-	int size;
-	vector<Field> values;
-	vector<int> possibleValues;
-	vector<int> emptyFields;
-};
+string exec(string cmd) {
+    FILE *in;
+	char buff[512];
 
-std::string exec(string cmd) {
-	FILE* pipe = popen(cmd.c_str(), "r");
-	if (!pipe)
-		return "ERROR";
-	char buffer[128];
-	std::string result = "";
-	while (!feof(pipe)) {
-		if (fgets(buffer, 128, pipe) != NULL)
-			result += buffer;
+	ostringstream resultStream;
+
+	if(!(in = popen(cmd.c_str(), "r"))){
+		return "error";
 	}
-	pclose(pipe);
-	return result;
+
+	while(fgets(buff, sizeof(buff), in) != NULL){
+		resultStream << buff;
+	}
+	pclose(in);
+	return resultStream.str();
 }
 
 string encode(int index, int value, int size) {
@@ -57,32 +54,25 @@ Field decode(int number, int size) {
 }
 
 //the vector need to have the first element on position with index 1 -> write 0 in index 0
-Hidoku fillData(Hidoku h, int size, vector<int> data) {
-	h.size = size;
-
+void fillData(vector<int> * possibleValues, vector<int>* emptyFields, int size, vector<int>* data) {
 	//fill all Values in possible Values field
-	for (int j = 1; j < size * size + 1; j++) {
-		h.possibleValues.push_back(j);
+	for (int j = 1; j <= size * size ; j++) {
+		possibleValues->push_back(j);
 	}
-
 	//erasecounter necessary because of erasing elements is changing the index
 	int erasecounter = 1;
 	for (int i = 1; i < size * size + 1; i++) {
-		int value = data.at(i);
+		int value = (*data).at(i-1);
 		//if field is empty add it to emptyField
 		if (value == 0) {
-			h.emptyFields.push_back(i);
+			emptyFields->push_back(i);
 		}
 		//if not empty create a Point and save it to values and remove it from possible values
 		else {
-			Field p = { i, value };
-			h.values.push_back(p);
-			h.possibleValues.erase(
-					h.possibleValues.begin() + value - erasecounter);
+			possibleValues->erase(remove(possibleValues->begin(), possibleValues->end(), value), possibleValues->end());
 			erasecounter++;
 		}
 	}
-	return h;
 }
 
 int parseHidoku(char* path, vector<int>* values) {
@@ -163,10 +153,10 @@ void drawCellBody(int numbersize, int cellCount) {
 	cout << '|' << endl;
 }
 
-void drawNumbers(int numsize, int size, vector<int>* values, int linenumber) {
+void drawNumbers(int numsize, int size, int values[], int linenumber) {
 	for (int i = 0; i < size; i++) {
 		cout << "| ";
-		int number = values->at(i + (linenumber * size));
+		int number = values[i + (linenumber * size)];
 		if (number != 0) {
 			cout << number;
 			int numberLength = ceil(log10(number + 0.5));
@@ -185,7 +175,7 @@ void drawNumbers(int numsize, int size, vector<int>* values, int linenumber) {
 	cout << '|' << endl;
 }
 
-void drawBoard(vector<int>* values, int size) {
+void drawBoard(int values[], int size) {
 	int linesize = (3 + ceil(log10(size * size + 0.5))) * size + 1;
 	cout << "hidoku with size " << size << endl;
 	drawLine(linesize, '-');
@@ -214,20 +204,17 @@ int getNumberFromCode(istringstream* code) {
 	return result;
 }
 
-void parseSolution(string solution, vector<int> * values, int size) {
+void parseSolution(string solution, int values[], int size) {
 	istringstream sol(solution);
 	sol.ignore(3);
 	int number = 0;
 	char sign;
-//	bool isTrue = false;
 	for (int j = 1; j <= size*size; j++) {
 		for (int i = 1; i <= size * size; i++) {
 			sol.get(sign);
-//			cout << sign << "  ";
 			if (sign == ' ') {
 				Field cell = decode(getNumberFromCode(&sol), size);
-				values->at(cell.x-1) = cell.y;
-//				cout << "find: x" << cell.x << " y" << cell.y << endl;
+				values[(cell.x-1)] = cell.y;
 			} else {
 				getNumberFromCode(&sol);
 
@@ -453,18 +440,27 @@ string computeClauses(vector<int>* values, int size) {
 
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 	vector<int>* values = new vector<int>();
-	int size = parseHidoku("easy/hidoku-4-6-1.txt", values);
+	int size = parseHidoku(argv[1], values);
 
-	//drawBoard(values, size);
-//	cout << computeClauses(values, size);
-//	cout << exec("echo \"" + computeClauses(values, size) + "\" | ./logic2cnf -j1");
-	parseSolution(
-			exec(
-					"echo \"" + computeClauses(values, size)
-							+ "\" | ./logic2cnf -j1"), values, size);
-	drawBoard(values, size);
+
+	vector<int>* possibleValues = new vector<int>();
+	vector<int>* emptyFields = new vector<int>();
+	fillData(possibleValues, emptyFields, size, values);
+
+
+
+
+	ofstream outfile;
+    outfile.open ("out.txt");
+
+    outfile << computeClauses(values, size);
+    outfile.close();
+
+	int n=size*size;
+    int newValues[n];
+	parseSolution( exec( "cat out.txt | ./logic2cnf -j1"), newValues, size);
+	drawBoard(newValues, size);
 	return 10;
 }
-

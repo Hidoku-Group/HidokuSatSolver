@@ -1,0 +1,37 @@
+This project contains the required files to run the hidoku competition.
+
+Setup:
+
+	1) Build the verifier and create the directories:
+		run "make"
+	2) Adding hidoku files that should be solved
+		open the file "files.list"
+		  each line in the file represents a hidoku that should be solved
+		for each hidoku you want to solve, add a line with the path and the file
+		  if you want to use a specific timeout, add a blank and the timeout in seconds
+	2.1) All unsatisfiable hidokus have to be mentioned in the file unsatInstances.list
+	3) set up your solver
+		  Assume, your solver is called "SOLVER".
+		create a directory "SOLVER" in the "solvers/" directory
+		copy all files that are required by your solver into the newly created directory
+		open the file "solvers.list"
+		add a line for your solver "SOLVER <how to call your solver>"
+			Note, the solver name is put first on the line
+			Afterwards, you have to put the call of your solver, e.g.:
+				"java -jar Jsolver.jar"
+				or "./Csolver -file="
+			Note, when your solver is called, the file is passed as last parameter
+			
+Solve the files and evaluate:
+	1) run "python competition.py solvers.list files.list unsatHidokus.list"
+	
+	2) The evaluation can be seen in the file evaluation.dat
+
+	3) A visualization of the solved instances and run time is presented in the files
+	   visualization.pdf and visualization.eps. These files are generated after another
+	   three files have been solved.
+
+Might be helpful:
+	When all Hidokus are places in the directory "hidokus", and all unsatisfiable hidokus are
+	located in "hidokus/unsat/", then the lists of all Hidokus, as well as the list of the 
+	unsatisfiable Hidokus can be created by calling "./fillHidokuLists.sh".
