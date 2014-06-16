@@ -38,6 +38,18 @@ int dist(int a, int b, int size){
     else return ydif;
 }
 
+int max(int a, int b, int size, vector<int>* values){
+    int distance = dist(a,b,size);
+    int value_a = values->at(a);
+    int value_b = values->at(b);
+    if (value_a > value_b) {
+                return ceil((float)((value_a - value_b) - distance)/2);
+                }
+    else {
+         return ceil((float)((value_b - value_a) - distance)/2);
+         }
+}
+
 string exec(string cmd) {
 	FILE *in;
 	char buff[512];
