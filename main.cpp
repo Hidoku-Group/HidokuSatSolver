@@ -23,6 +23,21 @@ struct Field {
 	int y;
 };
 
+//a, b sind die nummern der felder/indizes
+int dist(int a, int b, int size){
+    int xa = ((a-1) % size)+1;
+    int ya = floor((a-1)/size)+1;
+    int xb = ((b-1) % size)+1;
+    int yb = floor((b-1) /size)+1;
+    
+    int xdif, ydif;
+    if (xa>xb) {xdif = xa-xb;} else xdif=xb-xa;
+    if (ya>yb) {ydif = ya-yb;} else ydif=yb-ya;
+    
+    if (xdif>ydif) return xdif;
+    else return ydif;
+}
+
 string exec(string cmd) {
 	FILE *in;
 	char buff[512];
