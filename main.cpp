@@ -290,7 +290,7 @@ int bottom(int size, int from, int steps) {
 	return 0;
 }
 
-string computeClauses(vector<int>* values, int size) {
+string computeClauses(vector<int>* values, int size, vector<int>* possibleValues, vector<int>*emptyFields) {
 	int n = size * size;
 
 	string result;
@@ -311,30 +311,30 @@ string computeClauses(vector<int>* values, int size) {
 	result = result + "(";
 
 	//result = "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
-	for (int k = 1; k <= n; k++) { //toggle of ¬
+	for (int k = 0; k < emptyFields->size(); k++) { //toggle of ¬
 		//result = result + "k: " + to_string(k) + " val[k]:"  + to_string( values->at(k-1)) + "\n";
-		if (values->at(k - 1) != 0) {
+		if (values->at(emptyFields->at(k) -1 ) != 0) {
 			continue;
 		}
 
 		result = result + "(";
 
-		for (int i = 1; i <= n; i++) { //value
+		for (int i = 0; i < possibleValues->size(); i++) { //value
 			result = result + "(";
-			for (int j = 1; j <= n; j++) { //field index
+			for (int j = 0; j < emptyFields->size(); j++) { //field index
 				if (k == j) {
-					result = result + encode(j, i, size);
+					result = result + encode(emptyFields->at(j), possibleValues->at(i), size);
 					//result = result + " ("  + to_string( j ) +  ", "  + to_string( i ) +  ") ";
 				} else {
-					result = result + NOT + encode(j, i, size);
+					result = result + NOT + encode(emptyFields->at(j), possibleValues->at(i), size);
 					//result = result + NOT + "("  + to_string( j ) +  ", "  + to_string( i ) +  ") ";
 				}
-				if (j != n) {
+				if (j != emptyFields->size()-1) {
 					result = result + AND + " ";
 				}
 			}
 
-			if (i == n) {
+			if (i == possibleValues->size() -1) {
 				result = result + ") " + "\n";
 			} else {
 				result = result + ") " + OR + "\n";
@@ -349,10 +349,13 @@ string computeClauses(vector<int>* values, int size) {
 
 	//	result = result + "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" + "\n";
 	for (int i = 1; i <= n; i++) { //i represents the field index
-		for (int j = 2; j <= n; j++) { // j stands for the value of the field i
+		for (int j = 0; j < possibleValues->size(); j++) { // j stands for the value of the field i
+			if(possibleValues->at(j) < 2) {
+				continue;
+			}
 			//result = result + "( " + NOT + "("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
 
-			result = result + "( " + NOT + encode(i, j, size) + " ";
+			result = result + "( " + NOT + encode(i, possibleValues->at(j), size) + " ";
 
 			int t = top(size, i, 1);
 			int l = left(size, i, 1);
@@ -365,42 +368,42 @@ string computeClauses(vector<int>* values, int size) {
 
 			if (t != 0) {
 				//	result = result + OR + " ("  + to_string( t ) +  ", "  + to_string( j-1 ) +  ") ";
-				result = result + OR + encode(t, j - 1, size) + " ";
+				result = result + OR + encode(t, possibleValues->at(j) - 1, size) + " ";
 
 				if (tl != 0) {
 					//	result = result + OR + " ("  + to_string( tl ) +  ", "  + to_string( j-1 ) +  ") ";
-					result = result + OR + encode(tl, j - 1, size) + " ";
+					result = result + OR + encode(tl, possibleValues->at(j) - 1, size) + " ";
 				}
 
 				if (tr != 0) {
 					//	result = result + OR + " ("  + to_string( tr ) +  ", "  + to_string( j-1 ) +  ") ";
-					result = result + OR + encode(tr, j - 1, size) + " ";
+					result = result + OR + encode(tr, possibleValues->at(j) - 1, size) + " ";
 				}
 
 			}
 
 			if (l != 0) {
 				//result = result + OR + " ("  + to_string( l ) +  ", "  + to_string( j-1 ) + ") ";
-				result = result + OR + encode(l, j - 1, size) + " ";
+				result = result + OR + encode(l, possibleValues->at(j) - 1, size) + " ";
 			}
 
 			if (r != 0) {
 				//result = result + OR + " ("  + to_string( r ) +  ", "  + to_string( j-1 ) +  ") ";
-				result = result + OR + encode(r, j - 1, size) + " ";
+				result = result + OR + encode(r, possibleValues->at(j) - 1, size) + " ";
 			}
 
 			if (b != 0) {
 				//result = result + OR + " ("  + to_string( b ) +  ", "  + to_string( j-1 ) +  ") ";
-				result = result + OR + encode(b, j - 1, size) + " ";
+				result = result + OR + encode(b, possibleValues->at(j) - 1, size) + " ";
 
 				if (bl != 0) {
 					//result = result + OR + " ("  + to_string( bl ) +  ", "  + to_string( j-1 ) +  ") ";
-					result = result + OR + encode(bl, j - 1, size) + " ";
+					result = result + OR + encode(bl, possibleValues->at(j) - 1, size) + " ";
 				}
 
 				if (br != 0) {
 					//	result = result + OR + " ("  + to_string( br ) +  ", "  + to_string( j-1 ) +  ") ";
-					result = result + OR + encode(br, j - 1, size) + " ";
+					result = result + OR + encode(br, possibleValues->at(j) - 1, size) + " ";
 				}
 			}
 
@@ -455,12 +458,17 @@ int main(int argc, char* argv[]) {
 	ofstream outfile;
     outfile.open ("out.txt");
 
-    outfile << computeClauses(values, size);
+    outfile << computeClauses(values, size, possibleValues, emptyFields);
     outfile.close();
 
 	int n=size*size;
     int newValues[n];
-	parseSolution( exec( "cat out.txt | ./logic2cnf -j1"), newValues, size);
+    string result = exec( "cat out.txt | ./logic2cnf -j1 2> /dev/null");
+
+    if(result == "") {
+		return 20;
+	}
+	parseSolution( result, newValues, size);
 	drawBoard(newValues, size);
 	return 10;
 }
