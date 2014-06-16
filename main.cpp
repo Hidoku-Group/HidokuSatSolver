@@ -24,16 +24,16 @@ struct Field {
 };
 
 string exec(string cmd) {
-    FILE *in;
+	FILE *in;
 	char buff[512];
 
 	ostringstream resultStream;
 
-	if(!(in = popen(cmd.c_str(), "r"))){
+	if(!(in = popen(cmd.c_str(), "r"))) {
 		return "error";
 	}
 
-	while(fgets(buff, sizeof(buff), in) != NULL){
+	while(fgets(buff, sizeof(buff), in) != NULL) {
 		resultStream << buff;
 	}
 	pclose(in);
@@ -192,14 +192,13 @@ int getNumberFromCode(istringstream* code) {
 	char c;
 	string number = "";
 	code->get();
-	do
-	{
+	do {
 		code->get(c);
 //		cout << c;
-		if (c != ' '){
+		if (c != ' ') {
 			number += c;
 		}
-	}while(c != ' ');
+	} while(c != ' ');
 	result = atoi(number.c_str());
 	return result;
 }
@@ -297,7 +296,7 @@ string computeClauses(vector<int>* values, int size, vector<int>* possibleValues
 
 	result += "def ";
 	for (int i = size * size + 1; i <= size * size * size * size + size * size;
-			i++) {
+	        i++) {
 		result += "a" + to_string(i) + " ";
 	}
 	result += ";";
@@ -349,70 +348,114 @@ string computeClauses(vector<int>* values, int size, vector<int>* possibleValues
 
 	//	result = result + "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" + "\n";
 	for (int i = 1; i <= n; i++) { //i represents the field index
-		for (int j = 0; j < possibleValues->size(); j++) { // j stands for the value of the field i
-			if(possibleValues->at(j) < 2) {
-				continue;
-			}
-			//result = result + "( " + NOT + "("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
+ende:     /**
+                 *0-top
+                 *1-left
+                 *2-right
+                 *3-bottom
+                 *4-tl
+                 *5-tr
+                 *6-bl
+                 *7-br
+                 *
+                 */
+		int neighbours[8] = {top(size, i, 1), left(size, i, 1),	right(size, i, 1), bottom(size, i, 1)};
 
-			result = result + "( " + NOT + encode(i, possibleValues->at(j), size) + " ";
+		neighbours[4] = top(size, neighbours[1], 1);
+		neighbours[5] = top(size, neighbours[2], 1);
+		neighbours[6] = bottom(size, neighbours[1], 1);
+		neighbours[7] = bottom(size, neighbours[2], 1);
 
-			int t = top(size, i, 1);
-			int l = left(size, i, 1);
-			int r = right(size, i, 1);
-			int b = bottom(size, i, 1);
-			int tl = top(size, l, 1);
-			int tr = top(size, r, 1);
-			int bl = bottom(size, l, 1);
-			int br = bottom(size, r, 1);
 
-			if (t != 0) {
-				//	result = result + OR + " ("  + to_string( t ) +  ", "  + to_string( j-1 ) +  ") ";
-				result = result + OR + encode(t, possibleValues->at(j) - 1, size) + " ";
+		if(values->at(i-1) == 0) {
 
-				if (tl != 0) {
-					//	result = result + OR + " ("  + to_string( tl ) +  ", "  + to_string( j-1 ) +  ") ";
-					result = result + OR + encode(tl, possibleValues->at(j) - 1, size) + " ";
+			for (int j = 0; j < possibleValues->size(); j++) { // j stands for the value of the field i
+hinfort:
+				if(possibleValues->at(j) < 2 || find(possibleValues->begin(), possibleValues->end(), possibleValues->at(j)-1) == possibleValues->end() ) {
+					continue;
 				}
 
-				if (tr != 0) {
-					//	result = result + OR + " ("  + to_string( tr ) +  ", "  + to_string( j-1 ) +  ") ";
-					result = result + OR + encode(tr, possibleValues->at(j) - 1, size) + " ";
+				//result = result + "( " + NOT + "("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
+
+
+				for(int k=0; k<8; k++) {
+					//	if(neighbours[k] != 0)
+					//	result += to_string(possibleValues->at(j)) + " ?= " + to_string(values->at(neighbours[k]-1)+1);
+					if(neighbours[k] != 0 && ((possibleValues->at(j) == values->at(neighbours[k] - 1)+1)
+					                         )) {
+						//result += "weg";
+						/* j++;
+						if(j>= possibleValues->size()) {
+							i++;
+							goto ende;
+						}
+						goto hinfort;*/
+					}
 				}
 
-			}
 
-			if (l != 0) {
-				//result = result + OR + " ("  + to_string( l ) +  ", "  + to_string( j-1 ) + ") ";
-				result = result + OR + encode(l, possibleValues->at(j) - 1, size) + " ";
-			}
 
-			if (r != 0) {
-				//result = result + OR + " ("  + to_string( r ) +  ", "  + to_string( j-1 ) +  ") ";
-				result = result + OR + encode(r, possibleValues->at(j) - 1, size) + " ";
-			}
+				result = result + "( " + NOT + encode(i, possibleValues->at(j), size) + " ";
+				//	result += "(" + to_string(i) + ", " + to_string(possibleValues->at(j)) + ")";
 
-			if (b != 0) {
-				//result = result + OR + " ("  + to_string( b ) +  ", "  + to_string( j-1 ) +  ") ";
-				result = result + OR + encode(b, possibleValues->at(j) - 1, size) + " ";
+				for(int k=0; k<8; k++) {
+					int nk = neighbours[k];
+					if (find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()  ) {
+						result = result + OR + encode(nk, possibleValues->at(j) - 1, size) + " ";
+						//	result += "(" + to_string(nk) + ", " + to_string(possibleValues->at(j) -1) + ")";
 
-				if (bl != 0) {
-					//result = result + OR + " ("  + to_string( bl ) +  ", "  + to_string( j-1 ) +  ") ";
-					result = result + OR + encode(bl, possibleValues->at(j) - 1, size) + " ";
+					}
+
+
 				}
+				result = result + " )" + AND + "\n";
+			}
+		} else {
+			if(values->at(i-1) > 1 && find(possibleValues->begin(), possibleValues->end(), values->at(i-1)-1) != possibleValues->end() ) {
 
-				if (br != 0) {
-					//	result = result + OR + " ("  + to_string( br ) +  ", "  + to_string( j-1 ) +  ") ";
-					result = result + OR + encode(br, possibleValues->at(j) - 1, size) + " ";
+
+				result = result + "( ";
+
+				int tmp=0;
+				for(int k=0; k<8; k++) {
+					int nk=neighbours[k];
+					if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
+						if(tmp == 1) {
+							result = result + OR;
+						}
+						result += encode(nk, values->at(i-1)-1, size) + " ";
+					//	result += "(" + to_string(nk) + ", " + to_string(values->at(i-1)-1) + ") ";
+						tmp=1;
+					}
+
 				}
+				result = result + " )" + AND + "\n";
 			}
 
-			result = result + " )" + AND + "\n";
+			if(values->at(i-1) < n   && find(possibleValues->begin(), possibleValues->end(), values->at(i-1)+1) != possibleValues->end() ) {
+				result = result + "( ";
+
+				int tmp=0;
+				for(int k=0; k<8; k++) {
+					int nk=neighbours[k];
+					if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
+						if(tmp == 1) {
+							result = result + OR;
+						}
+						result += encode(nk, values->at(i-1)+1, size) + " ";
+						//result += "(" + to_string(nk) + ", " + to_string(values->at(i-1)+1) + ") ";
+						tmp=1;
+					}
+
+				}
+				result = result + " )" + AND + "\n";
+			}
 		}
 
 	}
 
-	//result = result + "\n" + "schritt 3: Nur 1 Zahl pro Feld" + "\n";
+
+//result = result + "\n" + "schritt 3: Nur 1 Zahl pro Feld" + "\n";
 
 	for (int i = 1; i <= n; i++) { //index of field
 		result = result + "(";
@@ -456,16 +499,16 @@ int main(int argc, char* argv[]) {
 
 
 	ofstream outfile;
-    outfile.open ("out.txt");
+	outfile.open ("out.txt");
 
-    outfile << computeClauses(values, size, possibleValues, emptyFields);
-    outfile.close();
+	outfile << computeClauses(values, size, possibleValues, emptyFields);
+	outfile.close();
 
 	int n=size*size;
-    int newValues[n];
-    string result = exec( "cat out.txt | ./logic2cnf -j1 2> /dev/null");
+	int newValues[n];
+	string result = exec( "cat out.txt | ./logic2cnf -j1 2> /dev/null");
 
-    if(result == "") {
+	if(result == "") {
 		return 20;
 	}
 	parseSolution( result, newValues, size);
