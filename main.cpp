@@ -405,7 +405,7 @@ void parseSolution(string solution, int values[]) {
 	sol.ignore(4);
 	int number = 1;
 	char sign;
-	for (int j = 1; j <= size*size*size*size+size; j++) {
+	for (int j = 1; j <= size*size*size*size+size*size; j++) {
 		sol.get(sign);
 		if (sign != '-') {
 			Field cell = decode(number);
