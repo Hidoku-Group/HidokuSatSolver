@@ -146,7 +146,7 @@ int max(int a, int b) {
 		return ceil((float)((value_b - value_a) - distance)/2);
 	}
 }
-/*  
+/*
 // order = 0: a tl, b br
 // order = 1: a bl, b tr
 void getRectangle(int a, int b, vector<int>*possibleValues, int order) {
@@ -211,22 +211,6 @@ void getMaxRange(int a, int b, vector<int>* possibleValues) {
 	}
 }
 */
-string exec(string cmd) {
-	FILE *in;
-	char buff[512];
-
-	ostringstream resultStream;
-
-	if(!(in = popen(cmd.c_str(), "r"))) {
-		return "error";
-	}
-
-	while(fgets(buff, sizeof(buff), in) != NULL) {
-		resultStream << buff;
-	}
-	pclose(in);
-	return resultStream.str();
-}
 
 int encode(int index, int value) {
 	return size * size * index + value;
@@ -409,29 +393,29 @@ void parseSolution(string solution, int values[]) {
 	}
 }*/
 void deleteNumberFromStream(istringstream* code) {
-code->get();
-char c;
-do {
-code->get(c);
-} while(c != ' ');
-}      
-      
+	code->get();
+	char c;
+	do {
+		code->get(c);
+	} while(c != ' ');
+}
+
 void parseSolution(string solution, int values[]) {
-     istringstream sol(solution);
-     sol.ignore(4);
-     int number = 1;
-     char sign;
-     for (int j = 1; j <= size*size*size*size+size; j++) {
-         sol.get(sign);
-         if (sign != '-') {
-         Field cell = decode(number);
-         values[(cell.x-1)] = cell.y;
-         deleteNumberFromStream(&sol);
-         } else {
-         deleteNumberFromStream(&sol);
-         }
-     number++;
-     }
+	istringstream sol(solution);
+	sol.ignore(4);
+	int number = 1;
+	char sign;
+	for (int j = 1; j <= size*size*size*size+size; j++) {
+		sol.get(sign);
+		if (sign != '-') {
+			Field cell = decode(number);
+			values[(cell.x-1)] = cell.y;
+			deleteNumberFromStream(&sol);
+		} else {
+			deleteNumberFromStream(&sol);
+		}
+		number++;
+	}
 }
 
 string getExactlyOne(vector<int>* vars) {
@@ -612,12 +596,20 @@ int main(int argc, char* argv[]) {
 
 	int n=size*size;
 	int newValues[n];
-	string result = exec( "minisat /tmp/inteamout.txt /tmp/inteamresult.txt > /dev/null && cat /tmp/inteamresult.txt");
+	system("minisat /tmp/inteamout.txt /tmp/inteamresult.txt > /tmp/inteamstat.txt");
+
+	ifstream ifs("/tmp/inteamresult.txt");
+	string result( (istreambuf_iterator<char>(ifs) ), (istreambuf_iterator<char>()));
 
 	if(result == "") {
+		cout << "unsat";
 		return 20;
 	}
 	parseSolution( result, newValues);
+
+	for(int i=0; i<n; i++) {
+		cout << newValues[i] << ", ";
+	}
 	drawBoard(newValues, size);
 	return 10;
 }

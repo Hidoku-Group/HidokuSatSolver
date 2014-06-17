@@ -18,7 +18,7 @@ extern const string AND = " 0\n";
 extern const string OR = " ";
 extern const string NOT = "-";
 
-/* 
+/*
  * vector<int> encode/decode global
  * vector->at(i) mehrmals benutzt -> in int zwischenspeichern
  * int tmp außerhalb von for schleifen deklarieren
@@ -146,7 +146,7 @@ int max(int a, int b) {
 		return ceil((float)((value_b - value_a) - distance)/2);
 	}
 }
-
+/*
 // order = 0: a tl, b br
 // order = 1: a bl, b tr
 void getRectangle(int a, int b, vector<int>*possibleValues, int order) {
@@ -155,18 +155,18 @@ void getRectangle(int a, int b, vector<int>*possibleValues, int order) {
 	int xb = getXPos(b);
 	int yb = getYPos(b);
 
-    if(order == 0) {
-		for(int i=xa;i<xb;i++) {
-			for(int j=ya; j<yb;j++) {
+	if(order == 0) {
+		for(int i=xa; i<xb; i++) {
+			for(int j=ya; j<yb; j++) {
 				if(values.at({i,j}) != 0) {
 					possibleValues->push_back({i,j});
 				}
 			}
 		}
 	} else if (order == 1) {
-		for(int i=xa;i<xb;i++) {
+		for(int i=xa; i<xb; i++) {
 			for(int j=yb; j<ya; j++) {
-                if(values.at({i,j}) != 0) {
+				if(values.at({i,j}) != 0) {
 					possibleValues->push_back({i,j});
 				}
 
@@ -177,7 +177,7 @@ void getRectangle(int a, int b, vector<int>*possibleValues, int order) {
 }
 
 void getMaxRange(int a, int b, vector<int>* possibleValues) {
-   	int xa = getXPos(a);
+	int xa = getXPos(a);
 	int ya = getYPos(a);
 	int xb = getXPos(b);
 	int yb = getYPos(b);
@@ -188,45 +188,29 @@ void getMaxRange(int a, int b, vector<int>* possibleValues) {
 	//a links
 	if(xa <= xb) {
 		//a links oben
-	   if(ya <= yb) {
-	   	   cornerA = top(left(a, m), m);
-	   	   cornerB = bottom(right(b, m), m);
-	   	   getRectangle(cornerA, cornerB, possibleValues, 0);
-	   } else { //a links unten
-	   	   cornerA = bottom(left(a, m), m);
-	   	   cornerB = top(right(b, m), m);
-	   	   getRectangle(cornerA, cornerB, possibleValues, 1);
-	   }
+		if(ya <= yb) {
+			cornerA = top(left(a, m), m);
+			cornerB = bottom(right(b, m), m);
+			getRectangle(cornerA, cornerB, possibleValues, 0);
+		} else { //a links unten
+			cornerA = bottom(left(a, m), m);
+			cornerB = top(right(b, m), m);
+			getRectangle(cornerA, cornerB, possibleValues, 1);
+		}
 	} else {//a rechts
 		if(ya<=yb) { //a rechts oben
-	   	   cornerA = top(right(a, m), m);
-	   	   cornerB = bottom(left(b, m), m);
-	   	   getRectangle(cornerB, cornerA, possibleValues, 1);
+			cornerA = top(right(a, m), m);
+			cornerB = bottom(left(b, m), m);
+			getRectangle(cornerB, cornerA, possibleValues, 1);
 		} else { // a rechtes unten
-	   	   cornerA = bottom(right(a, m), m);
-	   	   cornerB = top(left(b, m), m);
-	   	   getRectangle(cornerB, cornerA, possibleValues, 0);
+			cornerA = bottom(right(a, m), m);
+			cornerB = top(left(b, m), m);
+			getRectangle(cornerB, cornerA, possibleValues, 0);
 		}
-	
+
 	}
 }
-
-string exec(string cmd) {
-	FILE *in;
-	char buff[512];
-
-	ostringstream resultStream;
-
-	if(!(in = popen(cmd.c_str(), "r"))) {
-		return "error";
-	}
-
-	while(fgets(buff, sizeof(buff), in) != NULL) {
-		resultStream << buff;
-	}
-	pclose(in);
-	return resultStream.str();
-}
+*/
 
 int encode(int index, int value) {
 	return size * size * index + value;
@@ -241,7 +225,7 @@ Field decode(int number) {
 }
 
 //the vector need to have the first element on position with index 1 -> write 0 in index 0
-void fillData(vector<int> * possibleValues, vector<int>* emptyFields, vector<int>* data) {
+void fillData(vector<int> * possibleValues, vector<int>* emptyFields) {
 	//fill all Values in possible Values field
 	for (int j = 1; j <= size * size ; j++) {
 		possibleValues->push_back(j);
@@ -249,7 +233,7 @@ void fillData(vector<int> * possibleValues, vector<int>* emptyFields, vector<int
 	//erasecounter necessary because of erasing elements is changing the index
 	int erasecounter = 1;
 	for (int i = 1; i < size * size + 1; i++) {
-		int value = (*data).at(i-1);
+		int value = values.at(i-1);
 		//if field is empty add it to emptyField
 		if (value == 0) {
 			emptyFields->push_back(i);
@@ -371,7 +355,9 @@ void drawBoard(int values[], int size) {
 		drawLine(linesize, '-');
 	}
 }
-int getNumberFromCode(istringstream* code) {
+
+/*int getNumberFromCode(istringstream* code) {
+>>>>>>> dd3dd9c1a369f14c9c130e11c9ec15a5c665c6b2
 	int result;
 	char c;
 	string number = "";
@@ -404,6 +390,31 @@ void parseSolution(string solution, int values[]) {
 			}
 
 		}
+	}
+}*/
+void deleteNumberFromStream(istringstream* code) {
+	code->get();
+	char c;
+	do {
+		code->get(c);
+	} while(c != ' ');
+}
+
+void parseSolution(string solution, int values[]) {
+	istringstream sol(solution);
+	sol.ignore(4);
+	int number = 1;
+	char sign;
+	for (int j = 1; j <= size*size*size*size+size; j++) {
+		sol.get(sign);
+		if (sign != '-') {
+			Field cell = decode(number);
+			values[(cell.x-1)] = cell.y;
+			deleteNumberFromStream(&sol);
+		} else {
+			deleteNumberFromStream(&sol);
+		}
+		number++;
 	}
 }
 
@@ -446,10 +457,10 @@ string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields) {
 
 
 
-result = result + "\n";
+	result = result + "\n";
 
 //	result = result + "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" + "\n";
-for (int i = 1; i <= n; i++) { //i represents the field index
+	for (int i = 1; i <= n; i++) { //i represents the field index
 ende:     /**
                  *0-top
                  *1-left
@@ -461,116 +472,114 @@ ende:     /**
                  *7-br
                  *
                  */
-	int neighbours[8] = {top(i, 1), left(i, 1),	right(i, 1), bottom(i, 1)};
+		int neighbours[8] = {top(i, 1), left(i, 1),	right(i, 1), bottom(i, 1)};
 
-	neighbours[4] = top(neighbours[1], 1);
-	neighbours[5] = top(neighbours[2], 1);
-	neighbours[6] = bottom(neighbours[1], 1);
-	neighbours[7] = bottom(neighbours[2], 1);
+		neighbours[4] = top(neighbours[1], 1);
+		neighbours[5] = top(neighbours[2], 1);
+		neighbours[6] = bottom(neighbours[1], 1);
+		neighbours[7] = bottom(neighbours[2], 1);
 
 
-	if(values.at(i-1) == 0) {
+		if(values.at(i-1) == 0) {
 
-		for (int j = 0; j < possibleValues->size(); j++) { // j stands for the value of the field i
+			for (int j = 0; j < possibleValues->size(); j++) { // j stands for the value of the field i
 hinfort:
-			if(possibleValues->at(j) < 2 || find(possibleValues->begin(), possibleValues->end(), possibleValues->at(j)-1) == possibleValues->end() ) {
-				continue;
-			}
+				if(possibleValues->at(j) < 2 || find(possibleValues->begin(), possibleValues->end(), possibleValues->at(j)-1) == possibleValues->end() ) {
+					continue;
+				}
 
-			//result = result + "( " + NOT + "("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
+				//result = result + "( " + NOT + "("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
 
 
-			for(int k=0; k<8; k++) {
-				//	if(neighbours[k] != 0)
-				//	result += to_string(possibleValues->at(j)) + " ?= " + to_string(values.at(neighbours[k]-1)+1);
-				if(neighbours[k] != 0 && ((possibleValues->at(j) == values.at(neighbours[k] - 1)+1)
-				                         )) {
-					//result += "weg";
-					/* j++;
-					if(j>= possibleValues->size()) {
-						i++;
-						goto ende;
+				for(int k=0; k<8; k++) {
+					//	if(neighbours[k] != 0)
+					//	result += to_string(possibleValues->at(j)) + " ?= " + to_string(values.at(neighbours[k]-1)+1);
+					if(neighbours[k] != 0 && ((possibleValues->at(j) == values.at(neighbours[k] - 1)+1)
+					                         )) {
+						//result += "weg";
+						/* j++;
+						if(j>= possibleValues->size()) {
+							i++;
+							goto ende;
+						}
+						goto hinfort;*/
 					}
-					goto hinfort;*/
-				}
-			}
-
-
-
-			result = result + NOT + to_string(encode(i, possibleValues->at(j)));
-			//	result += "(" + to_string(i) + ", " + to_string(possibleValues->at(j)) + ")";
-
-			for(int k=0; k<8; k++) {
-				int nk = neighbours[k];
-				if (find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()  ) {
-					result = result + OR + to_string(encode(nk, possibleValues->at(j) - 1));
-					//	result += "(" + to_string(nk) + ", " + to_string(possibleValues->at(j) -1) + ")";
-
 				}
 
 
-			}
-			result = result + AND;
-		}
-	} else {
-		if(values.at(i-1) > 1 && find(possibleValues->begin(), possibleValues->end(), values.at(i-1)-1) != possibleValues->end() ) {
 
-			int tmp=0;
-			for(int k=0; k<8; k++) {
-				int nk=neighbours[k];
-				if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
-					if(tmp == 1) {
-						result = result + OR;
+				result = result + NOT + to_string(encode(i, possibleValues->at(j)));
+				//	result += "(" + to_string(i) + ", " + to_string(possibleValues->at(j)) + ")";
+
+				for(int k=0; k<8; k++) {
+					int nk = neighbours[k];
+					if (find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()  ) {
+						result = result + OR + to_string(encode(nk, possibleValues->at(j) - 1));
+						//	result += "(" + to_string(nk) + ", " + to_string(possibleValues->at(j) -1) + ")";
+
 					}
-					result += to_string(encode(nk, values.at(i-1)-1));
-					//	result += "(" + to_string(nk) + ", " + to_string(values.at(i-1)-1) + ") ";
-					tmp=1;
+
+
 				}
-
+				result = result + AND;
 			}
-			result = result + AND;
-		}
+		} else {
+			if(values.at(i-1) > 1 && find(possibleValues->begin(), possibleValues->end(), values.at(i-1)-1) != possibleValues->end() ) {
 
-		if(values.at(i-1) < n   && find(possibleValues->begin(), possibleValues->end(), values.at(i-1)+1) != possibleValues->end() ) {
-
-			int tmp=0;
-			for(int k=0; k<8; k++) {
-				int nk=neighbours[k];
-				if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
-					if(tmp == 1) {
-						result = result + OR;
+				int tmp=0;
+				for(int k=0; k<8; k++) {
+					int nk=neighbours[k];
+					if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
+						if(tmp == 1) {
+							result = result + OR;
+						}
+						result += to_string(encode(nk, values.at(i-1)-1));
+						//	result += "(" + to_string(nk) + ", " + to_string(values.at(i-1)-1) + ") ";
+						tmp=1;
 					}
-					result += to_string(encode(nk, values.at(i-1)+1));
-					//result += "(" + to_string(nk) + ", " + to_string(values.at(i-1)+1) + ") ";
-					tmp=1;
-				}
 
+				}
+				result = result + AND;
 			}
-			result = result + AND + "\n";
+
+			if(values.at(i-1) < n   && find(possibleValues->begin(), possibleValues->end(), values.at(i-1)+1) != possibleValues->end() ) {
+
+				int tmp=0;
+				for(int k=0; k<8; k++) {
+					int nk=neighbours[k];
+					if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
+						if(tmp == 1) {
+							result = result + OR;
+						}
+						result += to_string(encode(nk, values.at(i-1)+1));
+						//result += "(" + to_string(nk) + ", " + to_string(values.at(i-1)+1) + ") ";
+						tmp=1;
+					}
+
+				}
+				result = result + AND + "\n";
+			}
 		}
+
 	}
-
-}
 
 
 //result = result + "\n" + "schritt 3: Nur 1 Zahl pro Feld" + "\n";
 
-for(int i=0; i<emptyFields->size(); i++) {
-	for (int k=0; k<possibleValues->size(); k++) {
-	    vars->push_back(encode(emptyFields->at(i), possibleValues->at(k)));
-	}
-	result += getExactlyOne(vars);
-	vars->clear();
-		
-}
+	for(int i=0; i<emptyFields->size(); i++) {
+		for (int k=0; k<possibleValues->size(); k++) {
+			vars->push_back(encode(emptyFields->at(i), possibleValues->at(k)));
+		}
+		result += getExactlyOne(vars);
+		vars->clear();
 
-return result;
+	}
+
+	return result;
 
 }
 
 int main(int argc, char* argv[]) {
-    values = new vector<int>();
-
 	parseHidoku(argv[1]);
 
 
@@ -582,17 +591,22 @@ int main(int argc, char* argv[]) {
 	ofstream outfile;
 	outfile.open ("/tmp/inteamout.txt");
 
-	outfile << computeClauses(values, possibleValues, emptyFields);
+	outfile << computeClauses(possibleValues, emptyFields);
 	outfile.close();
 
 	int n=size*size;
 	int newValues[n];
-	string result = exec( "minisat /tmp/inteamout.txt /tmp/inteamresult.txt > /dev/null && cat /tmp/inteamresult.txt");
+	system("minisat /tmp/inteamout.txt /tmp/inteamresult.txt > /tmp/inteamstat.txt");
 
+	ifstream ifs("/tmp/inteamresult.txt");
+	string result( (istreambuf_iterator<char>(ifs) ),
+                       (istreambuf_iterator<char>()    ));
+	
 	if(result == "") {
+        cout << "unsat";
 		return 20;
 	}
 	parseSolution( result, newValues);
-	drawBoard(newValues);
+	drawBoard(newValues, size);
 	return 10;
 }
