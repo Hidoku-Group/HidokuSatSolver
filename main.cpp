@@ -14,9 +14,9 @@
 using namespace std;
 
 extern const string XOR = "@";
-extern const string AND = ".";
-extern const string OR = "+";
-extern const string NOT = "~";
+extern const string AND = " 0\n";
+extern const string OR = " ";
+extern const string NOT = "-";
 
 struct Field {
 	int x;
@@ -24,30 +24,33 @@ struct Field {
 };
 
 //a, b sind die nummern der felder/indizes
-int dist(int a, int b, int size){
-    int xa = ((a-1) % size)+1;
-    int ya = floor((a-1)/size)+1;
-    int xb = ((b-1) % size)+1;
-    int yb = floor((b-1) /size)+1;
-    
-    int xdif, ydif;
-    if (xa>xb) {xdif = xa-xb;} else xdif=xb-xa;
-    if (ya>yb) {ydif = ya-yb;} else ydif=yb-ya;
-    
-    if (xdif>ydif) return xdif;
-    else return ydif;
+int dist(int a, int b, int size) {
+	int xa = ((a-1) % size)+1;
+	int ya = floor((a-1)/size)+1;
+	int xb = ((b-1) % size)+1;
+	int yb = floor((b-1) /size)+1;
+
+	int xdif, ydif;
+	if (xa>xb) {
+		xdif = xa-xb;
+	} else xdif=xb-xa;
+	if (ya>yb) {
+		ydif = ya-yb;
+	} else ydif=yb-ya;
+
+	if (xdif>ydif) return xdif;
+	else return ydif;
 }
 
-int max(int a, int b, int size, vector<int>* values){
-    int distance = dist(a,b,size);
-    int value_a = values->at(a);
-    int value_b = values->at(b);
-    if (value_a > value_b) {
-                return ceil((float)((value_a - value_b) - distance)/2);
-                }
-    else {
-         return ceil((float)((value_b - value_a) - distance)/2);
-         }
+int max(int a, int b, int size, vector<int>* values) {
+	int distance = dist(a,b,size);
+	int value_a = values->at(a);
+	int value_b = values->at(b);
+	if (value_a > value_b) {
+		return ceil((float)((value_a - value_b) - distance)/2);
+	} else {
+		return ceil((float)((value_b - value_a) - distance)/2);
+	}
 }
 
 string exec(string cmd) {
@@ -67,9 +70,8 @@ string exec(string cmd) {
 	return resultStream.str();
 }
 
-string encode(int index, int value, int size) {
-	int e = size * size * index + value;
-	return "a" + to_string(e);
+int encode(int index, int value, int size) {
+	return size * size * index + value;
 }
 
 Field decode(int number, int size) {
@@ -250,6 +252,21 @@ void parseSolution(string solution, int values[], int size) {
 	}
 }
 
+string getExactlyOne(vector<int>* vars) {
+	string result = to_string(vars->at(0));
+	for(int i=1; i<vars->size(); i++) {
+		result += OR + to_string(vars->at(i));
+	}
+
+	for(int i=0; i<vars->size(); i++) {
+		for(int j=i+1; j<vars->size(); j++) {
+			result += AND + NOT + to_string(vars->at(i)) + OR + NOT + to_string(vars->at(j));
+		}
+	}
+	return result + AND;
+}
+
+
 /**
  * returns the number of the field that is "steps" steps in the left direction of "from"
  * if there is no such field in this direction simply 0 will be returned
@@ -321,60 +338,27 @@ string computeClauses(vector<int>* values, int size, vector<int>* possibleValues
 
 	string result;
 
-	result += "def ";
-	for (int i = size * size + 1; i <= size * size * size * size + size * size;
-	        i++) {
-		result += "a" + to_string(i) + " ";
-	}
-	result += ";";
-
 	for (int i = 1; i <= n; i++) {
 		if (values->at(i - 1) != 0) {
-			result = result + encode(i, values->at(i - 1), size) + AND + " ";
+			result = result + to_string(encode(i, values->at(i - 1), size)) + AND;
 		}
 	}
-
-	result = result + "(";
-
 	//result = "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
-	for (int k = 0; k < emptyFields->size(); k++) { //toggle of ¬
-		//result = result + "k: " + to_string(k) + " val[k]:"  + to_string( values->at(k-1)) + "\n";
-		if (values->at(emptyFields->at(k) -1 ) != 0) {
-			continue;
+	vector<int>* vars = new vector<int>();
+	for (int k = 0; k < possibleValues->size(); k++) { //toggle of ¬
+		for (int i = 0; i < emptyFields->size(); i++) { //value
+			vars->push_back(encode(emptyFields->at(i), possibleValues->at(k), size));
 		}
-
-		result = result + "(";
-
-		for (int i = 0; i < possibleValues->size(); i++) { //value
-			result = result + "(";
-			for (int j = 0; j < emptyFields->size(); j++) { //field index
-				if (k == j) {
-					result = result + encode(emptyFields->at(j), possibleValues->at(i), size);
-					//result = result + " ("  + to_string( j ) +  ", "  + to_string( i ) +  ") ";
-				} else {
-					result = result + NOT + encode(emptyFields->at(j), possibleValues->at(i), size);
-					//result = result + NOT + "("  + to_string( j ) +  ", "  + to_string( i ) +  ") ";
-				}
-				if (j != emptyFields->size()-1) {
-					result = result + AND + " ";
-				}
-			}
-
-			if (i == possibleValues->size() -1) {
-				result = result + ") " + "\n";
-			} else {
-				result = result + ") " + OR + "\n";
-
-			}
-		}
-		result = result + ")" + AND + "\n";
-
+		result += getExactlyOne(vars);
+		vars->clear();
 	}
 
-	result = result + "\n";
 
-	//	result = result + "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" + "\n";
-	for (int i = 1; i <= n; i++) { //i represents the field index
+
+result = result + "\n";
+
+//	result = result + "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" + "\n";
+for (int i = 1; i <= n; i++) { //i represents the field index
 ende:     /**
                  *0-top
                  *1-left
@@ -386,130 +370,110 @@ ende:     /**
                  *7-br
                  *
                  */
-		int neighbours[8] = {top(size, i, 1), left(size, i, 1),	right(size, i, 1), bottom(size, i, 1)};
+	int neighbours[8] = {top(size, i, 1), left(size, i, 1),	right(size, i, 1), bottom(size, i, 1)};
 
-		neighbours[4] = top(size, neighbours[1], 1);
-		neighbours[5] = top(size, neighbours[2], 1);
-		neighbours[6] = bottom(size, neighbours[1], 1);
-		neighbours[7] = bottom(size, neighbours[2], 1);
+	neighbours[4] = top(size, neighbours[1], 1);
+	neighbours[5] = top(size, neighbours[2], 1);
+	neighbours[6] = bottom(size, neighbours[1], 1);
+	neighbours[7] = bottom(size, neighbours[2], 1);
 
 
-		if(values->at(i-1) == 0) {
+	if(values->at(i-1) == 0) {
 
-			for (int j = 0; j < possibleValues->size(); j++) { // j stands for the value of the field i
+		for (int j = 0; j < possibleValues->size(); j++) { // j stands for the value of the field i
 hinfort:
-				if(possibleValues->at(j) < 2 || find(possibleValues->begin(), possibleValues->end(), possibleValues->at(j)-1) == possibleValues->end() ) {
-					continue;
-				}
-
-				//result = result + "( " + NOT + "("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
-
-
-				for(int k=0; k<8; k++) {
-					//	if(neighbours[k] != 0)
-					//	result += to_string(possibleValues->at(j)) + " ?= " + to_string(values->at(neighbours[k]-1)+1);
-					if(neighbours[k] != 0 && ((possibleValues->at(j) == values->at(neighbours[k] - 1)+1)
-					                         )) {
-						//result += "weg";
-						/* j++;
-						if(j>= possibleValues->size()) {
-							i++;
-							goto ende;
-						}
-						goto hinfort;*/
-					}
-				}
-
-
-
-				result = result + "( " + NOT + encode(i, possibleValues->at(j), size) + " ";
-				//	result += "(" + to_string(i) + ", " + to_string(possibleValues->at(j)) + ")";
-
-				for(int k=0; k<8; k++) {
-					int nk = neighbours[k];
-					if (find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()  ) {
-						result = result + OR + encode(nk, possibleValues->at(j) - 1, size) + " ";
-						//	result += "(" + to_string(nk) + ", " + to_string(possibleValues->at(j) -1) + ")";
-
-					}
-
-
-				}
-				result = result + " )" + AND + "\n";
+			if(possibleValues->at(j) < 2 || find(possibleValues->begin(), possibleValues->end(), possibleValues->at(j)-1) == possibleValues->end() ) {
+				continue;
 			}
-		} else {
-			if(values->at(i-1) > 1 && find(possibleValues->begin(), possibleValues->end(), values->at(i-1)-1) != possibleValues->end() ) {
+
+			//result = result + "( " + NOT + "("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
 
 
-				result = result + "( ";
+			for(int k=0; k<8; k++) {
+				//	if(neighbours[k] != 0)
+				//	result += to_string(possibleValues->at(j)) + " ?= " + to_string(values->at(neighbours[k]-1)+1);
+				if(neighbours[k] != 0 && ((possibleValues->at(j) == values->at(neighbours[k] - 1)+1)
+				                         )) {
+					//result += "weg";
+					/* j++;
+					if(j>= possibleValues->size()) {
+						i++;
+						goto ende;
+					}
+					goto hinfort;*/
+				}
+			}
 
-				int tmp=0;
-				for(int k=0; k<8; k++) {
-					int nk=neighbours[k];
-					if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
-						if(tmp == 1) {
-							result = result + OR;
-						}
-						result += encode(nk, values->at(i-1)-1, size) + " ";
+
+
+			result = result + NOT + to_string(encode(i, possibleValues->at(j), size));
+			//	result += "(" + to_string(i) + ", " + to_string(possibleValues->at(j)) + ")";
+
+			for(int k=0; k<8; k++) {
+				int nk = neighbours[k];
+				if (find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()  ) {
+					result = result + OR + to_string(encode(nk, possibleValues->at(j) - 1, size));
+					//	result += "(" + to_string(nk) + ", " + to_string(possibleValues->at(j) -1) + ")";
+
+				}
+
+
+			}
+			result = result + AND;
+		}
+	} else {
+		if(values->at(i-1) > 1 && find(possibleValues->begin(), possibleValues->end(), values->at(i-1)-1) != possibleValues->end() ) {
+
+			int tmp=0;
+			for(int k=0; k<8; k++) {
+				int nk=neighbours[k];
+				if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
+					if(tmp == 1) {
+						result = result + OR;
+					}
+					result += to_string(encode(nk, values->at(i-1)-1, size));
 					//	result += "(" + to_string(nk) + ", " + to_string(values->at(i-1)-1) + ") ";
-						tmp=1;
-					}
-
+					tmp=1;
 				}
-				result = result + " )" + AND + "\n";
+
 			}
-
-			if(values->at(i-1) < n   && find(possibleValues->begin(), possibleValues->end(), values->at(i-1)+1) != possibleValues->end() ) {
-				result = result + "( ";
-
-				int tmp=0;
-				for(int k=0; k<8; k++) {
-					int nk=neighbours[k];
-					if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
-						if(tmp == 1) {
-							result = result + OR;
-						}
-						result += encode(nk, values->at(i-1)+1, size) + " ";
-						//result += "(" + to_string(nk) + ", " + to_string(values->at(i-1)+1) + ") ";
-						tmp=1;
-					}
-
-				}
-				result = result + " )" + AND + "\n";
-			}
+			result = result + AND;
 		}
 
+		if(values->at(i-1) < n   && find(possibleValues->begin(), possibleValues->end(), values->at(i-1)+1) != possibleValues->end() ) {
+
+			int tmp=0;
+			for(int k=0; k<8; k++) {
+				int nk=neighbours[k];
+				if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
+					if(tmp == 1) {
+						result = result + OR;
+					}
+					result += to_string(encode(nk, values->at(i-1)+1, size));
+					//result += "(" + to_string(nk) + ", " + to_string(values->at(i-1)+1) + ") ";
+					tmp=1;
+				}
+
+			}
+			result = result + AND + "\n";
+		}
 	}
+
+}
 
 
 //result = result + "\n" + "schritt 3: Nur 1 Zahl pro Feld" + "\n";
 
-	for (int i = 1; i <= n; i++) { //index of field
-		result = result + "(";
-		for (int j = 1; j <= n; j++) { //value of field
-			//result = result + "( ("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
-			result = result + "( " + encode(i, j, size);
-			for (int k = 1; k <= n; k++) { //value of other fields
-				if (k == j) {
-					continue;
-				}
-				//	result = result + AND + " " + NOT + "("  + to_string( i ) +  ", "  + to_string( k ) +  ") ";
-				result = result + AND + NOT + encode(i, k, size);
-			}
-			if (j == n) {
-				result = result + ") " + "\n";
-			} else {
-				result = result + ") " + OR + "\n";
-			}
-		}
-		if (i != n) {
-			result = result + ") " + AND + "\n";
-		} else {
-			result = result + ")";
-		}
+for(int i=0; i<emptyFields->size(); i++) {
+	for (int k=0; k<possibleValues->size(); k++) {
+	    vars->push_back(encode(emptyFields->at(i), possibleValues->at(k), size));
 	}
+	result += getExactlyOne(vars);
+	vars->clear();
+		
+}
 
-	return result + ");";
+return result;
 
 }
 
@@ -523,17 +487,15 @@ int main(int argc, char* argv[]) {
 	fillData(possibleValues, emptyFields, size, values);
 
 
-
-
 	ofstream outfile;
-	outfile.open ("out.txt");
+	outfile.open ("/tmp/inteamout.txt");
 
 	outfile << computeClauses(values, size, possibleValues, emptyFields);
 	outfile.close();
 
 	int n=size*size;
 	int newValues[n];
-	string result = exec( "cat out.txt | ./logic2cnf -j1 2> /dev/null");
+	string result = exec( "minisat /tmp/inteamout.txt /tmp/inteamresult.txt > /dev/null && cat /tmp/inteamresult.txt");
 
 	if(result == "") {
 		return 20;

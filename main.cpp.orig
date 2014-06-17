@@ -14,14 +14,41 @@
 using namespace std;
 
 extern const string XOR = "@";
-extern const string AND = ".";
-extern const string OR = "+";
+extern const string AND = "\n";
+extern const string OR = " ";
 extern const string NOT = "~";
 
 struct Field {
 	int x;
 	int y;
 };
+
+//a, b sind die nummern der felder/indizes
+int dist(int a, int b, int size){
+    int xa = ((a-1) % size)+1;
+    int ya = floor((a-1)/size)+1;
+    int xb = ((b-1) % size)+1;
+    int yb = floor((b-1) /size)+1;
+    
+    int xdif, ydif;
+    if (xa>xb) {xdif = xa-xb;} else xdif=xb-xa;
+    if (ya>yb) {ydif = ya-yb;} else ydif=yb-ya;
+    
+    if (xdif>ydif) return xdif;
+    else return ydif;
+}
+
+int max(int a, int b, int size, vector<int>* values){
+    int distance = dist(a,b,size);
+    int value_a = values->at(a);
+    int value_b = values->at(b);
+    if (value_a > value_b) {
+                return ceil((float)((value_a - value_b) - distance)/2);
+                }
+    else {
+         return ceil((float)((value_b - value_a) - distance)/2);
+         }
+}
 
 string exec(string cmd) {
 	FILE *in;
@@ -40,10 +67,9 @@ string exec(string cmd) {
 	return resultStream.str();
 }
 
-string encode(int index, int value, int size) {
-	int e = size * size * index + value;
-	return "a" + to_string(e);
-}
+int encode(int index, int value, int size) {
+	    return size * size * index + value;
+	}
 
 Field decode(int number, int size) {
 	int n = size * size;
@@ -294,53 +320,25 @@ string computeClauses(vector<int>* values, int size, vector<int>* possibleValues
 
 	string result;
 
-	result += "def ";
-	for (int i = size * size + 1; i <= size * size * size * size + size * size;
-	        i++) {
-		result += "a" + to_string(i) + " ";
-	}
-	result += ";";
-
 	for (int i = 1; i <= n; i++) {
 		if (values->at(i - 1) != 0) {
-			result = result + encode(i, values->at(i - 1), size) + AND + " ";
+			result = result + to_string(encode(i, values->at(i - 1), size)) + AND;
 		}
 	}
 
-	result = result + "(";
-
 	//result = "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
+	vector<int>* vars;
 	for (int k = 0; k < emptyFields->size(); k++) { //toggle of ¬
 		//result = result + "k: " + to_string(k) + " val[k]:"  + to_string( values->at(k-1)) + "\n";
 		if (values->at(emptyFields->at(k) -1 ) != 0) {
 			continue;
 		}
 
-		result = result + "(";
-
 		for (int i = 0; i < possibleValues->size(); i++) { //value
-			result = result + "(";
-			for (int j = 0; j < emptyFields->size(); j++) { //field index
-				if (k == j) {
-					result = result + encode(emptyFields->at(j), possibleValues->at(i), size);
-					//result = result + " ("  + to_string( j ) +  ", "  + to_string( i ) +  ") ";
-				} else {
-					result = result + NOT + encode(emptyFields->at(j), possibleValues->at(i), size);
-					//result = result + NOT + "("  + to_string( j ) +  ", "  + to_string( i ) +  ") ";
-				}
-				if (j != emptyFields->size()-1) {
-					result = result + AND + " ";
-				}
+					vars->push_back(encode(emptyFields->at(j), possibleValues->at(i), size))
 			}
 
-			if (i == possibleValues->size() -1) {
-				result = result + ") " + "\n";
-			} else {
-				result = result + ") " + OR + "\n";
-
-			}
 		}
-		result = result + ")" + AND + "\n";
 
 	}
 
@@ -382,8 +380,8 @@ hinfort:
 					//	if(neighbours[k] != 0)
 					//	result += to_string(possibleValues->at(j)) + " ?= " + to_string(values->at(neighbours[k]-1)+1);
 					if(neighbours[k] != 0 && ((possibleValues->at(j) == values->at(neighbours[k] - 1)+1)
-					                          )) {
-					    //result += "weg";
+					                         )) {
+						//result += "weg";
 						/* j++;
 						if(j>= possibleValues->size()) {
 							i++;
@@ -396,13 +394,13 @@ hinfort:
 
 
 				result = result + "( " + NOT + encode(i, possibleValues->at(j), size) + " ";
-			//	result += "(" + to_string(i) + ", " + to_string(possibleValues->at(j)) + ")";
+				//	result += "(" + to_string(i) + ", " + to_string(possibleValues->at(j)) + ")";
 
 				for(int k=0; k<8; k++) {
 					int nk = neighbours[k];
 					if (find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()  ) {
 						result = result + OR + encode(nk, possibleValues->at(j) - 1, size) + " ";
-					//	result += "(" + to_string(nk) + ", " + to_string(possibleValues->at(j) -1) + ")";
+						//	result += "(" + to_string(nk) + ", " + to_string(possibleValues->at(j) -1) + ")";
 
 					}
 
@@ -412,43 +410,43 @@ hinfort:
 			}
 		} else {
 			if(values->at(i-1) > 1 && find(possibleValues->begin(), possibleValues->end(), values->at(i-1)-1) != possibleValues->end() ) {
-					
-			
-			result = result + "( ";
 
-			int tmp=0;
-			for(int k=0; k<8; k++) {
-				int nk=neighbours[k];
-				if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
-					if(tmp == 1) {
-						result = result + OR;
+
+				result = result + "( ";
+
+				int tmp=0;
+				for(int k=0; k<8; k++) {
+					int nk=neighbours[k];
+					if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
+						if(tmp == 1) {
+							result = result + OR;
+						}
+						result += encode(nk, values->at(i-1)-1, size) + " ";
+					//	result += "(" + to_string(nk) + ", " + to_string(values->at(i-1)-1) + ") ";
+						tmp=1;
 					}
-					result += encode(nk, values->at(i-1)-1, size) + " ";
-					result += "(" + to_string(nk) + ", " + to_string(values->at(i-1)-1) + ") ";
-					tmp=1;
-				}
 
+				}
+				result = result + " )" + AND + "\n";
 			}
-			result = result + " )" + AND + "\n";
-			}
-			
+
 			if(values->at(i-1) < n   && find(possibleValues->begin(), possibleValues->end(), values->at(i-1)+1) != possibleValues->end() ) {
-			result = result + "( ";
+				result = result + "( ";
 
-			tmp=0;
-			for(int k=0; k<8; k++) {
-				int nk=neighbours[k];
-				if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
-					if(tmp == 1) {
-						result = result + OR;
+				int tmp=0;
+				for(int k=0; k<8; k++) {
+					int nk=neighbours[k];
+					if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
+						if(tmp == 1) {
+							result = result + OR;
+						}
+						result += encode(nk, values->at(i-1)+1, size) + " ";
+						//result += "(" + to_string(nk) + ", " + to_string(values->at(i-1)+1) + ") ";
+						tmp=1;
 					}
-					result += encode(nk, values->at(i-1)+1, size) + " ";
-					result += "(" + to_string(nk) + ", " + to_string(values->at(i-1)+1) + ") ";
-					tmp=1;
-				}
 
-			}
-			result = result + " )" + AND + "\n";
+				}
+				result = result + " )" + AND + "\n";
 			}
 		}
 
@@ -486,6 +484,21 @@ hinfort:
 
 }
 
+string getExactlyOne(vector<int>* vars) {
+	string result = to_string(vars->at(0));
+	for(int i=1; i<vars->size(); i++) {
+		result += OR + to_string(vars->at(i));
+	}
+
+	for(int i=0; i<vars->size(); i++) {
+		for(int j=i+1; j<vars->size(); j++) {
+		   result += AND + NOT + to_string(vars->at(i)) + OR + NOT + to_string(vars->at(j));
+		}
+	}
+	return result;
+}
+
+
 int main(int argc, char* argv[]) {
 	vector<int>* values = new vector<int>();
 	int size = parseHidoku(argv[1], values);
@@ -496,8 +509,14 @@ int main(int argc, char* argv[]) {
 	fillData(possibleValues, emptyFields, size, values);
 
 
+	vector<int>* vars = new vector<int>();
+	vars->push_back(1);
+	vars->push_back(2);
+	vars->push_back(3);
+	vars->push_back(4);
+	vars->push_back(5);
 
-
+	cout << getExactlyOne(vars);
 	ofstream outfile;
 	outfile.open ("out.txt");
 
