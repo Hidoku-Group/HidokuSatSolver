@@ -371,7 +371,9 @@ void drawBoard(int values[], int size) {
 		drawLine(linesize, '-');
 	}
 }
-int getNumberFromCode(istringstream* code) {
+
+/*int getNumberFromCode(istringstream* code) {
+>>>>>>> dd3dd9c1a369f14c9c130e11c9ec15a5c665c6b2
 	int result;
 	char c;
 	string number = "";
@@ -405,6 +407,31 @@ void parseSolution(string solution, int values[]) {
 
 		}
 	}
+}*/
+void deleteNumberFromStream(istringstream* code) {
+code->get();
+char c;
+do {
+code->get(c);
+} while(c != ' ');
+}      
+      
+void parseSolution(string solution, int values[]) {
+     istringstream sol(solution);
+     sol.ignore(4);
+     int number = 1;
+     char sign;
+     for (int j = 1; j <= size*size*size*size+size; j++) {
+         sol.get(sign);
+         if (sign != '-') {
+         Field cell = decode(number);
+         values[(cell.x-1)] = cell.y;
+         deleteNumberFromStream(&sol);
+         } else {
+         deleteNumberFromStream(&sol);
+         }
+     number++;
+     }
 }
 
 string getExactlyOne(vector<int>* vars) {
