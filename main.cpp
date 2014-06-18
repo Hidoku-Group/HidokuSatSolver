@@ -378,6 +378,7 @@ int parseSolution(string solution, int values[]) {
 	string line;
 	string number;
 	if(solFile.is_open()) {
+		getline(solFile, line);
 		if(line == "UNSAT") {
 			return 0;
 		}
