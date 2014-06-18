@@ -213,9 +213,9 @@ void getMaxRange(int a, int b, vector<int>* possibleValues) {
 */
 
 
-Field *encoding;
+Field* encoding;
+int* encodingReverse;
 int encodingCount = 0;
-int *encodingReverse;
 
 int encode(int index, int value) {
 	//if encoding contains already (index, value) return it
@@ -225,6 +225,7 @@ int encode(int index, int value) {
 		return tmp;
 	}
 	encodingReverse[index*size*size + value] = encodingCount;
+
 	Field f = {index, value};
 	encoding[encodingCount] = f;
 	cout << "(" << index << ", " << value << ") \t\t->" << encodingCount << endl;
@@ -630,6 +631,11 @@ int main(int argc, char* argv[]) {
 	encoding = new Field[size*size*size*size*size]();
 	encodingReverse = new int[size*size*size*size]();
 
+	for(int i=0; i<size*size; i++) {
+		for(int j=0; j<size*size; j++) {
+			cout << encodingReverse[i*size*size + j] + encoding[i+j].x + encoding[i+j].y;
+		}
+	}
 	fillData(possibleValues, emptyFields);
 
 
@@ -645,8 +651,13 @@ int main(int argc, char* argv[]) {
 
 	int res = parseSolution( "result.txt", newValues);
 
+	for(int i=0; i<size*size; i++) {
+		for(int j=0; j<size*size; j++) {
+			cout << encodingReverse[i*size*size + j] + encoding[i+j].x + encoding[i+j].y;
+		}
+	}
+
 	delete[] encoding;
-	delete[] encodingReverse;
 	if(res == 0) {
 		cout << "unsat";
 		return 20;
