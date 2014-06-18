@@ -356,15 +356,14 @@ void drawBoard(int values[], int size) {
 	}
 }
 
-/*int getNumberFromCode(istringstream* code) {
->>>>>>> dd3dd9c1a369f14c9c130e11c9ec15a5c665c6b2
+int getNumberFromCode(istringstream* code) {
 	int result;
 	char c;
 	string number = "";
 	code->get();
 	do {
 		code->get(c);
-//		cout << c;
+		cout << c;
 		if (c != ' ') {
 			number += c;
 		}
@@ -373,30 +372,51 @@ void drawBoard(int values[], int size) {
 	return result;
 }
 
-void parseSolution(string solution, int values[]) {
-	istringstream sol(solution);
-	sol.ignore(3);
-	int number = 0;
-	char sign;
-	for (int j = 1; j <= size*size; j++) {
-		for (int i = 1; i <= size * size; i++) {
-			sol.get(sign);
-			if (sign == ' ') {
-				Field cell = decode(getNumberFromCode(&sol));
-				values[(cell.x-1)] = cell.y;
-			} else {
-				getNumberFromCode(&sol);
 
-			}
-
+int parseSolution(string solution, int values[]) {
+	ifstream solFile(solution);
+	string line;
+	string number;
+	if(solFile.is_open()) {
+		if(line == "UNSAT") {
+			return 0;
 		}
+		bool skip = 0;
+		while(getline(solFile, line)) {
+			for(size_t i=0; i<line.size(); ++i) {
+				char c = line[i];
+
+				//new number read
+				if(c == ' ') {
+					skip = 0;
+					if(!number.empty()) {
+						Field cell = decode(atoi(number.c_str()));
+						values[(cell.x-1)] = cell.y;
+						number.clear();
+					}
+				} else //negative number, skip it!
+					if(c == '-') {
+						skip = 1;
+						i++;
+					} else {
+						if(skip == 0) {
+							number += c;
+						}
+					}
+			}
+		}
+		solFile.close();
 	}
-}*/
+}
+
+/*
+
 void deleteNumberFromStream(istringstream* code) {
 	code->get();
 	char c;
 	do {
 		code->get(c);
+		//cout << c << ", ";
 	} while(c != ' ');
 }
 
@@ -405,18 +425,25 @@ void parseSolution(string solution, int values[]) {
 	sol.ignore(4);
 	int number = 1;
 	char sign;
-	for (int j = 1; j <= size*size*size*size+size*size; j++) {
+
+	for(int i=1; i< size*size*size*size + size ; i++) {
 		sol.get(sign);
+		//cout << sign << ", ";
 		if (sign != '-') {
 			Field cell = decode(number);
+			cout << number << ", ";
 			values[(cell.x-1)] = cell.y;
 			deleteNumberFromStream(&sol);
 		} else {
+			cout << "-" << number << ", ";
 			deleteNumberFromStream(&sol);
 		}
 		number++;
 	}
 }
+*/
+
+
 
 string getExactlyOne(vector<int>* vars) {
 	string result = to_string(vars->at(0));
@@ -582,34 +609,31 @@ hinfort:
 int main(int argc, char* argv[]) {
 	parseHidoku(argv[1]);
 
-
 	vector<int>* possibleValues = new vector<int>();
 	vector<int>* emptyFields = new vector<int>();
 	fillData(possibleValues, emptyFields);
 
 
 	ofstream outfile;
-	outfile.open ("/tmp/inteamout.txt");
+	outfile.open ("out.txt");
 
 	outfile << computeClauses(possibleValues, emptyFields);
 	outfile.close();
 
 	int n=size*size;
 	int newValues[n];
-	system("minisat /tmp/inteamout.txt /tmp/inteamresult.txt > /tmp/inteamstat.txt");
+	system("minisat out.txt result.txt > stat.txt");
 
-	ifstream ifs("/tmp/inteamresult.txt");
-	string result( (istreambuf_iterator<char>(ifs) ), (istreambuf_iterator<char>()));
+	//ifstream ifs("result.txt");
 
-	if(result == "") {
+	//string result( (istreambuf_iterator<char>(ifs) ), (istreambuf_iterator<char>()));
+
+	int res = parseSolution( "result.txt", newValues);
+	if(res == 0) {
 		cout << "unsat";
 		return 20;
 	}
-	parseSolution( result, newValues);
 
-	for(int i=0; i<n; i++) {
-		cout << newValues[i] << ", ";
-	}
 	drawBoard(newValues, size);
 	return 10;
 }
