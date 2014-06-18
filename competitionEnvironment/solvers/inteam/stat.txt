@@ -1,11 +1,11 @@
 WARNING: for repeatability, setting FPU to use double precision
 ============================[ Problem Statistics ]=============================
 |                                                                             |
-|  Number of variables:          2425                                         |
-|  Number of clauses:           24150                                         |
-|  Parse time:                   0.01 s                                       |
-|  Eliminated clauses:           0.01 Mb                                      |
-|  Simplification time:          0.02 s                                       |
+|  Number of variables:            90                                         |
+|  Number of clauses:             105                                         |
+|  Parse time:                   0.00 s                                       |
+|  Eliminated clauses:           0.00 Mb                                      |
+|  Simplification time:          0.00 s                                       |
 |                                                                             |
 ============================[ Search Statistics ]==============================
 | Conflicts |          ORIGINAL         |          LEARNT          | Progress |
@@ -13,11 +13,11 @@ WARNING: for repeatability, setting FPU to use double precision
 ===============================================================================
 ===============================================================================
 restarts              : 1
-conflicts             : 42             (1800 /sec)
-decisions             : 267            (0.00 % random) (11443 /sec)
-propagations          : 5567           (238589 /sec)
-conflict literals     : 341            (8.33 % deleted)
-Memory used           : 22.82 MB
-CPU time              : 0.023333 s
+conflicts             : 0              (-nan /sec)
+decisions             : 1              (0.00 % random) (inf /sec)
+propagations          : 21             (inf /sec)
+conflict literals     : 0              (-nan % deleted)
+Memory used           : 20.74 MB
+CPU time              : 0 s
 
 SATISFIABLE
