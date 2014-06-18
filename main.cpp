@@ -212,16 +212,29 @@ void getMaxRange(int a, int b, vector<int>* possibleValues) {
 }
 */
 
+
+Field *encoding;
+int encodingCount = 0;
+int *encodingReverse;
+
 int encode(int index, int value) {
-	return size * size * index + value;
+	//if encoding contains already (index, value) return it
+	int tmp = encodingReverse[index*size*size+value];
+	if(tmp != 0) {
+		cout << "gefunden: (" << index << ", " << value << ") \t\t->" << tmp << endl;
+		return tmp;
+	}
+	encodingReverse[index*size*size + value] = encodingCount;
+	Field f = {index, value};
+	encoding[encodingCount] = f;
+	cout << "(" << index << ", " << value << ") \t\t->" << encodingCount << endl;
+	encodingCount++;
+
+	return encodingCount-1;
 }
 
 Field decode(int number) {
-	int n = size * size;
-	int newValue = ((number-1) % (n)) +1;
-	int newNumber = floor((number-1) / n);
-	Field f = { newNumber, newValue };
-	return f;
+	return encoding[number];
 }
 
 //the vector need to have the first element on position with index 1 -> write 0 in index 0
@@ -467,7 +480,7 @@ string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields) {
 
 	for (int i = 1; i <= n; i++) {
 		if (values.at(i - 1) != 0) {
-			result = result + to_string(encode(i, values.at(i - 1))) + AND;
+			result += to_string(encode(i, values.at(i - 1))) + AND;
 		}
 	}
 	//result = "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
@@ -485,7 +498,7 @@ string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields) {
 
 
 
-	result = result + "\n";
+	result += "\n";
 
 //	result = result + "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" + "\n";
 	for (int i = 1; i <= n; i++) { //i represents the field index
@@ -536,30 +549,32 @@ hinfort:
 
 
 
-				result = result + NOT + to_string(encode(i, possibleValues->at(j)));
+				result += NOT + to_string(encode(i, possibleValues->at(j)));
 				//	result += "(" + to_string(i) + ", " + to_string(possibleValues->at(j)) + ")";
 
+				int nk;
+
 				for(int k=0; k<8; k++) {
-					int nk = neighbours[k];
+					nk = neighbours[k];
 					if (find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()  ) {
-						result = result + OR + to_string(encode(nk, possibleValues->at(j) - 1));
+						result += OR + to_string(encode(nk, possibleValues->at(j) - 1));
 						//	result += "(" + to_string(nk) + ", " + to_string(possibleValues->at(j) -1) + ")";
 
 					}
 
 
 				}
-				result = result + AND;
+				result += AND;
 			}
 		} else {
 			if(values.at(i-1) > 1 && find(possibleValues->begin(), possibleValues->end(), values.at(i-1)-1) != possibleValues->end() ) {
 
-				int tmp=0;
+				int tmp=0, nk;
 				for(int k=0; k<8; k++) {
-					int nk=neighbours[k];
+					nk=neighbours[k];
 					if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
 						if(tmp == 1) {
-							result = result + OR;
+							result += OR;
 						}
 						result += to_string(encode(nk, values.at(i-1)-1));
 						//	result += "(" + to_string(nk) + ", " + to_string(values.at(i-1)-1) + ") ";
@@ -567,17 +582,17 @@ hinfort:
 					}
 
 				}
-				result = result + AND;
+				result += AND;
 			}
 
 			if(values.at(i-1) < n   && find(possibleValues->begin(), possibleValues->end(), values.at(i-1)+1) != possibleValues->end() ) {
 
-				int tmp=0;
+				int tmp=0, nk;
 				for(int k=0; k<8; k++) {
-					int nk=neighbours[k];
+					nk=neighbours[k];
 					if(nk != 0 && find(emptyFields->begin(), emptyFields->end(), nk) != emptyFields->end()) {
 						if(tmp == 1) {
-							result = result + OR;
+							result += OR;
 						}
 						result += to_string(encode(nk, values.at(i-1)+1));
 						//result += "(" + to_string(nk) + ", " + to_string(values.at(i-1)+1) + ") ";
@@ -585,7 +600,7 @@ hinfort:
 					}
 
 				}
-				result = result + AND + "\n";
+				result += AND + "\n";
 			}
 		}
 
@@ -612,6 +627,9 @@ int main(int argc, char* argv[]) {
 
 	vector<int>* possibleValues = new vector<int>();
 	vector<int>* emptyFields = new vector<int>();
+	encoding = new Field[size*size*size*size*size]();
+	encodingReverse = new int[size*size*size*size]();
+
 	fillData(possibleValues, emptyFields);
 
 
@@ -625,11 +643,10 @@ int main(int argc, char* argv[]) {
 	int newValues[n];
 	system("minisat out.txt result.txt > stat.txt");
 
-	//ifstream ifs("result.txt");
-
-	//string result( (istreambuf_iterator<char>(ifs) ), (istreambuf_iterator<char>()));
-
 	int res = parseSolution( "result.txt", newValues);
+
+	delete[] encoding;
+	delete[] encodingReverse;
 	if(res == 0) {
 		cout << "unsat";
 		return 20;
