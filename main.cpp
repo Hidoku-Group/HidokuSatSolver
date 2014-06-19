@@ -628,12 +628,12 @@ int main(int argc, char* argv[]) {
 
 	vector<int>* possibleValues = new vector<int>();
 	vector<int>* emptyFields = new vector<int>();
-	encoding = new Field[size*size*size*size*size]();
-	encodingReverse = new int[size*size*size*size]();
+	encoding = new Field[size*size*size*size]();
+	encodingReverse = new int[size*size*size*size*size]();
 
 	for(int i=0; i<size*size; i++) {
 		for(int j=0; j<size*size; j++) {
-			cout << encodingReverse[i*size*size + j] + encoding[i+j].x + encoding[i+j].y;
+			cout << encodingReverse[i*size*size + j] << encoding[i+j].x << encoding[i+j].y;
 		}
 	}
 	fillData(possibleValues, emptyFields);
