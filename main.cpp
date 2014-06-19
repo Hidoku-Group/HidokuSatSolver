@@ -215,13 +215,12 @@ void getMaxRange(int a, int b, vector<int>* possibleValues) {
 
 Field* encoding;
 int* encodingReverse;
-int encodingCount = 0;
+int encodingCount = 1;
 
 int encode(int index, int value) {
 	//if encoding contains already (index, value) return it
 	int tmp = encodingReverse[index*size*size+value];
 	if(tmp != 0) {
-		cout << "gefunden: (" << index << ", " << value << ") \t\t->" << tmp << endl;
 		return tmp;
 	}
 	encodingReverse[index*size*size + value] = encodingCount;
@@ -235,6 +234,7 @@ int encode(int index, int value) {
 }
 
 Field decode(int number) {
+	cout <<number << "\t\t-> (" << encoding[number].x << ", " << encoding[number].y << ")" << endl;
 	return encoding[number];
 }
 
@@ -631,18 +631,17 @@ int main(int argc, char* argv[]) {
 	encoding = new Field[size*size*size*size]();
 	encodingReverse = new int[size*size*size*size*size]();
 
-	for(int i=0; i<size*size; i++) {
-		for(int j=0; j<size*size; j++) {
-			cout << encodingReverse[i*size*size + j] << encoding[i+j].x << encoding[i+j].y;
-		}
-	}
 	fillData(possibleValues, emptyFields);
-
+for(int i=0; i<values.size(); i++) {
+	if(values.at(i) == 0) 
+		continue;
+	cout << "(" << i+1 << ", " << values.at(i) << ")" << endl;
+}
 
 	ofstream outfile;
 	outfile.open ("out.txt");
 
-	outfile << computeClauses(possibleValues, emptyFields);
+	outfile << "c cnf " << encodingCount << " 11 \n" << computeClauses(possibleValues, emptyFields);
 	outfile.close();
 
 	int n=size*size;
@@ -651,13 +650,11 @@ int main(int argc, char* argv[]) {
 
 	int res = parseSolution( "result.txt", newValues);
 
-	for(int i=0; i<size*size; i++) {
-		for(int j=0; j<size*size; j++) {
-			cout << encodingReverse[i*size*size + j] + encoding[i+j].x + encoding[i+j].y;
-		}
-	}
 
 	delete[] encoding;
+	delete[] encodingReverse;
+
+
 	if(res == 0) {
 		cout << "unsat";
 		return 20;
