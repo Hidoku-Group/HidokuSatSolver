@@ -173,8 +173,6 @@ int topM(int from, int steps) {
 
 int bottomM(int from, int steps) {
 	int bottom = from + steps * size;
-	cout << "from: " << from << " steps: " << steps <<endl;
-	cout << "bottom: " << bottom << endl;
 	if (bottom <= size * size) {
 		return bottom;
 	}
@@ -212,15 +210,10 @@ int dist(int a, int b) {
 //       2
 int max(int a, int b) {
 	int distance = dist(a, b);
-	cout << "dist: " << distance << endl;
 	int valueA = values.at(a-1);
 	int valueB = values.at(b-1);
 
-	cout << "valA: " << valueA <<endl;
-	cout << "valB: " << valueB <<endl;
-
 	if (valueA > valueB) {
-		cout << "max:" << floor((float) ((valueA - valueB) - distance) / 2) << endl;
 		return floor((float) ((valueA - valueB) - distance) / 2);
 
 	} else {
@@ -237,16 +230,12 @@ void getRectangle(int a, int b, vector<int>*possibleValues, int order) {
 	int xb = getXPos(b);
 	int yb = getYPos(b);
 
-	cout << "i a: " << a << "(x,y): (" << xa << ", " << ya << ") convertToIndex: " << convertXYToIndex(xa, ya)<<endl;
-	cout << "i b: " << a << "(x,y): (" << xb << ", " << yb << ") convertToIndex: " << convertXYToIndex(xb, yb)<<endl<<endl;
-
 	int index;
 	if(order == 0) {
-			for(int j=ya; j<=yb; j++) {
-		for(int i=xa; i<=xb; i++) {
+		for(int j=ya; j<=yb; j++) {
+			for(int i=xa; i<=xb; i++) {
 				index = convertXYToIndex(i, j);
 				if(values.at(index-1) == 0) {
-					cout << "("<< j << ", " << i << ")"<<endl;
 					possibleValues->push_back(index);
 				}
 			}
@@ -256,7 +245,6 @@ void getRectangle(int a, int b, vector<int>*possibleValues, int order) {
 			for(int j=yb; j<=ya; j++) {
 				index = convertXYToIndex(i, j);
 				if(values.at(index-1) == 0) {
-					cout << "("<< j << ", " << i << ")"<<endl;
 					possibleValues->push_back(index);
 				}
 
@@ -272,10 +260,6 @@ void getMaxRange(int a, int b, vector<int>* possibleValues) {
 	int xb = getXPos(b);
 	int yb = getYPos(b);
 	int m = max(a, b);
-	cout << a << ":(" << xa << ", " << ya << ") bis ";
-	cout << b << ":(" << xb << ", " << yb << ") \n";
-	cout << "max: " << m<< endl;
-
 
 	int cornerA;
 	int cornerB;
@@ -284,12 +268,8 @@ void getMaxRange(int a, int b, vector<int>* possibleValues) {
 		//a links oben
 		if(ya <= yb) {
 			cornerA = topM(leftM(a, m), m);
-			cout << "ecke a " << cornerA << endl;
 
 			cornerB = bottomM(rightM(b,m), m);
-			cout << "righ(b): " << rightM(b,m) <<endl;
-			cout << "bottem(b): " <<bottomM(b,m) <<endl;
-			cout << " ecke b " << cornerB << endl;
 			getRectangle(cornerA, cornerB, possibleValues, 0);
 		} else { //a links unten
 			cornerA = bottomM(leftM(a, m), m);
@@ -529,93 +509,58 @@ int parseSolution(string solution, int values[]) {
 	}
 }
 
-/*
-
- void deleteNumberFromStream(istringstream* code) {
- code->get();
- char c;
- do {
- code->get(c);
- //cout << c << ", ";
- } while(c != ' ');
- }
-
- void parseSolution(string solution, int values[]) {
- istringstream sol(solution);
- sol.ignore(4);
- int number = 1;
- char sign;
-
- for(int i=1; i< size*size*size*size + size ; i++) {
- sol.get(sign);
- //cout << sign << ", ";
- if (sign != '-') {
- Field cell = decode(number);
- cout << number << ", ";
- values[(cell.x-1)] = cell.y;
- deleteNumberFromStream(&sol);
- } else {
- cout << "-" << number << ", ";
- deleteNumberFromStream(&sol);
- }
- number++;
- }
- }
- */
-
-string getExactlyOne(vector<int>* vars) {
-	string result = to_string(vars->at(0));
-	for (int i = 1; i < vars->size(); i++) {
-		result += OR + to_string(vars->at(i));
-	}
-
-	for (int i = 0; i < vars->size(); i++) {
+string getAtMostOne(vector<int>*vars) {
+for (int i = 0; i < vars->size(); i++) {
 		for (int j = i + 1; j < vars->size(); j++) {
 			result += AND() + NOT + to_string(vars->at(i)) + OR + NOT
 			          + to_string(vars->at(j));
 		}
 	}
 	return result + AND();
+
 }
 
-string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields) {
+string getExactlyOne(vector<int>* vars) {
+	Field a = decode(vars->at(0));
+	string result = to_string(vars->at(0));
+	result += ": (" + to_string(a.x) + ", " + to_string(a.y) + ") ";
+	for (int i = 1; i < vars->size(); i++) {
+		a = decode(vars->at(i));
+
+		result += OR + to_string(vars->at(i));
+		result += ": (" + to_string(a.x) + ", " + to_string(a.y) + ") ";
+	}
+
+	}
+
+string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields, vector<Field>*sortedValues) {
+	//a, b für getMaxRange holen
+	//b-a für possibleValues nehmen
+	//range als emptyFields nehmen
+	//
+	//
+
 	int n = size * size;
-
 	string result;
-
 	for (int i = 1; i <= n; i++) {
 		if (values.at(i - 1) != 0) {
 			result += to_string(encode(i, values.at(i - 1))) + AND();
 		}
 	}
-	//result = "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
-	vector<int>* vars = new vector<int>();
-
-	//nach sortieren wird diese for schleife nicht von k=0 bis possibleValues->size() gehen, sondern in einzelnen
-	//schritten von a bis b, und so weiter
-	for (int k = 0; k < possibleValues->size(); k++) { //toggle of ¬
-		for (int i = 0; i < emptyFields->size(); i++) { //value
-			vars->push_back(encode(emptyFields->at(i), possibleValues->at(k)));
-		}
-		result += getExactlyOne(vars);
-		vars->clear();
-	}
-
-	result += "\n";
 
 //	result = result + "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" + "\n";
 	for (int i = 1; i <= n; i++) { //i represents the field index
-ende: /**
-		 *0-top
-		 *1-left
-		 *2-right
-		 *3-bottom
-		 *4-tl
-		 *5-tr
-		 *6-bl
-		 *7-br
-		 *
-		 */
+		/**
+			 *0-top
+			 *1-left
+			 *2-right
+			 *3-bottom
+			 *4-tl
+			 *5-tr
+			 *6-bl
+			 *7-br
+			 *
+			 */
 		int neighbours[8] = { top(i, 1), left(i, 1), right(i, 1), bottom(i, 1) };
 
 		neighbours[4] = top(neighbours[1], 1);
@@ -626,7 +571,6 @@ ende: /**
 		if (values.at(i - 1) == 0) {
 
 			for (int j = 0; j < possibleValues->size(); j++) { // j stands for the value of the field i
-hinfort:
 				if (possibleValues->at(j) < 2
 				        || find(possibleValues->begin(), possibleValues->end(),
 				                possibleValues->at(j) - 1)
@@ -719,49 +663,90 @@ hinfort:
 
 	}
 
-//result = result + "\n" + "schritt 3: Nur 1 Zahl pro Feld" + "\n";
 
-	for (int i = 0; i < emptyFields->size(); i++) {
-		for (int k = 0; k < possibleValues->size(); k++) {
-			vars->push_back(encode(emptyFields->at(i), possibleValues->at(k)));
+
+	Field a,b;
+	vector<int>* vars = new vector<int>();
+	for(int i=0; i<sortedValues->size()-1; i++) {
+		a=sortedValues->at(i);
+		b=sortedValues->at(i+1);
+
+		if(a.y+1 == b.y) {
+			continue;
 		}
-		result += getExactlyOne(vars);
-		vars->clear();
+		cout << "a: " << a.y << " b: " << b.y << endl;
+		emptyFields->clear();
+		getMaxRange(a.x, b.x, emptyFields);
 
+		possibleValues->clear();
+
+		for(int i=a.y+1; i<b.y; i++) {
+			possibleValues->push_back(i);
+		}
+		//result = "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
+
+		//nach sortieren wird diese for schleife nicht von k=0 bis possibleValues->size() gehen, sondern in einzelnen
+		//schritten von a bis b, und so weiter
+		for (int k = 0; k < possibleValues->size(); k++) { //toggle of ¬
+			for (int i = 0; i < emptyFields->size(); i++) { //value
+				vars->push_back(encode(emptyFields->at(i), possibleValues->at(k)));
+			}
+			result += getExactlyOne(vars);
+			vars->clear();
+		}
+
+		result += "\n";
+
+		//if just one value is possible it should be clear that step 3 is nonsense
+		if(possibleValues->size() > 1) {
+//result = result + "\n" + "schritt 3: Nur 1 Zahl pro Feld" + "\n";
+			cout << "empty"<<endl ;
+			for(int i=0; i<emptyFields->size(); i++ ) {
+				cout << "(" << i << ", " << emptyFields->at(i) << ")" << endl;
+			}
+			cout << "poss"<< endl;
+			for(int i=0; i<possibleValues->size(); i++ ) {
+				cout << "(" << i << ", " << possibleValues->at(i) << ")" << endl;
+			}
+
+
+			for (int i = 0; i < emptyFields->size(); i++) {
+				for (int k = 0; k < possibleValues->size(); k++) {
+					vars->push_back(encode(emptyFields->at(i), possibleValues->at(k)));
+				}
+				result += getExactlyOne(vars);
+				vars->clear();
+
+			}
+		}
 	}
-
 	return result;
 
+}
+
+
+bool compareFields (Field i,Field j) {
+	return (i.y < j.y);
 }
 
 int main(int argc, char* argv[]) {
 	parseHidoku(argv[1]);
 
-	vector<int>* range = new vector<int>();
-	int a,b;
+
+	//sort values
+	vector<Field>* sortedValues = new vector<Field>();
+
+	int tmp;
 	for(int i=0; i<values.size(); i++) {
-		if(values.at(i) == 0) {
+		tmp = values.at(i);
+		if(tmp == 0) {
 			continue;
 		}
-		a = i+1;
-		break;
-	}
-	for(int i=a; i<values.size(); i++) {
-		if(values.at(i) == 0) {
-			continue;
-		}
-		b = i+1;
-		break;
+		Field x = {i+1, tmp};
+		sortedValues->push_back(x);
 	}
 
-	getMaxRange(a,b, range);
-
-	for(int i=0; i<range->size(); i++) {
-		cout << range->at(i) << ", ";
-	}
-
-
-
+	sort (sortedValues->begin(), sortedValues->end(), compareFields);
 
 	vector<int>* possibleValues = new vector<int>();
 	vector<int>* emptyFields = new vector<int>();
@@ -774,7 +759,7 @@ int main(int argc, char* argv[]) {
 	outfile.open("out.txt");
 
 	outfile << "p cnf " << encodingCount - 1 << " " << andCtr << " \n"
-	        << computeClauses(possibleValues, emptyFields);
+	        << computeClauses(possibleValues, emptyFields, sortedValues);
 	outfile.close();
 
 	int n = size * size;
