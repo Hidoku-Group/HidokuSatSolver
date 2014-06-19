@@ -146,12 +146,17 @@ int dist(int a, int b) {
 //       2
 int max(int a, int b) {
 	int distance = dist(a, b);
-	int value_a = values.at(a);
-	int value_b = values.at(b);
-	if (value_a > value_b) {
-		return ceil((float) ((value_a - value_b) - distance) / 2);
+	cout << "dist: " << distance << endl;
+	int valueA = values.at(a-1);
+	int valueB = values.at(b-1);
+
+	cout << "valA: " << valueA <<endl;
+	cout << "valB: " << valueB <<endl;
+
+	if (valueA > valueB) {
+		return ceil((float) ((valueA - valueB) - distance) / 2);
 	} else {
-		return ceil((float) ((value_b - value_a) - distance) / 2);
+		return ceil((float) ((valueB - valueA) - distance) / 2);
 	}
 }
 
@@ -203,19 +208,34 @@ void getMaxRange(int a, int b, vector<int>* possibleValues) {
 	int m = max(a, b);
 	cout << a << ":(" << xa << ", " << ya << ") bis ";
 	cout << b << ":(" << xb << ", " << yb << ") \n";
+	cout << "max: " << m<< endl;
+
+
 	int cornerA;
 	int cornerB;
 	//a links
 	if(xa <= xb) {
 		//a links oben
 		if(ya <= yb) {
+			int l= left(a,m);
+			if(l== 0) {
+				l= a;
+			}
 			cout <<"lo";
-			cornerA = top(left(a, m), m);
+			cornerA = top(l, m);
 			if(cornerA == 0) {
 				cornerA = a;
 			}
 			cout << "ecke a " << cornerA << endl;
-			cornerB = bottom(right(b, m), m);
+
+
+			int r= right(b,m);
+			if(r == 0) {
+				r = b;
+			}
+			cout << "rechts: " << r << endl;
+			cornerB = bottom(r, m);
+			cout << "recunt: " << cornerB << endl;
 			if(cornerB == 0) {
 				cornerB = b;
 			}
