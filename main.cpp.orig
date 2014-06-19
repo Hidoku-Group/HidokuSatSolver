@@ -109,6 +109,10 @@ int bottom(int from, int steps) {
 	return 0;
 }
 
+
+
+
+
 int getXPos(int a) {
 	return ((a - 1) % size) + 1;
 }
@@ -117,7 +121,69 @@ int getYPos(int a) {
 	return floor((a - 1) / size) + 1;
 }
 
+
+
+
+int convertXYToIndex(int x, int y) {
+	return (y-1)*size + x ;
+}
+
+
+//////////////////////////////////////////////////////////i
+//
+//
+int leftM(int from, int steps) {
+	int mod = from % size;
+
+	//prevents from "overflow, which means that you can substract 3 from 7, get 4,
+	//and 4 would be left of 4, but not in the same row
+	if (mod > size) {
+		return convertXYToIndex(1, getYPos(from));
+	}
+	int left = from - steps;
+	if (left > from - mod) {
+		return left;
+	} else if (mod == 0) { //special case for the last entries in each row
+		int d = from / steps;
+		if (left > from - d * size) {
+			return left;
+		}
+	}
+	return convertXYToIndex(1, getYPos(from));
+}
+
+int rightM(int from, int steps) {
+	int right = from + steps, d = from / size;
+
+	if (from % size == 0) {
+		return convertXYToIndex(size, getYPos(from));
+	} else if (right <= (d + 1) * size) {
+		return right;
+	}
+	return convertXYToIndex(size, getYPos(from));
+}
+
+int topM(int from, int steps) {
+	int top = from - steps * size;
+	if (top > 0) {
+		return top;
+	}
+	return convertXYToIndex(getXPos(from), 1);
+}
+
+int bottomM(int from, int steps) {
+	int bottom = from + steps * size;
+	cout << "from: " << from << " steps: " << steps <<endl;
+	cout << "bottom: " << bottom << endl;
+	if (bottom <= size * size) {
+		return bottom;
+	}
+	return convertXYToIndex(getXPos(from), size);
+}
+
+
 //a, b sind die nummern der felder/indizes
+//returns biggest difference in x or y values
 int dist(int a, int b) {
 	int xa = getXPos(a);
 	int ya = getYPos(a);
@@ -134,7 +200,7 @@ int dist(int a, int b) {
 	} else
 		ydif = yb - ya;
 
-	if (xdif > ydif)
+	if (xdif < ydif)
 		return xdif;
 	else
 		return ydif;
@@ -146,20 +212,22 @@ int dist(int a, int b) {
 //       2
 int max(int a, int b) {
 	int distance = dist(a, b);
-	int value_a = values.at(a);
-	int value_b = values.at(b);
-	if (value_a > value_b) {
-		return ceil((float) ((value_a - value_b) - distance) / 2);
+	cout << "dist: " << distance << endl;
+	int valueA = values.at(a-1);
+	int valueB = values.at(b-1);
+
+	cout << "valA: " << valueA <<endl;
+	cout << "valB: " << valueB <<endl;
+
+	if (valueA > valueB) {
+		cout << "max:" << floor((float) ((valueA - valueB) - distance) / 2) << endl;
+		return floor((float) ((valueA - valueB) - distance) / 2);
+
 	} else {
-		return ceil((float) ((value_b - value_a) - distance) / 2);
+		return ceil((float) ((valueB - valueA) - distance) / 2);
 	}
 }
 
-
-
-int convertXYToIndex(int y, int x) {
-	return size*y-(size*x);
-}
 
 // order = 0: a tl, b br
 // order = 1: a bl, b tr
@@ -169,23 +237,26 @@ void getRectangle(int a, int b, vector<int>*possibleValues, int order) {
 	int xb = getXPos(b);
 	int yb = getYPos(b);
 
+	cout << "i a: " << a << "(x,y): (" << xa << ", " << ya << ") convertToIndex: " << convertXYToIndex(xa, ya)<<endl;
+	cout << "i b: " << a << "(x,y): (" << xb << ", " << yb << ") convertToIndex: " << convertXYToIndex(xb, yb)<<endl<<endl;
+
 	int index;
 	if(order == 0) {
-		for(int i=xa; i<xb; i++) {
-			cout << "(" << i;
-			for(int j=ya; j<yb; j++) {
-				cout << ", " << j << ")";
+			for(int j=ya; j<=yb; j++) {
+		for(int i=xa; i<=xb; i++) {
 				index = convertXYToIndex(i, j);
-				if(values.at(index-1) != 0) {
+				if(values.at(index-1) == 0) {
+					cout << "("<< j << ", " << i << ")"<<endl;
 					possibleValues->push_back(index);
 				}
 			}
 		}
 	} else if (order == 1) {
-		for(int i=xa; i<xb; i++) {
-			for(int j=yb; j<ya; j++) {
+		for(int i=xa; i<=xb; i++) {
+			for(int j=yb; j<=ya; j++) {
 				index = convertXYToIndex(i, j);
-				if(values.at(index-1) != 0) {
+				if(values.at(index-1) == 0) {
+					cout << "("<< j << ", " << i << ")"<<endl;
 					possibleValues->push_back(index);
 				}
 
@@ -203,55 +274,36 @@ void getMaxRange(int a, int b, vector<int>* possibleValues) {
 	int m = max(a, b);
 	cout << a << ":(" << xa << ", " << ya << ") bis ";
 	cout << b << ":(" << xb << ", " << yb << ") \n";
+	cout << "max: " << m<< endl;
+
+
 	int cornerA;
 	int cornerB;
 	//a links
 	if(xa <= xb) {
 		//a links oben
 		if(ya <= yb) {
-			cout <<"lo";
-			cornerA = top(left(a, m), m);
-			if(cornerA == 0) {
-				cornerA = a;
-			}
+			cornerA = topM(leftM(a, m), m);
 			cout << "ecke a " << cornerA << endl;
-			cornerB = bottom(right(b, m), m);
-			if(cornerB == 0) {
-				cornerB = b;
-			}
+
+			cornerB = bottomM(rightM(b,m), m);
+			cout << "righ(b): " << rightM(b,m) <<endl;
+			cout << "bottem(b): " <<bottomM(b,m) <<endl;
 			cout << " ecke b " << cornerB << endl;
 			getRectangle(cornerA, cornerB, possibleValues, 0);
 		} else { //a links unten
-			cornerA = bottom(left(a, m), m);
-			if(cornerA == 0) {
-				cornerA = a;
-			}
-			cornerB = top(right(b, m), m);
-			if(cornerB == 0) {
-				cornerB = b;
-			}
+			cornerA = bottomM(leftM(a, m), m);
+			cornerB = topM(rightM(b, m), m);
 			getRectangle(cornerA, cornerB, possibleValues, 1);
 		}
 	} else {//a rechts
 		if(ya<=yb) { //a rechts oben
-			cornerA = top(right(a, m), m);
-			if(cornerA == 0) {
-				cornerA = a;
-			}
-			cornerB = bottom(left(b, m), m);
-			if(cornerB == 0) {
-				cornerB = b;
-			}
+			cornerA = topM(rightM(a, m), m);
+			cornerB = bottomM(leftM(b, m), m);
 			getRectangle(cornerB, cornerA, possibleValues, 1);
 		} else { // a rechtes unten
-			cornerA = bottom(right(a, m), m);
-			if(cornerA == 0) {
-				cornerA = a;
-			}
-			cornerB = top(left(b, m), m);
-			if(cornerB == 0) {
-				cornerB = b;
-			}
+			cornerA = bottomM(rightM(a, m), m);
+			cornerB = topM(leftM(b, m), m);
 			getRectangle(cornerB, cornerA, possibleValues, 0);
 		}
 
@@ -301,8 +353,8 @@ void fillData(vector<int> * possibleValues, vector<int>* emptyFields) {
 		//if not empty create a Point and save it to values and remove it from possible values
 		else {
 			possibleValues->erase(
-					remove(possibleValues->begin(), possibleValues->end(),
-							value), possibleValues->end());
+			    remove(possibleValues->begin(), possibleValues->end(),
+			           value), possibleValues->end());
 			erasecounter++;
 		}
 	}
@@ -350,7 +402,7 @@ void parseHidoku(char* path) {
 				myfile.ignore(ignores);
 				lineIndex++;
 				count++;
-			//	cout << " " << number << " ";
+				//	cout << " " << number << " ";
 				break;
 			}
 			if (lineIndex == size) {
@@ -463,14 +515,14 @@ int parseSolution(string solution, int values[]) {
 						number.clear();
 					}
 				} else //negative number, skip it!
-				if (c == '-') {
-					skip = 1;
-					i++;
-				} else {
-					if (skip == 0) {
-						number += c;
+					if (c == '-') {
+						skip = 1;
+						i++;
+					} else {
+						if (skip == 0) {
+							number += c;
+						}
 					}
-				}
 			}
 		}
 		solFile.close();
@@ -520,7 +572,7 @@ string getExactlyOne(vector<int>* vars) {
 	for (int i = 0; i < vars->size(); i++) {
 		for (int j = i + 1; j < vars->size(); j++) {
 			result += AND() + NOT + to_string(vars->at(i)) + OR + NOT
-					+ to_string(vars->at(j));
+			          + to_string(vars->at(j));
 		}
 	}
 	return result + AND();
@@ -553,7 +605,7 @@ string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields) {
 
 //	result = result + "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" + "\n";
 	for (int i = 1; i <= n; i++) { //i represents the field index
-		ende: /**
+ende: /**
 		 *0-top
 		 *1-left
 		 *2-right
@@ -574,10 +626,11 @@ string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields) {
 		if (values.at(i - 1) == 0) {
 
 			for (int j = 0; j < possibleValues->size(); j++) { // j stands for the value of the field i
-				hinfort: if (possibleValues->at(j) < 2
-						|| find(possibleValues->begin(), possibleValues->end(),
-								possibleValues->at(j) - 1)
-								== possibleValues->end()) {
+hinfort:
+				if (possibleValues->at(j) < 2
+				        || find(possibleValues->begin(), possibleValues->end(),
+				                possibleValues->at(j) - 1)
+				        == possibleValues->end()) {
 					continue;
 				}
 
@@ -587,8 +640,8 @@ string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields) {
 					//	if(neighbours[k] != 0)
 					//	result += to_string(possibleValues->at(j)) + " ?= " + to_string(values.at(neighbours[k]-1)+1);
 					if (neighbours[k] != 0
-							&& ((possibleValues->at(j)
-									== values.at(neighbours[k] - 1) + 1))) {
+					        && ((possibleValues->at(j)
+					             == values.at(neighbours[k] - 1) + 1))) {
 						//result += "weg";
 						/* j++;
 						 if(j>= possibleValues->size()) {
@@ -607,10 +660,10 @@ string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields) {
 				for (int k = 0; k < 8; k++) {
 					nk = neighbours[k];
 					if (find(emptyFields->begin(), emptyFields->end(), nk)
-							!= emptyFields->end()) {
+					        != emptyFields->end()) {
 						result += OR
-								+ to_string(
-										encode(nk, possibleValues->at(j) - 1));
+						          + to_string(
+						              encode(nk, possibleValues->at(j) - 1));
 						//	result += "(" + to_string(nk) + ", " + to_string(possibleValues->at(j) -1) + ")";
 
 					}
@@ -620,15 +673,15 @@ string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields) {
 			}
 		} else {
 			if (values.at(i - 1) > 1
-					&& find(possibleValues->begin(), possibleValues->end(),
-							values.at(i - 1) - 1) != possibleValues->end()) {
+			        && find(possibleValues->begin(), possibleValues->end(),
+			                values.at(i - 1) - 1) != possibleValues->end()) {
 
 				int tmp = 0, nk;
 				for (int k = 0; k < 8; k++) {
 					nk = neighbours[k];
 					if (nk != 0
-							&& find(emptyFields->begin(), emptyFields->end(),
-									nk) != emptyFields->end()) {
+					        && find(emptyFields->begin(), emptyFields->end(),
+					                nk) != emptyFields->end()) {
 						if (tmp == 1) {
 							result += OR;
 						}
@@ -642,15 +695,15 @@ string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields) {
 			}
 
 			if (values.at(i - 1) < n
-					&& find(possibleValues->begin(), possibleValues->end(),
-							values.at(i - 1) + 1) != possibleValues->end()) {
+			        && find(possibleValues->begin(), possibleValues->end(),
+			                values.at(i - 1) + 1) != possibleValues->end()) {
 
 				int tmp = 0, nk;
 				for (int k = 0; k < 8; k++) {
 					nk = neighbours[k];
 					if (nk != 0
-							&& find(emptyFields->begin(), emptyFields->end(),
-									nk) != emptyFields->end()) {
+					        && find(emptyFields->begin(), emptyFields->end(),
+					                nk) != emptyFields->end()) {
 						if (tmp == 1) {
 							result += OR;
 						}
@@ -684,8 +737,24 @@ string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields) {
 int main(int argc, char* argv[]) {
 	parseHidoku(argv[1]);
 
-vector<int>* range = new vector<int>();
-	getMaxRange(1, 3, range);
+	vector<int>* range = new vector<int>();
+	int a,b;
+	for(int i=0; i<values.size(); i++) {
+		if(values.at(i) == 0) {
+			continue;
+		}
+		a = i+1;
+		break;
+	}
+	for(int i=a; i<values.size(); i++) {
+		if(values.at(i) == 0) {
+			continue;
+		}
+		b = i+1;
+		break;
+	}
+
+	getMaxRange(a,b, range);
 
 	for(int i=0; i<range->size(); i++) {
 		cout << range->at(i) << ", ";
@@ -705,7 +774,7 @@ vector<int>* range = new vector<int>();
 	outfile.open("out.txt");
 
 	outfile << "p cnf " << encodingCount - 1 << " " << andCtr << " \n"
-			<< computeClauses(possibleValues, emptyFields);
+	        << computeClauses(possibleValues, emptyFields);
 	outfile.close();
 
 	int n = size * size;

@@ -109,6 +109,10 @@ int bottom(int from, int steps) {
 	return 0;
 }
 
+
+
+
+
 int getXPos(int a) {
 	return ((a - 1) % size) + 1;
 }
@@ -117,7 +121,69 @@ int getYPos(int a) {
 	return floor((a - 1) / size) + 1;
 }
 
+
+
+
+int convertXYToIndex(int x, int y) {
+	return (y-1)*size + x ;
+}
+
+
+//////////////////////////////////////////////////////////i
+//
+//
+int leftM(int from, int steps) {
+	int mod = from % size;
+
+	//prevents from "overflow, which means that you can substract 3 from 7, get 4,
+	//and 4 would be left of 4, but not in the same row
+	if (mod > size) {
+		return convertXYToIndex(1, getYPos(from));
+	}
+	int left = from - steps;
+	if (left > from - mod) {
+		return left;
+	} else if (mod == 0) { //special case for the last entries in each row
+		int d = from / steps;
+		if (left > from - d * size) {
+			return left;
+		}
+	}
+	return convertXYToIndex(1, getYPos(from));
+}
+
+int rightM(int from, int steps) {
+	int right = from + steps, d = from / size;
+
+	if (from % size == 0) {
+		return convertXYToIndex(size, getYPos(from));
+	} else if (right <= (d + 1) * size) {
+		return right;
+	}
+	return convertXYToIndex(size, getYPos(from));
+}
+
+int topM(int from, int steps) {
+	int top = from - steps * size;
+	if (top > 0) {
+		return top;
+	}
+	return convertXYToIndex(getXPos(from), 1);
+}
+
+int bottomM(int from, int steps) {
+	int bottom = from + steps * size;
+	cout << "from: " << from << " steps: " << steps <<endl;
+	cout << "bottom: " << bottom << endl;
+	if (bottom <= size * size) {
+		return bottom;
+	}
+	return convertXYToIndex(getXPos(from), size);
+}
+
+
 //a, b sind die nummern der felder/indizes
+//returns biggest difference in x or y values
 int dist(int a, int b) {
 	int xa = getXPos(a);
 	int ya = getYPos(a);
@@ -134,7 +200,7 @@ int dist(int a, int b) {
 	} else
 		ydif = yb - ya;
 
-	if (xdif > ydif)
+	if (xdif < ydif)
 		return xdif;
 	else
 		return ydif;
@@ -154,17 +220,14 @@ int max(int a, int b) {
 	cout << "valB: " << valueB <<endl;
 
 	if (valueA > valueB) {
-		return ceil((float) ((valueA - valueB) - distance) / 2);
+		cout << "max:" << floor((float) ((valueA - valueB) - distance) / 2) << endl;
+		return floor((float) ((valueA - valueB) - distance) / 2);
+
 	} else {
 		return ceil((float) ((valueB - valueA) - distance) / 2);
 	}
 }
 
-
-
-int convertXYToIndex(int y, int x) {
-	return size*y-(size*x);
-}
 
 // order = 0: a tl, b br
 // order = 1: a bl, b tr
@@ -174,23 +237,26 @@ void getRectangle(int a, int b, vector<int>*possibleValues, int order) {
 	int xb = getXPos(b);
 	int yb = getYPos(b);
 
+	cout << "i a: " << a << "(x,y): (" << xa << ", " << ya << ") convertToIndex: " << convertXYToIndex(xa, ya)<<endl;
+	cout << "i b: " << a << "(x,y): (" << xb << ", " << yb << ") convertToIndex: " << convertXYToIndex(xb, yb)<<endl<<endl;
+
 	int index;
 	if(order == 0) {
-		for(int i=xa; i<xb; i++) {
-			cout << "(" << i;
-			for(int j=ya; j<yb; j++) {
-				cout << ", " << j << ")";
+		for(int j=ya; j<=yb; j++) {
+			for(int i=xa; i<=xb; i++) {
 				index = convertXYToIndex(i, j);
-				if(values.at(index-1) != 0) {
+				if(values.at(index-1) == 0) {
+					cout << "("<< j << ", " << i << ")"<<endl;
 					possibleValues->push_back(index);
 				}
 			}
 		}
 	} else if (order == 1) {
-		for(int i=xa; i<xb; i++) {
-			for(int j=yb; j<ya; j++) {
+		for(int i=xa; i<=xb; i++) {
+			for(int j=yb; j<=ya; j++) {
 				index = convertXYToIndex(i, j);
-				if(values.at(index-1) != 0) {
+				if(values.at(index-1) == 0) {
+					cout << "("<< j << ", " << i << ")"<<endl;
 					possibleValues->push_back(index);
 				}
 
@@ -217,61 +283,27 @@ void getMaxRange(int a, int b, vector<int>* possibleValues) {
 	if(xa <= xb) {
 		//a links oben
 		if(ya <= yb) {
-			int l= left(a,m);
-			if(l== 0) {
-				l= a;
-			}
-			cout <<"lo";
-			cornerA = top(l, m);
-			if(cornerA == 0) {
-				cornerA = a;
-			}
+			cornerA = topM(leftM(a, m), m);
 			cout << "ecke a " << cornerA << endl;
 
-
-			int r= right(b,m);
-			if(r == 0) {
-				r = b;
-			}
-			cout << "rechts: " << r << endl;
-			cornerB = bottom(r, m);
-			cout << "recunt: " << cornerB << endl;
-			if(cornerB == 0) {
-				cornerB = b;
-			}
+			cornerB = bottomM(rightM(b,m), m);
+			cout << "righ(b): " << rightM(b,m) <<endl;
+			cout << "bottem(b): " <<bottomM(b,m) <<endl;
 			cout << " ecke b " << cornerB << endl;
 			getRectangle(cornerA, cornerB, possibleValues, 0);
 		} else { //a links unten
-			cornerA = bottom(left(a, m), m);
-			if(cornerA == 0) {
-				cornerA = a;
-			}
-			cornerB = top(right(b, m), m);
-			if(cornerB == 0) {
-				cornerB = b;
-			}
+			cornerA = bottomM(leftM(a, m), m);
+			cornerB = topM(rightM(b, m), m);
 			getRectangle(cornerA, cornerB, possibleValues, 1);
 		}
 	} else {//a rechts
 		if(ya<=yb) { //a rechts oben
-			cornerA = top(right(a, m), m);
-			if(cornerA == 0) {
-				cornerA = a;
-			}
-			cornerB = bottom(left(b, m), m);
-			if(cornerB == 0) {
-				cornerB = b;
-			}
+			cornerA = topM(rightM(a, m), m);
+			cornerB = bottomM(leftM(b, m), m);
 			getRectangle(cornerB, cornerA, possibleValues, 1);
 		} else { // a rechtes unten
-			cornerA = bottom(right(a, m), m);
-			if(cornerA == 0) {
-				cornerA = a;
-			}
-			cornerB = top(left(b, m), m);
-			if(cornerB == 0) {
-				cornerB = b;
-			}
+			cornerA = bottomM(rightM(a, m), m);
+			cornerB = topM(leftM(b, m), m);
 			getRectangle(cornerB, cornerA, possibleValues, 0);
 		}
 
@@ -497,39 +529,6 @@ int parseSolution(string solution, int values[]) {
 	}
 }
 
-/*
-
- void deleteNumberFromStream(istringstream* code) {
- code->get();
- char c;
- do {
- code->get(c);
- //cout << c << ", ";
- } while(c != ' ');
- }
-
- void parseSolution(string solution, int values[]) {
- istringstream sol(solution);
- sol.ignore(4);
- int number = 1;
- char sign;
-
- for(int i=1; i< size*size*size*size + size ; i++) {
- sol.get(sign);
- //cout << sign << ", ";
- if (sign != '-') {
- Field cell = decode(number);
- cout << number << ", ";
- values[(cell.x-1)] = cell.y;
- deleteNumberFromStream(&sol);
- } else {
- cout << "-" << number << ", ";
- deleteNumberFromStream(&sol);
- }
- number++;
- }
- }
- */
 
 string getExactlyOne(vector<int>* vars) {
 	string result = to_string(vars->at(0));
@@ -706,7 +705,23 @@ int main(int argc, char* argv[]) {
 	parseHidoku(argv[1]);
 
 	vector<int>* range = new vector<int>();
-	getMaxRange(1, 3, range);
+	int a,b;
+	for(int i=0; i<values.size(); i++) {
+		if(values.at(i) == 0) {
+			continue;
+		}
+		a = i+1;
+		break;
+	}
+	for(int i=a; i<values.size(); i++) {
+		if(values.at(i) == 0) {
+			continue;
+		}
+		b = i+1;
+		break;
+	}
+
+	getMaxRange(a,b, range);
 
 	for(int i=0; i<range->size(); i++) {
 		cout << range->at(i) << ", ";
