@@ -1,0 +1,5832 @@
+version: 1
+creator: callgrind-3.9.0
+pid: 17800
+cmd:  /usr/bin/minisat out.txt result.txt
+part: 1
+
+
+desc: I1 cache: 
+desc: D1 cache: 
+desc: LL cache: 
+
+desc: Timerange: Basic block 0 - 130470090
+desc: Trigger: Program termination
+
+positions: line
+events: Ir sysCount sysTime
+summary: 573293011 161 37
+
+
+ob=(4) /usr/lib/libm-2.19.so
+fl=(4) ???
+fn=(248) 0x0000000000005650
+0 17
+
+fn=(2226) 0x0000000000005580
+0 9
+
+fn=(180) ceil
+0 1
+cob=(3) /usr/lib/libc-2.19.so
+cfi=(3) ???
+cfn=(172) __get_cpu_features
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(1766) 0x0000000000010960
+0 48118
+
+fn=(184) __log_finite
+0 2
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+0 1
+0 8
+
+fn=(192) floor
+0 1
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(186) rintf
+0 1
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(196) __atan2_finite
+0 2
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+0 1
+0 8
+
+fn=(198) sin
+0 2
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+0 1
+0 8
+
+fn=(178) ceilf
+0 1
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(1674) pow
+0 4370
+cfn=(1678) 0x00000000000150b0
+calls=625 0 
+0 166207
+0 625
+0 9090
+
+fn=(160) __exp_finite
+0 2
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+cob=(1) /usr/lib/ld-2.19.so
+cfi=(1) ???
+cfn=(168) _dl_runtime_resolve
+calls=1 0 
+0 1446
+0 5
+0 8
+
+fn=(190) floorf
+0 1
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(1678)
+0 85650
+cfn=(1766)
+calls=575 0 
+0 47718
+0 32119
+cfn=(1766)
+calls=20 0 
+0 400
+0 320
+
+fn=(2214) 0x0000000000005610
+0 8
+cob=(3)
+cfi=(3)
+cfn=(2098) __cxa_finalize
+calls=1 0 
+0 220
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1356
+0 5
+0 1
+cfn=(2226)
+calls=1 0 
+0 9
+0 3
+
+fn=(174) cos
+0 2
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+0 1
+0 8
+
+fn=(182) __pow_finite
+0 2
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(176) rint
+0 1
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(194) __asin_finite
+0 2
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(188) __acos_finite
+0 2
+cob=(3)
+cfi=(3)
+cfn=(172)
+calls=1 0 
+0 5
+0 1
+0 5
+
+ob=(7) /usr/lib/libstdc++.so.6.0.20
+fl=(7) ???
+fn=(300) std::future_category()
+0 5
+cfn=(306) __cxa_guard_acquire
+calls=1 0 
+0 33
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 848
+0 5
+0 4
+cfn=(312) __cxa_guard_release
+calls=1 0 
+0 14
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 855
+0 5
+0 4
+cob=(3)
+cfi=(3)
+cfn=(318) __cxa_atexit
+calls=1 0 
+0 61
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1326
+0 5
+0 3
+
+fn=(378) 0x000000000005bcc0
+0 49
+
+fn=(2160) 0x000000000005c080
+0 8
+cob=(3)
+cfi=(3)
+cfn=(2098)
+calls=1 0 
+0 1177
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1356
+0 5
+0 1
+cfn=(2184) 0x000000000005bff0
+calls=1 0 
+0 9
+0 3
+
+fn=(2184)
+0 9
+
+fn=(306)
+0 66
+
+fn=(324) 0x000000000005bab0
+0 6
+
+fn=(2176) std::error_category::~error_category()
+0 3
+
+fn=(352) 0x000000000005bc00
+0 49
+
+fn=(284) 0x000000000005c0c0
+0 17
+
+fn=(292) 0x000000000005ba90
+0 2
+cfn=(300)
+calls=1 0 
+0 3168
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 860
+0 5
+0 4
+
+fn=(312)
+0 28
+
+fn=(326) 0x000000000005baf0
+0 73
+
+fn=(404) 0x000000000005bd80
+0 54
+
+fn=(2170) 0x00000000000ba990
+0 3
+cfn=(2176)
+calls=1 0 
+0 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 892
+0 5
+
+fn=(2178) 0x00000000000ba9c0
+0 3
+cfn=(2176)
+calls=1 0 
+0 1
+0 1
+
+fn=(406) 0x000000000005bfb0
+0 5
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+
+ob=(5) /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+fl=(5) ???
+fn=(2104) 0x00000000000005d0
+0 9
+
+fn=(2086) 0x0000000000000640
+0 8
+cob=(3)
+cfi=(3)
+cfn=(2098)
+calls=1 0 
+0 220
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 877
+0 5
+0 1
+cfn=(2104)
+calls=1 0 
+0 9
+0 3
+
+ob=(7)
+fl=(7)
+fn=(406)
+0 5
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+
+fn=(2180) 0x00000000000b9680
+0 3
+cfn=(2176)
+calls=1 0 
+0 1
+0 1
+
+ob=(5)
+fl=(5)
+fn=(222) 0x0000000000000680
+0 16
+
+ob=(2) ???
+fl=(2) ???
+fn=(2138) 0x0000000004c37394
+0 3
+
+fn=(2190) 0x000000000511a2ec
+0 3
+
+fn=(410) 0x0000000004e3e028
+0 6
+
+fn=(2158) 0x0000000004e4a8b0
+0 3
+
+fn=(2212) 0x0000000005373998
+0 3
+
+fn=(218) 0x0000000004a23570
+0 6
+
+fn=(256) 0x00000000053637c0
+0 6
+
+fn=(2084) 0x0000000000403724
+0 3
+
+fn=(2110) 0x0000000004a237f8
+0 3
+
+fn=(2232) 0x0000000005997aa4
+0 3
+
+fn=(244) 0x000000000592a390
+0 6
+
+fn=(422) 0x0000000004c28fc8
+0 6
+
+fn=(626) 0x0000000000401b28
+0 6
+
+fn=(280) 0x00000000050aaf98
+0 6
+
+ob=(10) /usr/bin/minisat
+fl=(10) ???
+fn=(616) 0x0000000000402c8a
+0 11
+cob=(3)
+cfi=(3)
+cfn=(622) (below main)
+calls=1 0 
+0 571755987 86 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1393
+0 5
+
+fn=(2078) 0x0000000000402cc0
+0 8
+
+fn=(646) 0x0000000000401e70
+0 4
+
+fn=(742) Minisat::BoolOption::parse(char const*)
+0 192
+
+fn=(1120) 0x0000000000402e60
+0 7560321
+cob=(8) /usr/lib/libz.so.1.2.8
+cfi=(8) ???
+cfn=(1000) gzread
+calls=3 0 
+0 267 2
+0 3
+0 2041420
+
+fn=(2074) 0x0000000000402d40
+0 5
+cfn=(2078)
+calls=1 0 
+0 8
+0 3
+
+fn=(2128) Minisat::vec<Minisat::Option*, int>::~vec()
+0 6
+cob=(3)
+cfi=(3)
+cfn=(810) free
+calls=1 0 
+0 119
+0 1
+
+fn=(532) Minisat::vec<Minisat::Option*, int>::push(Minisat::Option* const&)
+0 352
+cob=(3)
+cfi=(3)
+cfn=(460) realloc
+calls=2 0 
+0 270
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1251
+0 6
+0 10
+
+fn=(624) 0x00000000004036b0
+0 16
+cob=(2)
+cfi=(2)
+cfn=(626)
+calls=1 0 
+0 6
+0 7
+cfn=(634) 0x0000000000402d60
+calls=1 0 
+0 16
+0 4
+cfn=(646)
+calls=1 0 
+0 4
+0 14
+
+fn=(634)
+0 16
+
+fn=(656) 0x0000000000401e90
+0 15
+cob=(9) /usr/lib/libminisat.so.2.1.0
+cfi=(9) ???
+cfn=(662) Minisat::setUsageHelp(char const*)
+calls=1 0 
+0 3
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 914
+0 5
+0 1
+cob=(9)
+cfi=(9)
+cfn=(670) Minisat::setX86FPUPrecision()
+calls=1 0 
+0 1653 2
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 974
+0 5
+0 15
+cfn=(524) Minisat::Option::getOptionList()
+calls=1 0 
+0 11
+0 3
+cfn=(532)
+calls=1 0 
+0 20
+0 20
+cfn=(524)
+calls=1 0 
+0 11
+0 3
+cfn=(532)
+calls=1 0 
+0 20
+0 18
+cfn=(524)
+calls=1 0 
+0 11
+0 3
+cfn=(532)
+calls=1 0 
+0 20
+0 18
+cfn=(524)
+calls=1 0 
+0 11
+0 3
+cfn=(532)
+calls=1 0 
+0 177
+0 18
+cfn=(524)
+calls=1 0 
+0 11
+0 3
+cfn=(532)
+calls=1 0 
+0 20
+0 20
+cfn=(524)
+calls=1 0 
+0 11
+0 3
+cfn=(532)
+calls=1 0 
+0 20
+0 20
+cfn=(524)
+calls=1 0 
+0 11
+0 3
+cfn=(532)
+calls=1 0 
+0 20
+0 8
+cob=(9)
+cfi=(9)
+cfn=(736) Minisat::parseOptions(int&, char**, bool)
+calls=1 0 
+0 1696
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 959
+0 5
+0 2
+cob=(9)
+cfi=(9)
+cfn=(754) Minisat::SimpSolver::SimpSolver()
+calls=1 0 
+0 5826 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 884
+0 5
+0 1
+cfn=(816) 0x0000000000402df0
+calls=1 0 
+0 1308 1
+0 8
+cob=(9)
+cfi=(9)
+cfn=(836) Minisat::sigTerm(void (*)(int))
+calls=1 0 
+0 1705 3
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 854
+0 5
+0 12
+cob=(8)
+cfi=(8)
+cfn=(860) gzopen
+calls=1 0 
+0 7284 2
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 624
+0 5
+0 8
+cob=(3)
+cfi=(3)
+cfn=(676) puts
+calls=1 0 
+0 234
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1205
+0 5
+0 2
+cob=(3)
+cfi=(3)
+cfn=(676)
+calls=1 0 
+0 234
+0 1
+0 9
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=1 0 
+0 342
+0 1
+0 17
+cfn=(1120)
+calls=1 0 
+0 19
+0 163948
+cfn=(1120)
+calls=81974 0 
+0 2459705 2
+0 901723
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 119
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1206
+0 5
+0 2
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 612
+0 1
+0 2
+cob=(8)
+cfi=(8)
+cfn=(1374) gzclose
+calls=1 0 
+0 4668 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 631
+0 5
+0 10
+cob=(3)
+cfi=(3)
+cfn=(1438) printf
+calls=1 0 
+0 899
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1244
+0 5
+0 4
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=1 0 
+0 922
+0 1
+0 1
+cfn=(816)
+calls=1 0 
+0 24 1
+0 9
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=1 0 
+0 1651
+0 1
+0 2
+cob=(9)
+cfi=(9)
+cfn=(836)
+calls=1 0 
+0 474 3
+0 1
+0 3
+cob=(9)
+cfi=(9)
+cfn=(1478) Minisat::SimpSolver::eliminate(bool)
+calls=1 0 
+0 350494630 3 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1012
+0 5
+0 1
+cfn=(816)
+calls=1 0 
+0 24 1
+0 7
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=1 0 
+0 1501
+0 1
+0 2
+cob=(3)
+cfi=(3)
+cfn=(676)
+calls=1 0 
+0 234
+0 1
+0 573809
+cfn=(1144) 0x0000000000402ed0
+calls=81972 0 
+0 8749223 9
+0 349048
+cfn=(1144)
+calls=174524 0 
+0 18360765 6
+0 1825246
+cob=(9)
+cfi=(9)
+cfn=(1194) Minisat::SimpSolver::newVar(Minisat::lbool, bool)
+calls=2155 0 
+0 2233110 2
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1140
+0 2159
+0 2971225
+cfn=(796) Minisat::vec<Minisat::Lit, int>::capacity(int)
+calls=8 0 
+0 2810
+0 245935
+cob=(9)
+cfi=(9)
+cfn=(1282) Minisat::SimpSolver::addClause_(Minisat::vec<Minisat::Lit, int>&)
+calls=81973 0 
+0 70163242 29
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1319
+0 81977
+0 82074
+cfn=(1144)
+calls=1 0 
+0 125
+0 2
+cfn=(1144)
+calls=1 0 
+0 138
+0 7
+cob=(8)
+cfi=(8)
+cfn=(1000)
+calls=1 0 
+0 9056 2
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 616
+0 5
+0 12
+cob=(9)
+cfi=(9)
+cfn=(1870) Minisat::Solver::printStats() const
+calls=1 0 
+0 50290 8
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 982
+0 5
+0 2
+cob=(3)
+cfi=(3)
+cfn=(2002) putchar
+calls=1 0 
+0 41
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1243
+0 5
+0 14
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=1 0 
+0 210
+0 1
+0 15
+cob=(3)
+cfi=(3)
+cfn=(1974) fclose@@GLIBC_2.2.5
+calls=1 0 
+0 520 3
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1260
+0 5
+0 13
+cob=(3)
+cfi=(3)
+cfn=(2060) exit
+calls=1 0 
+0 13230 2
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1206
+0 5
+0 6
+cob=(9)
+cfi=(9)
+cfn=(1662) Minisat::SimpSolver::solve_(bool, bool)
+calls=1 0 
+0 109812426
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 982
+0 5
+0 6
+cob=(3)
+cfi=(3)
+cfn=(1410) fopen@@GLIBC_2.2.5
+calls=1 0 
+0 421 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1221
+0 5
+0 7
+cob=(3)
+cfi=(3)
+cfn=(2018) fwrite
+calls=1 0 
+0 326 2
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1243
+0 5
+0 81894
+cob=(3)
+cfi=(3)
+cfn=(2030) fprintf
+calls=2155 0 
+0 2060309 2
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1243
+0 2159
+0 8625
+cob=(3)
+cfi=(3)
+cfn=(2018)
+calls=1 0 
+0 133
+0 1
+0 3
+
+fn=(744) 0x0000000000403040
+0 8
+
+fn=(2124) Minisat::IntOption::~IntOption()
+0 7
+
+fn=(2126) Minisat::BoolOption::~BoolOption()
+0 5
+
+fn=(524)
+0 176
+
+fn=(740) Minisat::IntOption::parse(char const*)
+0 340
+
+fn=(796)
+0 14556
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=155 0 
+0 77509
+0 155
+0 4387
+
+fn=(816)
+0 21
+cob=(3)
+cfi=(3)
+cfn=(822) getrusage
+calls=3 0 
+0 15 3
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1280
+0 7
+0 33
+
+fn=(1144)
+0 1282490
+cfn=(1120)
+calls=256498 0 
+0 7142287
+0 15996766
+cob=(8)
+cfi=(8)
+cfn=(1000)
+calls=12 0 
+0 1308 12
+0 12
+0 2308564
+cob=(8)
+cfi=(8)
+cfn=(1000)
+calls=2 0 
+0 246 3
+0 2
+0 378576
+
+ob=(3)
+fl=(3)
+fn=(232) __init_misc
+0 12
+cfn=(234) rindex
+calls=1 0 
+0 54
+0 12
+
+fn=(318)
+0 192
+cfn=(320) __new_exitfn
+calls=24 0 
+0 1074
+0 336
+
+fn=(320)
+0 1074
+
+fn=(462) realloc_hook_ini
+0 11
+cfn=(464) ptmalloc_init.part.7
+calls=1 0 
+0 56354
+0 4
+cfn=(461) realloc'2
+calls=1 0 
+0 1066 2
+
+fn=(466) _dl_addr
+0 14
+cob=(1)
+cfi=(1)
+cfn=(38) rtld_lock_default_lock_recursive
+calls=1 0 
+0 2
+0 2
+cob=(1)
+cfi=(1)
+cfn=(470) _dl_find_dso_for_object
+calls=1 0 
+0 74
+0 1
+0 55950
+cob=(1)
+cfi=(1)
+cfn=(40) rtld_lock_default_unlock_recursive
+calls=1 0 
+0 2
+0 13
+
+fn=(696) _IO_do_write@@GLIBC_2.2.5
+0 32
+cfn=(2034) new_do_write
+calls=4 0 
+0 340 4
+0 24
+
+fn=(822)
+0 8
+0 0 4
+0 12
+
+fn=(1336) mremap_chunk
+0 87
+cfn=(1338) mremap
+calls=3 0 
+0 18 3
+0 86
+
+fn=(1438)
+0 410
+cfn=(920) vfprintf
+calls=14 0 
+0 53969
+0 44
+cfn=(920)
+calls=4 0 
+0 2593
+0 36
+
+fn=(1442) _itoa_word
+0 114078
+
+fn=(1456) isnan
+0 140
+
+fn=(1926) vfscanf
+0 24
+cfn=(1928) _IO_vfscanf
+calls=12 0 
+0 3179 3
+
+fn=(1928)
+0 2223
+cfn=(1940) _IO_sputbackc
+calls=1 0 
+0 14
+0 117
+cfn=(1940)
+calls=1 0 
+0 14
+0 18
+cfn=(1964) __strtol_internal
+calls=1 0 
+0 195
+0 151
+cfn=(1930) __uflow
+calls=1 0 
+0 207 3
+0 47
+cfn=(1940)
+calls=11 0 
+0 154
+0 39
+
+fn=(1954) getc
+0 7659
+
+fn=(1964)
+0 3
+cfn=(1966) ____strtol_l_internal
+calls=1 0 
+0 192
+
+fn=(2062) __run_exit_handlers
+0 9
+cfn=(2064) __call_tls_dtors
+calls=1 0 
+0 24
+0 309
+cfn=(2234) _IO_cleanup
+calls=1 0 
+0 395 1
+0 5
+cfn=(2244) _Exit
+calls=1 0 
+0 5 1
+0 8
+cob=(1)
+cfi=(1)
+cfn=(2070) _dl_fini
+calls=1 0 
+0 12470
+0 1
+
+fn=(152) gettimeofday
+0 55
+cfn=(148) _dl_vdso_vsym
+calls=1 0 
+0 6
+0 5
+
+fn=(234)
+0 54
+
+fn=(240) handle_intel
+0 44
+cfn=(242) intel_check_word
+calls=2 0 
+0 636
+0 14
+cfn=(242)
+calls=2 0 
+0 224
+0 40
+
+fn=(478) malloc_consolidate
+0 276333
+cfn=(480) malloc_init_state
+calls=1 0 
+0 648
+
+fn=(480)
+0 648
+
+fn=(686) _IO_file_doallocate
+0 33
+cfn=(688) _IO_file_stat
+calls=3 0 
+0 42 3
+0 54
+cfn=(692) mmap
+calls=3 0 
+0 18 3
+0 21
+cfn=(694) _IO_setb
+calls=3 0 
+0 57
+0 18
+
+fn=(692)
+0 27
+0 0 9
+0 27
+
+fn=(1102) memcpy@@GLIBC_2.14
+0 7
+
+fn=(1400) __close_nocancel
+0 6
+0 0 3
+0 9
+
+fn=(1412) __fopen_internal
+0 20
+cfn=(474) malloc
+calls=2 0 
+0 190
+0 2
+0 22
+cfn=(914) _IO_no_init
+calls=2 0 
+0 116
+0 8
+cfn=(1416) _IO_file_init@@GLIBC_2.2.5
+calls=2 0 
+0 172
+0 10
+cfn=(1420) _IO_file_fopen@@GLIBC_2.2.5
+calls=2 0 
+0 271 2
+0 18
+cfn=(1426) __fopen_maybe_mmap
+calls=2 0 
+0 8
+
+fn=(1444) _IO_padn
+0 1029
+cfn=(680) _IO_file_xsputn@@GLIBC_2.2.5
+calls=49 0 
+0 3261
+0 392
+
+fn=(1914) feof
+0 7884
+
+fn=(2002)
+0 41
+
+fn=(2236) _IO_flush_all_lockp
+0 35
+cfn=(682) _IO_file_overflow@@GLIBC_2.2.5
+calls=1 0 
+0 119 1
+0 60
+
+fn=(2240) _IO_default_setbuf
+0 8
+cfn=(2242) _IO_file_sync@@GLIBC_2.2.5
+calls=1 0 
+0 13
+0 21
+cfn=(694)
+calls=1 0 
+0 21
+0 1
+
+fn=(154) memcpy@GLIBC_2.2.5
+0 13
+
+fn=(236) __ctype_init
+0 16
+
+fn=(242)
+0 860
+
+fn=(464)
+0 24
+cfn=(472) __linkin_atfork
+calls=1 0 
+0 9
+0 257
+cfn=(466)
+calls=1 0 
+0 56058
+0 6
+
+fn=(682)
+0 146
+cfn=(696)
+calls=5 0 
+0 299 3
+0 4
+cfn=(684) _IO_doallocbuf
+calls=2 0 
+0 188 4
+0 12
+
+fn=(684)
+0 27
+cfn=(686)
+calls=3 0 
+0 243 6
+0 12
+
+fn=(694)
+0 172
+cfn=(1342) munmap
+calls=2 0 
+0 10 2
+0 8
+
+fn=(700) __GI_mempcpy
+0 123034
+
+fn=(844) sigaction
+0 24
+cfn=(846) __libc_sigaction
+calls=6 0 
+0 612 6
+
+fn=(846)
+0 330
+0 0 6
+0 282
+
+fn=(1420)
+0 93
+cfn=(1422) _IO_file_open
+calls=2 0 
+0 86 2
+0 12
+cfn=(1424) __GI_strstr
+calls=2 0 
+0 48
+0 32
+
+fn=(1440) read_int
+0 1011
+
+fn=(1974)
+0 32
+cfn=(1986) _IO_file_finish@@GLIBC_2.2.5
+calls=2 0 
+0 46
+0 22
+cfn=(810)
+calls=2 0 
+0 262
+0 2
+0 12
+cfn=(1976) _IO_un_link
+calls=2 0 
+0 162
+0 44
+cfn=(1980) _IO_file_close_it@@GLIBC_2.2.5
+calls=2 0 
+0 306 5
+0 22
+
+fn=(1986)
+0 16
+cfn=(1988) _IO_default_finish
+calls=2 0 
+0 30
+
+fn=(2064)
+0 5
+cob=(1)
+cfi=(1)
+cfn=(2068) __tls_get_addr
+calls=1 0 
+0 11
+0 1
+0 7
+
+fn=(2242)
+0 13
+
+fn=(2244)
+0 5
+
+fn=(146) time
+0 55
+cfn=(148)
+calls=1 0 
+0 6
+0 5
+
+fn=(150) strncasecmp
+0 6
+
+fn=(652) __sigsetjmp
+0 18
+cfn=(654) __sigjmp_save
+calls=1 0 
+0 9
+
+fn=(680)
+0 281692
+cfn=(700)
+calls=6558 0 
+0 122756
+0 150646
+cfn=(682)
+calls=4 0 
+0 530 6
+0 76
+cfn=(698) _IO_default_xsputn
+calls=4 0 
+0 266
+0 8
+
+fn=(1074) __read_nocancel
+0 40
+0 0 20
+0 60
+
+fn=(1312) __GI_memcpy
+0 2799944
+
+fn=(1338)
+0 9
+0 0 3
+0 9
+
+fn=(1342)
+0 12
+0 0 6 1
+0 18
+
+fn=(1410)
+0 4
+cfn=(1412)
+calls=2 0 
+0 837 2
+
+fn=(1416)
+0 16
+cfn=(1418) _IO_link_in
+calls=2 0 
+0 146
+0 10
+
+fn=(1424)
+0 48
+
+fn=(1454) __printf_fp
+0 800
+cfn=(1456)
+calls=20 0 
+0 140
+0 240
+cfn=(1458) isinf
+calls=20 0 
+0 260
+0 220
+cfn=(1460) __mpn_extract_double
+calls=20 0 
+0 400
+0 837
+cfn=(1312)
+calls=11 0 
+0 253
+0 1531
+cfn=(1638) __mpn_mul
+calls=4 0 
+0 280
+0 222
+cfn=(1462) __mpn_lshift
+calls=10 0 
+0 150
+0 230
+cfn=(1782) __mpn_cmp
+calls=15 0 
+0 165
+0 96
+cfn=(1312)
+calls=11 0 
+0 253
+0 202
+cfn=(1462)
+calls=7 0 
+0 105
+0 1101
+cfn=(1468) hack_digit.13659
+calls=17 0 
+0 1408
+0 48
+cfn=(1468)
+calls=16 0 
+0 1770
+0 781
+cfn=(1468)
+calls=32 0 
+0 1692
+0 392
+cfn=(1468)
+calls=20 0 
+0 1545
+0 1455
+cfn=(678) strlen
+calls=20 0 
+0 320
+0 1380
+cfn=(700)
+calls=12 0 
+0 216
+0 986
+cfn=(1466) __mpn_rshift
+calls=10 0 
+0 170
+0 80
+cfn=(1466)
+calls=10 0 
+0 170
+0 188
+cfn=(1462)
+calls=3 0 
+0 45
+0 231
+cfn=(1466)
+calls=1 0 
+0 17
+0 154
+cfn=(1638)
+calls=1 0 
+0 70
+0 511
+cfn=(1464) __mpn_mul_1
+calls=2 0 
+0 64
+0 130
+cfn=(1444)
+calls=13 0 
+0 1215
+0 1111
+cfn=(1466)
+calls=2 0 
+0 34
+0 86
+
+fn=(1464)
+0 1864
+
+fn=(1976)
+0 10
+cfn=(1978) __GI__IO_un_link.part.0
+calls=2 0 
+0 156
+0 2
+
+fn=(2038) write
+0 8
+cfn=(2040) __write_nocancel
+calls=4 0 
+0 20 4
+
+fn=(172)
+0 70
+
+fn=(230) _init
+0 70
+cfn=(148)
+calls=1 0 
+0 6
+0 8
+cfn=(148)
+calls=1 0 
+0 6
+0 10
+cfn=(232)
+calls=1 0 
+0 78
+0 1
+cfn=(236)
+calls=1 0 
+0 16
+0 14
+
+fn=(460)
+0 3111291
+cfn=(496) _int_realloc
+calls=55306 0 
+0 17117059 21
+0 1327378
+cfn=(1336)
+calls=3 0 
+0 191 3
+0 21
+cfn=(462)
+calls=1 0 
+0 57435 2
+0 95265
+cfn=(474)
+calls=10585 0 
+0 1349503 7
+
+fn=(461)
+0 26
+cfn=(474)
+calls=1 0 
+0 1040 2
+
+fn=(474)
+0 222453
+cfn=(476) _int_malloc
+calls=10593 0 
+0 917226 9
+0 211835
+
+fn=(482) __default_morecore
+0 48
+cfn=(484) sbrk
+calls=24 0 
+0 909 24
+0 120
+
+fn=(496)
+0 2203423
+cfn=(476)
+calls=46426 0 
+0 6357682 21
+0 1020690
+cfn=(812) _int_free
+calls=2267 0 
+0 177728
+0 176592
+cfn=(812)
+calls=44148 0 
+0 3746929
+0 431658
+cfn=(812)
+calls=1071 0 
+0 102470
+0 72651
+cfn=(1312)
+calls=23860 0 
+0 2799438
+0 27798
+
+fn=(920)
+0 71775
+cfn=(922) strchrnul
+calls=2175 0 
+0 43788
+0 26100
+cfn=(680)
+calls=2173 0 
+0 33626
+cfn=(698)
+calls=2 0 
+0 85
+0 443896
+cfn=(922)
+calls=6531 0 
+0 130740
+0 58779
+cfn=(680)
+calls=6529 0 
+0 101421
+cfn=(698)
+calls=2 0 
+0 90
+0 100470
+cfn=(1440)
+calls=51 0 
+0 783
+0 1635
+cfn=(1440)
+calls=19 0 
+0 228
+0 95972
+cfn=(680)
+calls=82 0 
+0 1230
+0 78260
+cfn=(680)
+calls=4228 0 
+0 270748 1
+cfn=(698)
+calls=1 0 
+0 75
+0 155937
+cfn=(698)
+calls=1 0 
+0 65
+cfn=(680)
+calls=2188 0 
+0 143895 1
+0 48194
+cfn=(1442)
+calls=2193 0 
+0 114078
+0 61476
+cfn=(680)
+calls=4 0 
+0 264
+0 96
+cfn=(1444)
+calls=4 0 
+0 386
+0 15623
+cfn=(1444)
+calls=32 0 
+0 3081
+0 1668
+cfn=(1454)
+calls=20 0 
+0 23754
+0 52974
+
+fn=(934) open
+0 6
+cfn=(936) __open_nocancel
+calls=3 0 
+0 15 3
+
+fn=(952) lseek
+0 2
+cfn=(954) __lseek_nocancel
+calls=1 0 
+0 5 1
+
+fn=(1104) __memcpy_sse2_unaligned
+0 2888
+
+fn=(1422)
+0 24
+cfn=(934)
+calls=2 0 
+0 14 2
+0 30
+cfn=(1418)
+calls=2 0 
+0 8
+0 10
+
+fn=(1466)
+0 391
+
+fn=(1638)
+0 120
+cfn=(1464)
+calls=5 0 
+0 160
+0 70
+
+fn=(1784) __mpn_divrem
+0 1622
+
+fn=(1896) sprintf
+0 15
+cfn=(1898) vsprintf
+calls=1 0 
+0 737
+0 2
+
+fn=(1898)
+0 15
+cfn=(914)
+calls=1 0 
+0 44
+0 7
+cfn=(918) _IO_str_init_static_internal
+calls=1 0 
+0 54
+0 4
+cfn=(920)
+calls=1 0 
+0 601
+0 12
+
+fn=(1924) fscanf
+0 180
+cfn=(1926)
+calls=12 0 
+0 3203 3
+0 24
+
+fn=(1966)
+0 192
+
+fn=(2018)
+0 75
+cfn=(680)
+calls=1 0 
+0 262 2
+0 4
+cfn=(680)
+calls=1 0 
+0 68
+0 50
+
+fn=(2030)
+0 32325
+cfn=(920)
+calls=2155 0 
+0 2023674 2
+0 4310
+
+fn=(472)
+0 9
+
+fn=(476)
+0 1898485
+cfn=(478)
+calls=64 0 
+0 200051
+0 2915679
+cfn=(478)
+calls=24 0 
+0 66697
+0 2170453
+cfn=(692)
+calls=6 0 
+0 36 6
+0 577
+cfn=(482)
+calls=23 0 
+0 1052 24
+0 614
+cfn=(482)
+calls=1 0 
+0 25
+0 21239
+
+fn=(654)
+0 9
+
+fn=(698)
+0 441
+cfn=(700)
+calls=1 0 
+0 62
+0 78
+
+fn=(812)
+0 4556171
+cfn=(478)
+calls=9 0 
+0 10233
+0 113742
+
+fn=(912) vsnprintf
+0 20
+cfn=(914)
+calls=1 0 
+0 44
+0 8
+cfn=(918)
+calls=1 0 
+0 54
+0 4
+cfn=(920)
+calls=1 0 
+0 355
+0 12
+
+fn=(1426)
+0 8
+
+fn=(1932) _IO_default_uflow
+0 4
+cfn=(1934) _IO_file_underflow@@GLIBC_2.2.5
+calls=1 0 
+0 172 3
+0 8
+
+fn=(1940)
+0 182
+
+fn=(1978)
+0 156
+
+fn=(1984) _IO_file_close
+0 4
+cfn=(1400)
+calls=2 0 
+0 10 2
+
+fn=(2060)
+0 4
+cfn=(2062)
+calls=1 0 
+0 13226 2
+
+fn=(238) init_cacheinfo
+0 11
+cfn=(240)
+calls=1 0 
+0 431
+0 4
+cfn=(240)
+calls=1 0 
+0 527
+0 130
+
+fn=(650) _setjmp
+0 2
+cfn=(652)
+calls=1 0 
+0 27
+
+fn=(918)
+0 30
+cfn=(694)
+calls=2 0 
+0 38
+0 40
+
+fn=(1398) close
+0 2
+cfn=(1400)
+calls=1 0 
+0 5 1
+
+fn=(1418)
+0 154
+
+fn=(1936) _IO_switch_to_get_mode
+0 20
+
+fn=(2098)
+0 1310
+cob=(7)
+cfi=(7)
+cfn=(2180)
+calls=1 0 
+0 5
+cob=(7)
+cfi=(7)
+cfn=(2178)
+calls=1 0 
+0 5
+cob=(7)
+cfi=(7)
+cfn=(2170)
+calls=1 0 
+0 901
+cob=(10)
+cfi=(10)
+cfn=(2128)
+calls=1 0 
+0 126
+cob=(10)
+cfi=(10)
+cfn=(2126)
+calls=5 0 
+0 5
+cob=(10)
+cfi=(10)
+cfn=(2124)
+calls=7 0 
+0 7
+cob=(9)
+cfi=(9)
+cfn=(2122) Minisat::DoubleOption::~DoubleOption()
+calls=7 0 
+0 7
+0 278
+cfn=(2100) __unregister_atfork
+calls=6 0 
+0 78
+
+fn=(2238) _IO_file_setbuf@@GLIBC_2.2.5
+0 3
+cfn=(2240)
+calls=1 0 
+0 64
+0 12
+
+fn=(142) strcasecmp
+0 3
+cfn=(144) __init_cpu_features
+calls=1 0 
+0 80
+0 4
+
+fn=(144)
+0 80
+
+fn=(486) brk
+0 96
+0 0 24
+0 216
+
+fn=(678)
+0 878
+
+fn=(690) _fxstat
+0 21
+0 0 3
+0 9
+
+fn=(810)
+0 97555
+cfn=(812)
+calls=6501 0 
+0 653019
+0 52
+cfn=(1340) munmap_chunk
+calls=4 0 
+0 104 4 1
+
+fn=(910) snprintf
+0 14
+cfn=(912)
+calls=1 0 
+0 497
+0 2
+
+fn=(916) _IO_old_init
+0 94
+
+fn=(922)
+0 174528
+
+fn=(1340)
+0 84
+cfn=(1342)
+calls=4 0 
+0 20 4 1
+
+fn=(1458)
+0 260
+
+fn=(1460)
+0 400
+
+fn=(1468)
+0 1098
+cfn=(1464)
+calls=40 0 
+0 800
+0 710
+cfn=(1784)
+calls=40 0 
+0 1622
+0 896
+cfn=(1464)
+calls=42 0 
+0 840
+0 449
+
+fn=(1930)
+0 19
+cfn=(1932)
+calls=1 0 
+0 184 3
+0 4
+
+fn=(1938) _IO_file_read
+0 4
+cfn=(1072) read
+calls=1 0 
+0 7 1
+
+fn=(1982) _IO_unsave_markers
+0 10
+
+fn=(1988)
+0 30
+
+fn=(2034)
+0 52
+cfn=(2036) _IO_file_write@@GLIBC_2.2.5
+calls=4 0 
+0 172 4
+0 116
+
+fn=(2040)
+0 8
+0 0 4
+0 12
+
+fn=(2234)
+0 8
+cfn=(2236)
+calls=1 0 
+0 214 1
+0 91
+cfn=(2238)
+calls=1 0 
+0 79
+0 3
+
+fn=(148)
+0 24
+
+fn=(484)
+0 424
+cfn=(486)
+calls=23 0 
+0 299 23
+0 168
+cfn=(486)
+calls=1 0 
+0 13 1
+0 5
+
+fn=(622)
+0 21
+cfn=(318)
+calls=1 0 
+0 67
+0 11
+cob=(10)
+cfi=(10)
+cfn=(624)
+calls=1 0 
+0 67
+0 8
+cfn=(650)
+calls=1 0 
+0 29
+0 14
+cob=(10)
+cfi=(10)
+cfn=(656)
+calls=1 0 
+0 571755768 86 1
+0 2
+
+fn=(676)
+0 45
+cfn=(678)
+calls=9 0 
+0 542
+0 212
+cfn=(680)
+calls=1 0 
+0 303 2
+0 32
+cfn=(680)
+calls=8 0 
+0 896
+0 268
+
+fn=(688)
+0 12
+cfn=(690)
+calls=3 0 
+0 30 3
+
+fn=(842) signal
+0 252
+cfn=(844)
+calls=6 0 
+0 636 6
+0 30
+
+fn=(914)
+0 40
+cfn=(916)
+calls=4 0 
+0 94
+0 70
+
+fn=(936)
+0 6
+0 0 3
+0 9
+
+fn=(954)
+0 2
+0 0 1
+0 3
+
+fn=(1072)
+0 40
+cfn=(1074)
+calls=20 0 
+0 100 20
+
+fn=(1462)
+0 300
+
+fn=(1782)
+0 165
+
+fn=(1888) getpid
+0 11
+0 0 1
+0 5
+
+fn=(1934)
+0 16
+cfn=(1936)
+calls=1 0 
+0 20
+0 12
+cfn=(1938)
+calls=1 0 
+0 11 1
+0 17
+cfn=(684)
+calls=1 0 
+0 94 2
+0 2
+
+fn=(1980)
+0 24
+
+ob=(8)
+fl=(8)
+fn=(1000)
+0 908
+cob=(3)
+cfi=(3)
+cfn=(1104)
+calls=1 0 
+0 1444
+0 1
+0 8
+cfn=(1002) 0x000000000000d770
+calls=1 0 
+0 7463 1
+0 87
+cfn=(1064) 0x000000000000d290
+calls=17 0 
+0 664 18
+0 302
+
+fn=(1002)
+0 17
+cfn=(1010) 0x000000000000d3d0
+calls=1 0 
+0 7441 1
+0 5
+
+fn=(1034) inflateReset2
+0 36
+cfn=(1040) inflateReset
+calls=1 0 
+0 791
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 607
+0 5
+
+fn=(1064)
+0 383
+cob=(3)
+cfi=(3)
+cfn=(1072)
+calls=19 0 
+0 133 19
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1205
+0 23
+0 167
+
+fn=(1026) inflateInit2_
+0 23
+cfn=(1028) 0x000000000000c7a0
+calls=1 0 
+0 172
+0 8
+cfn=(1034)
+calls=1 0 
+0 1439
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 732
+0 5
+0 16
+
+fn=(1054) 0x000000000000d310
+0 20
+cfn=(1064)
+calls=1 0 
+0 1247 1
+0 13
+
+fn=(1388) 0x000000000000c7b0
+0 2
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 121
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1206
+0 5
+
+fn=(2152) 0x0000000000002330
+0 9
+
+fn=(1040)
+0 9
+cfn=(1046) inflateResetKeep
+calls=1 0 
+0 29
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 748
+0 5
+
+fn=(860)
+0 14
+cob=(3)
+cfi=(3)
+cfn=(474)
+calls=1 0 
+0 181
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1291
+0 5
+0 56
+cob=(3)
+cfi=(3)
+cfn=(678)
+calls=1 0 
+0 16
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1251
+0 5
+
+ob=(3)
+fl=(3)
+fn=(1980)
+0 6
+cfn=(1982)
+calls=2 0 
+0 10
+0 20
+cfn=(694)
+calls=2 0 
+0 74 2
+0 16
+cfn=(1976)
+calls=2 0 
+0 6
+0 26
+cfn=(1984)
+calls=2 0 
+0 14 2
+0 11
+cfn=(696)
+calls=1 0 
+0 97 1
+0 2
+
+fn=(2036)
+0 52
+cfn=(2038)
+calls=4 0 
+0 28 4
+0 92
+
+fn=(2100)
+0 30
+
+ob=(8)
+fl=(8)
+fn=(860)
+0 3
+cob=(3)
+cfi=(3)
+cfn=(474)
+calls=1 0 
+0 91
+0 1
+0 10
+cob=(3)
+cfi=(3)
+cfn=(910)
+calls=1 0 
+0 513
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1265
+0 5
+0 16
+cfn=(964) 0x000000000000cb40
+calls=1 0 
+0 24
+0 17
+cob=(3)
+cfi=(3)
+cfn=(952)
+calls=1 0 
+0 7 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1266
+0 5
+0 17
+cob=(3)
+cfi=(3)
+cfn=(934)
+calls=1 0 
+0 7 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1205
+0 5
+0 8
+
+fn=(1010)
+0 23
+cob=(3)
+cfi=(3)
+cfn=(1104)
+calls=1 0 
+0 1444
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1261
+0 5
+0 15
+cob=(3)
+cfi=(3)
+cfn=(474)
+calls=1 0 
+0 168
+0 1
+0 4
+cob=(3)
+cfi=(3)
+cfn=(474)
+calls=1 0 
+0 173
+0 1
+0 16
+cfn=(1026)
+calls=1 0 
+0 2395
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 638
+0 5
+0 4
+cfn=(1054)
+calls=1 0 
+0 1280 1
+0 8
+
+fn=(1028)
+0 3
+cob=(3)
+cfi=(3)
+cfn=(474)
+calls=1 0 
+0 168
+0 1
+
+fn=(414) 0x00000000000023e0
+0 16
+
+fn=(1046)
+0 29
+
+fn=(1380) gzclose_r
+0 19
+cfn=(964)
+calls=1 0 
+0 24
+0 3
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 89
+0 1
+0 2
+cob=(3)
+cfi=(3)
+cfn=(1398)
+calls=1 0 
+0 7 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1228
+0 5
+0 3
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 326
+0 1
+
+ob=(3)
+fl=(3)
+fn=(2100)
+0 48
+
+ob=(8)
+fl=(8)
+fn=(1380)
+0 9
+cfn=(1386) inflateEnd
+calls=1 0 
+0 1354
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 591
+0 5
+0 2
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 133
+0 1
+0 2
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 159
+0 1
+0 1
+
+fn=(1386)
+0 16
+cfn=(1388)
+calls=1 0 
+0 1334
+0 4
+
+fn=(2140) 0x00000000000023a0
+0 8
+cob=(3)
+cfi=(3)
+cfn=(2098)
+calls=1 0 
+0 220
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1356
+0 5
+0 1
+cfn=(2152)
+calls=1 0 
+0 9
+0 3
+
+fn=(964)
+0 48
+
+fn=(1374)
+0 5
+cfn=(1380)
+calls=1 0 
+0 3966 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 692
+0 5
+
+ob=(9)
+fl=(9)
+fn=(434) 0x0000000000004690
+0 29
+cfn=(442) Minisat::DoubleOption::DoubleOption(char const*, char const*, char const*, double, Minisat::DoubleRange)
+calls=1 0 
+0 62701 2
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 903
+0 5
+0 6
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 16
+cfn=(442)
+calls=1 0 
+0 43
+0 1
+0 5
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 16
+cfn=(442)
+calls=1 0 
+0 202
+0 1
+0 5
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 16
+cfn=(442)
+calls=1 0 
+0 43
+0 1
+0 5
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 7
+cfn=(510) Minisat::IntOption::IntOption(char const*, char const*, char const*, int, Minisat::IntRange)
+calls=1 0 
+0 199
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 839
+0 5
+0 5
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 7
+cfn=(510)
+calls=1 0 
+0 42
+0 1
+0 4
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 14
+cob=(10)
+cfi=(10)
+cfn=(524)
+calls=1 0 
+0 11
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 909
+0 5
+0 3
+cob=(10)
+cfi=(10)
+cfn=(532)
+calls=1 0 
+0 20
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 999
+0 5
+0 9
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 12
+cob=(10)
+cfi=(10)
+cfn=(524)
+calls=1 0 
+0 11
+0 1
+0 3
+cob=(10)
+cfi=(10)
+cfn=(532)
+calls=1 0 
+0 20
+0 1
+0 7
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 8
+cfn=(510)
+calls=1 0 
+0 199
+0 1
+0 4
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 18
+cfn=(442)
+calls=1 0 
+0 43
+0 1
+0 5
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 16
+cfn=(442)
+calls=1 0 
+0 43
+0 1
+0 5
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 7
+cfn=(510)
+calls=1 0 
+0 42
+0 1
+0 4
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 11
+
+fn=(736)
+0 750
+cob=(10)
+cfi=(10)
+cfn=(744)
+calls=2 0 
+0 8
+cob=(10)
+cfi=(10)
+cfn=(742)
+calls=16 0 
+0 192
+cob=(10)
+cfi=(10)
+cfn=(740)
+calls=20 0 
+0 340
+cfn=(738) Minisat::DoubleOption::parse(char const*)
+calls=14 0 
+0 238
+0 168
+
+fn=(776) 0x000000000000cec0
+0 174
+cfn=(782) Minisat::vec<unsigned int, int>::capacity(int)
+calls=29 0 
+0 95154 5
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 703
+0 33
+0 1659422
+
+fn=(1208) 0x0000000000005230
+0 35153
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=35 0 
+0 32082
+0 35
+0 101403
+
+fn=(1282)
+0 1476144
+cfn=(1288) Minisat::Solver::addClause_(Minisat::vec<Minisat::Lit, int>&)
+calls=82008 0 
+0 38913976 19
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 872
+0 82012
+0 19676400
+cfn=(782)
+calls=18225 0 
+0 6923795 3
+0 18225
+0 44130
+cfn=(776)
+calls=27 0 
+0 1754327 5
+0 1290639
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=27 0 
+0 3130 2
+0 27
+0 139095
+
+fn=(1526) Minisat::Solver::detachClause(unsigned int, bool)
+0 121799
+cob=(10)
+cfi=(10)
+cfn=(796)
+calls=1 0 
+0 939
+0 1
+0 44
+cob=(10)
+cfi=(10)
+cfn=(796)
+calls=14 0 
+0 7298
+0 14
+0 28
+
+fn=(1538) Minisat::SimpSolver::eliminateVar(int)
+0 36860
+cfn=(1532) Minisat::OccLists<int, Minisat::vec<unsigned int, int>, Minisat::SimpSolver::ClauseDeleted, Minisat::MkIndexDefault<int> >::clean(int const&)
+calls=75 0 
+0 74362
+0 75
+0 8504722
+cfn=(1544) Minisat::SimpSolver::merge(Minisat::Clause const&, Minisat::Clause const&, int, int&)
+calls=98082 0 
+0 18926908
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 879
+0 98086
+0 403459
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=2155 0 
+0 264230
+0 2155
+0 12930
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=2155 0 
+0 200315
+0 2155
+0 748164
+cfn=(782)
+calls=23820 0 
+0 7394490
+0 23820
+0 51238
+cfn=(1546) 0x000000000000f200
+calls=2 0 
+0 2955
+0 16
+cfn=(1568) 0x000000000000f310
+calls=2 0 
+0 58
+0 292
+cfn=(1514) Minisat::SimpSolver::removeClause(unsigned int)
+calls=71 0 
+0 29745
+0 71
+0 1341
+cfn=(1582) Minisat::SimpSolver::merge(Minisat::Clause const&, Minisat::Clause const&, int, Minisat::vec<Minisat::Lit, int>&)
+calls=69 0 
+0 26348
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1000
+0 73
+0 243
+cfn=(1282)
+calls=35 0 
+0 159530
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 912
+0 39
+0 96
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=2 0 
+0 238
+0 2
+0 48
+cfn=(1508) Minisat::SimpSolver::backwardSubsumptionCheck(bool)
+calls=2 0 
+0 583961
+0 2
+0 2
+
+fn=(1546)
+0 856
+cfn=(782)
+calls=7 0 
+0 2021
+0 7
+0 71
+
+fn=(1626) Minisat::Solver::relocAll(Minisat::ClauseAllocator&)
+0 1168
+cfn=(1632) Minisat::OccLists<Minisat::Lit, Minisat::vec<Minisat::Solver::Watcher, int>, Minisat::Solver::WatcherDeleted, Minisat::MkIndexLit>::clean(Minisat::Lit const&)
+calls=128 0 
+0 54522
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1335
+0 132
+0 2985696
+cfn=(802) Minisat::RegionAllocator<unsigned int>::alloc(int)
+calls=81889 0 
+0 1801558
+0 81889
+0 5238605
+
+fn=(1668) Minisat::Solver::solve_()
+0 35
+cob=(3)
+cfi=(3)
+cfn=(676)
+calls=1 0 
+0 234
+0 1
+0 2
+cob=(3)
+cfi=(3)
+cfn=(676)
+calls=1 0 
+0 234
+0 1
+0 2
+cob=(3)
+cfi=(3)
+cfn=(676)
+calls=1 0 
+0 234
+0 1
+0 2
+cob=(3)
+cfi=(3)
+cfn=(676)
+calls=1 0 
+0 234
+0 1
+0 360
+cob=(4)
+cfi=(4)
+cfn=(1674)
+calls=10 0 
+0 558
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1314
+0 14
+0 60
+cfn=(1708) Minisat::Solver::search(int)
+calls=10 0 
+0 109579975
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 680
+0 14
+0 226
+cob=(3)
+cfi=(3)
+cfn=(676)
+calls=1 0 
+0 234
+0 1
+0 17261
+cfn=(1732) Minisat::Solver::cancelUntil(int)
+calls=1 0 
+0 188933
+0 1
+0 9
+cfn=(1208)
+calls=1 0 
+0 19938
+0 2
+
+fn=(1714) Minisat::Solver::pickBranchLit()
+0 6954728
+
+fn=(1726) Minisat::Solver::litRedundant(Minisat::Lit)
+0 6050272
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=4 0 
+0 1390
+0 4
+0 63
+cob=(10)
+cfi=(10)
+cfn=(796)
+calls=9 0 
+0 7951
+0 9
+0 35
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=1 0 
+0 281
+0 1
+0 5
+
+fn=(670)
+0 12
+cob=(3)
+cfi=(3)
+cfn=(676)
+calls=1 0 
+0 426 2
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1205
+0 5
+0 5
+
+fn=(1194)
+0 21550
+cfn=(1200) Minisat::Solver::newVar(Minisat::lbool, bool)
+calls=2155 0 
+0 1246931 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 760
+0 2159
+0 62495
+cfn=(1256) 0x000000000000c720
+calls=2155 0 
+0 86111
+0 19395
+cfn=(1256)
+calls=2155 0 
+0 71115
+0 216301
+cfn=(1244) 0x0000000000011030
+calls=2155 0 
+0 74971
+0 8620
+cfn=(1244)
+calls=2155 0 
+0 75507
+0 54496
+cfn=(1242) Minisat::vec<int, int>::capacity(int)
+calls=2155 0 
+0 21097
+0 2155
+0 43100
+cfn=(1206) Minisat::vec<char, int>::capacity(int)
+calls=2155 0 
+0 17302
+0 2155
+0 43100
+cfn=(1244)
+calls=2155 0 
+0 75424
+0 8909
+cfn=(1242)
+calls=17 0 
+0 12867
+0 17
+0 170
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=17 0 
+0 27494 1
+0 17
+0 38892
+
+fn=(1200)
+0 88355
+cfn=(1208)
+calls=2155 0 
+0 79910
+0 64650
+cfn=(1208)
+calls=2155 0 
+0 68825
+0 15085
+cfn=(1226) 0x0000000000009670
+calls=2155 0 
+0 75089
+0 6465
+cob=(10)
+cfi=(10)
+cfn=(796)
+calls=2155 0 
+0 19509
+0 2155
+0 149261
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=17 0 
+0 45918
+0 17
+0 36771
+cfn=(1206)
+calls=2155 0 
+0 8620
+0 2155
+0 45255
+cfn=(1206)
+calls=2155 0 
+0 17111
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 703
+0 2159
+0 62747
+cfn=(1226)
+calls=2155 0 
+0 75171
+0 8620
+cfn=(1226)
+calls=2155 0 
+0 75131
+0 84146
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=17 0 
+0 16143 1
+0 17
+0 32478
+cfn=(1242)
+calls=2155 0 
+0 20432
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 711
+0 2159
+0 45238
+cfn=(1242)
+calls=17 0 
+0 12197
+0 17
+0 176
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=18 0 
+0 83391
+0 18
+0 126
+
+fn=(1226)
+0 38790
+cfn=(1206)
+calls=6465 0 
+0 50836
+0 6465
+0 129300
+
+fn=(1256)
+0 25860
+cfn=(1242)
+calls=4310 0 
+0 32236
+0 4310
+0 94820
+
+fn=(1300) Minisat::Solver::uncheckedEnqueue(Minisat::Lit, unsigned int)
+0 4812210
+
+fn=(1502) Minisat::SimpSolver::gatherTouchedClauses()
+0 5937171
+
+fn=(1520) Minisat::Solver::removeClause(unsigned int)
+0 32580
+cfn=(1526)
+calls=3258 0 
+0 129731
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 744
+0 3262
+0 131005
+
+fn=(1544)
+0 18926908
+
+fn=(1568)
+0 58
+
+fn=(1708)
+0 240
+cfn=(1306) Minisat::Solver::propagate()
+calls=10 0 
+0 320
+0 10
+0 18176
+cfn=(1306)
+calls=9088 0 
+0 63710252
+0 9088
+0 37324
+cfn=(1720) Minisat::Solver::analyze(unsigned int, Minisat::vec<Minisat::Lit, int>&, int&)
+calls=1466 0 
+0 18864873
+0 1466
+0 50
+cfn=(1720)
+calls=10 0 
+0 63500
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 872
+0 14
+0 4428
+cfn=(1732)
+calls=1476 0 
+0 9925257
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 728
+0 1480
+0 12942
+cfn=(802)
+calls=1419 0 
+0 31218
+0 1419
+0 302358
+cfn=(1318) Minisat::Solver::attachClause(unsigned int)
+calls=1419 0 
+0 107811
+0 1419
+0 26961
+cfn=(1300)
+calls=1419 0 
+0 25542
+0 1419
+0 14825
+cfn=(1738) Minisat::Solver::progressEstimate() const
+calls=5 0 
+0 96826
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 776
+0 9
+0 125
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=5 0 
+0 33460
+0 5
+0 30521
+cfn=(1738)
+calls=9 0 
+0 98647
+0 9
+0 36
+cfn=(1732)
+calls=9 0 
+0 419421
+0 9
+0 49
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=10 0 
+0 1207
+0 10
+0 405
+cfn=(1300)
+calls=57 0 
+0 1026
+0 57
+0 175156
+cfn=(1714)
+calls=7613 0 
+0 6954728
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 744
+0 7617
+0 53320
+cfn=(1242)
+calls=11 0 
+0 10405
+0 11
+0 83754
+cfn=(1300)
+calls=7612 0 
+0 137016
+0 7612
+0 15034
+cfn=(1484) Minisat::Solver::simplify()
+calls=66 0 
+0 8260344
+0 66
+0 222
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=15 0 
+0 27264
+0 15
+0 77
+
+fn=(1882) 0x0000000000011650
+0 8
+cob=(3)
+cfi=(3)
+cfn=(1888)
+calls=1 0 
+0 16 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1228
+0 5
+0 5
+cob=(3)
+cfi=(3)
+cfn=(1896)
+calls=1 0 
+0 754
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1251
+0 5
+0 3
+cob=(3)
+cfi=(3)
+cfn=(1410)
+calls=1 0 
+0 420 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1221
+0 5
+0 8
+cob=(3)
+cfi=(3)
+cfn=(1914)
+calls=1 0 
+0 36
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1221
+0 5
+0 22
+cob=(3)
+cfi=(3)
+cfn=(1914)
+calls=11 0 
+0 396
+0 11
+0 26
+cob=(3)
+cfi=(3)
+cfn=(1974)
+calls=1 0 
+0 390 2
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1260
+0 5
+0 56
+cob=(3)
+cfi=(3)
+cfn=(1924)
+calls=12 0 
+0 3407 3
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1228
+0 16
+0 57
+cob=(3)
+cfi=(3)
+cfn=(1914)
+calls=11 0 
+0 396
+0 11
+0 392
+cob=(3)
+cfi=(3)
+cfn=(1914)
+calls=196 0 
+0 7056
+0 196
+0 828
+cob=(3)
+cfi=(3)
+cfn=(1954)
+calls=207 0 
+0 7659
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1228
+0 211
+0 425
+
+fn=(2112) 0x0000000000005110
+0 8
+cob=(3)
+cfi=(3)
+cfn=(2098)
+calls=1 0 
+0 665
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1356
+0 5
+0 1
+cfn=(2132) 0x0000000000005080
+calls=1 0 
+0 9
+0 3
+
+fn=(426) 0x0000000000005150
+0 17
+
+fn=(510)
+0 200
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=2 0 
+0 270
+0 2
+0 10
+
+fn=(754)
+0 9
+cfn=(760) Minisat::Solver::Solver()
+calls=1 0 
+0 751 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 640
+0 5
+0 56
+cfn=(776)
+calls=1 0 
+0 976
+0 19
+cob=(10)
+cfi=(10)
+cfn=(796)
+calls=1 0 
+0 240
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 939
+0 5
+0 21
+cfn=(802)
+calls=1 0 
+0 22
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 775
+0 5
+0 56
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 89
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1206
+0 5
+0 7
+
+fn=(1288)
+0 2214216
+cfn=(1294) void Minisat::sort<Minisat::Lit, Minisat::LessThan_default<Minisat::Lit> >(Minisat::Lit*, int, Minisat::LessThan_default<Minisat::Lit>)
+calls=82008 0 
+0 4131360
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 959
+0 82012
+0 9783123
+cfn=(802)
+calls=81989 0 
+0 1803758
+0 81989
+0 6879270
+cfn=(1318)
+calls=81989 0 
+0 13597605 13
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 736
+0 81993
+0 82103
+cfn=(1300)
+calls=19 0 
+0 342
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 832
+0 23
+0 38
+cfn=(1306)
+calls=19 0 
+0 1140
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 704
+0 23
+0 544
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=26 0 
+0 171050 6
+0 26
+0 130
+
+fn=(1508)
+0 5351588
+cfn=(1532)
+calls=781 0 
+0 844307
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1255
+0 785
+0 255876768
+cfn=(1592) Minisat::SimpSolver::strengthenClause(unsigned int, Minisat::Lit)
+calls=1 0 
+0 1194
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 872
+0 5
+0 33453342
+cfn=(1514)
+calls=29 0 
+0 145342
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 776
+0 33
+0 184
+
+fn=(1514)
+0 80770
+cfn=(1520)
+calls=100 0 
+0 15323
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 744
+0 104
+0 72014
+cfn=(1242)
+calls=14 0 
+0 5982
+0 14
+0 136
+
+fn=(1662)
+0 46
+cfn=(1856) Minisat::SimpSolver::extendModel()
+calls=1 0 
+0 331
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 776
+0 5
+0 19
+cfn=(1668)
+calls=1 0 
+0 109810561
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 680
+0 5
+0 3
+
+fn=(1856)
+0 331
+
+fn=(662)
+0 3
+
+fn=(802)
+0 1487682
+cfn=(762) 0x0000000000005180
+calls=165298 0 
+0 661192
+0 1487682
+
+fn=(1206)
+0 60925
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=137 0 
+0 64211
+0 137
+0 19943
+
+fn=(1602) 0x000000000000c100
+0 312
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=1 0 
+0 366 1
+0 1
+0 8
+
+fn=(2122)
+0 7
+
+fn=(782)
+0 1009944
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=42081 0 
+0 13153030 8
+0 42081
+0 210405
+
+fn=(1244)
+0 38790
+cfn=(1206)
+calls=6465 0 
+0 51347
+0 6465
+0 129300
+
+fn=(1294)
+0 440088
+cfn=(1295) void Minisat::sort<Minisat::Lit, Minisat::LessThan_default<Minisat::Lit> >(Minisat::Lit*, int, Minisat::LessThan_default<Minisat::Lit>)'2
+calls=148 0 
+0 176929
+0 148
+0 740
+cfn=(1295)
+calls=148 0 
+0 184436
+0 148
+0 3328871
+
+fn=(1295)
+0 24502
+cfn=(1295)
+calls=157 0 
+0 109377
+0 157
+0 785
+cfn=(1295)
+calls=157 0 
+0 117431
+0 157
+0 335764
+
+fn=(1532)
+0 918669
+
+fn=(1620) Minisat::SimpSolver::relocAll(Minisat::ClauseAllocator&)
+0 24
+
+fn=(1720)
+0 11361920
+cob=(10)
+cfi=(10)
+cfn=(796)
+calls=88 0 
+0 48687
+0 88
+0 4956
+cob=(10)
+cfi=(10)
+cfn=(796)
+calls=1476 0 
+0 6445
+0 1476
+0 843286
+cfn=(1726)
+calls=40079 0 
+0 6060011
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 792
+0 40083
+0 558682
+cob=(10)
+cfi=(10)
+cfn=(796)
+calls=10 0 
+0 1477
+0 10
+0 460
+
+fn=(1732)
+0 10533611
+
+fn=(836)
+0 10
+cob=(3)
+cfi=(3)
+cfn=(842)
+calls=2 0 
+0 306 2
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1227
+0 6
+0 6
+cob=(3)
+cfi=(3)
+cfn=(842)
+calls=2 0 
+0 306 2
+0 2
+0 8
+cob=(3)
+cfi=(3)
+cfn=(842)
+calls=2 0 
+0 306 2
+0 2
+
+fn=(1484)
+0 1125
+cfn=(1306)
+calls=67 0 
+0 2144
+0 67
+0 473
+cfn=(1490) Minisat::Solver::removeSatisfied(Minisat::vec<unsigned int, int>&)
+calls=2 0 
+0 1429642
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 856
+0 6
+0 26
+cfn=(1496) Minisat::Solver::rebuildOrderHeap()
+calls=2 0 
+0 382825
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 768
+0 6
+0 27
+cfn=(1490)
+calls=1 0 
+0 6625075
+0 1
+0 923
+
+fn=(1598) Minisat::vec<Minisat::vec<unsigned int, int>, int>::clear(bool)
+0 15058
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=2134 0 
+0 277565
+0 2134
+0 8625
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 867
+0 1
+0 8
+
+fn=(1600) Minisat::SimpSolver::garbageCollect()
+0 16
+cfn=(1602)
+calls=1 0 
+0 687 1
+0 5
+cfn=(1620)
+calls=1 0 
+0 24
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 904
+0 5
+0 3
+cfn=(1626)
+calls=1 0 
+0 10164905
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 880
+0 5
+0 8
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 49 1 1
+0 1
+0 15
+
+fn=(1848) Minisat::Solver::satisfied(Minisat::Clause const&) const
+0 4648964
+
+fn=(1478)
+0 10
+cfn=(1484)
+calls=1 0 
+0 183620
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 704
+0 5
+0 17
+cfn=(1502)
+calls=2 0 
+0 5937171
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 840
+0 6
+0 856769
+cfn=(1508)
+calls=2 0 
+0 295092490
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 872
+0 6
+0 11
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 121
+0 1
+0 5
+cfn=(1598)
+calls=1 0 
+0 304258
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 743
+0 5
+0 5
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 133
+0 1
+0 7
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 121
+0 1
+0 7
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 121
+0 1
+0 10
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 146
+0 1
+0 7
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=1 0 
+0 49 1
+0 1
+0 14
+cfn=(1496)
+calls=1 0 
+0 223203
+0 1
+0 3
+cfn=(1600)
+calls=1 0 
+0 10167507 2 1
+0 13
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=1 0 
+0 1675
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1244
+0 5
+0 163441
+cfn=(1538)
+calls=2155 0 
+0 37551820
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 776
+0 2159
+0 4320
+cfn=(776)
+calls=1 0 
+0 183
+0 1
+
+fn=(1632)
+0 233461
+
+fn=(1870)
+0 9
+cob=(3)
+cfi=(3)
+cfn=(822)
+calls=1 0 
+0 5 1
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1280
+0 5
+0 9
+cfn=(1880) Minisat::memUsedPeak(bool)
+calls=1 0 
+0 31482 7
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 672
+0 5
+0 5
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=1 0 
+0 646
+0 1
+0 9
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=1 0 
+0 2598
+0 1
+0 21
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=1 0 
+0 3982
+0 1
+0 9
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=1 0 
+0 3006
+0 1
+0 19
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=1 0 
+0 2871
+0 1
+0 8
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=1 0 
+0 1532
+0 1
+0 10
+cob=(3)
+cfi=(3)
+cfn=(1438)
+calls=1 0 
+0 2099
+0 1
+0 1
+
+fn=(1880)
+0 3
+cfn=(1882)
+calls=1 0 
+0 31467 7
+0 12
+
+fn=(562) 0x0000000000004c00
+0 25
+cob=(10)
+cfi=(10)
+cfn=(524)
+calls=1 0 
+0 11
+0 1
+0 3
+cob=(10)
+cfi=(10)
+cfn=(532)
+calls=1 0 
+0 20
+0 1
+0 9
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 12
+cob=(10)
+cfi=(10)
+cfn=(524)
+calls=1 0 
+0 11
+0 1
+0 3
+cob=(10)
+cfi=(10)
+cfn=(532)
+calls=1 0 
+0 20
+0 1
+0 6
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 12
+cob=(10)
+cfi=(10)
+cfn=(524)
+calls=1 0 
+0 11
+0 1
+0 3
+cob=(10)
+cfi=(10)
+cfn=(532)
+calls=1 0 
+0 1432
+0 1
+0 6
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 12
+cob=(10)
+cfi=(10)
+cfn=(524)
+calls=1 0 
+0 11
+0 1
+0 3
+cob=(10)
+cfi=(10)
+cfn=(532)
+calls=1 0 
+0 20
+0 1
+0 11
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 12
+cob=(10)
+cfi=(10)
+cfn=(524)
+calls=1 0 
+0 11
+0 1
+0 3
+cob=(10)
+cfi=(10)
+cfn=(532)
+calls=1 0 
+0 20
+0 1
+0 8
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 12
+cob=(10)
+cfi=(10)
+cfn=(524)
+calls=1 0 
+0 11
+0 1
+0 3
+cob=(10)
+cfi=(10)
+cfn=(532)
+calls=1 0 
+0 20
+0 1
+0 8
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 12
+cob=(10)
+cfi=(10)
+cfn=(524)
+calls=1 0 
+0 11
+0 1
+0 3
+cob=(10)
+cfi=(10)
+cfn=(532)
+calls=1 0 
+0 20
+0 1
+0 14
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+0 1
+0 9
+
+fn=(1592)
+0 35
+cfn=(1526)
+calls=1 0 
+0 392
+0 1
+0 293
+cfn=(1318)
+calls=1 0 
+0 61
+0 1
+0 411
+
+fn=(442)
+0 259
+cob=(7)
+cfi=(7)
+cfn=(306)
+calls=1 0 
+0 33
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1222
+0 5
+0 9
+cob=(7)
+cfi=(7)
+cfn=(312)
+calls=1 0 
+0 14
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1229
+0 5
+0 4
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 67
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1326
+0 5
+0 38
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=2 0 
+0 57590 2
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1251
+0 6
+0 12
+
+fn=(738)
+0 238
+
+fn=(760)
+0 131
+cfn=(762)
+calls=1 0 
+0 594 1
+0 26
+
+fn=(762)
+0 496230
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=1 0 
+0 249 1
+0 1
+0 165306
+
+fn=(1242)
+0 29568
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=161 0 
+0 143345
+0 161
+0 9373
+
+fn=(1306)
+0 1954733
+cfn=(1632)
+calls=199 0 
+0 178939
+0 199
+0 54188688
+cfn=(1300)
+calls=258238 0 
+0 4648284
+0 258238
+0 1458239
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=3134 0 
+0 1007424
+0 3134
+0 15978
+
+fn=(1318)
+0 5329891
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=6877 0 
+0 3405032 8
+0 6877
+0 141039
+cob=(3)
+cfi=(3)
+cfn=(460)
+calls=13191 0 
+0 4743492 5
+0 13191
+0 65955
+
+fn=(1490)
+0 61
+cfn=(1848)
+calls=2 0 
+0 126
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 808
+0 6
+0 581427
+cfn=(1848)
+calls=83061 0 
+0 4648838
+0 83061
+0 2452075
+cfn=(1520)
+calls=3158 0 
+0 281999
+0 3158
+0 3158
+
+fn=(1496)
+0 538052
+cob=(3)
+cfi=(3)
+cfn=(810)
+calls=3 0 
+0 409
+0 3
+0 183
+cfn=(1242)
+calls=50 0 
+0 67231
+0 50
+0 100
+
+fn=(1582)
+0 25066
+cob=(10)
+cfi=(10)
+cfn=(796)
+calls=1 0 
+0 147
+0 1
+0 18
+cob=(10)
+cfi=(10)
+cfn=(796)
+calls=4 0 
+0 1104
+0 4
+0 8
+
+fn=(1738)
+0 4473
+cob=(4)
+cfi=(4)
+cfn=(1674)
+calls=601 0 
+0 175575
+0 601
+0 70
+cob=(4)
+cfi=(4)
+cfn=(1674)
+calls=14 0 
+0 4159
+0 14
+0 10581
+
+fn=(2132)
+0 9
+
+ob=(1)
+fl=(1)
+fn=(8) brk
+0 4
+0 0 1
+0 8
+
+fn=(24) calloc
+0 168
+cfn=(28) malloc
+calls=21 0 
+0 711 4
+0 21
+
+fn=(28)
+0 138
+cfn=(32) __libc_memalign
+calls=46 0 
+0 1252 4
+0 46
+
+fn=(112) cache_rpath.part.4
+0 16
+
+fn=(4) _dl_setup_hash
+0 207
+
+fn=(10) strlen
+0 1793
+
+fn=(12) sbrk
+0 17
+
+fn=(38)
+0 128
+
+fn=(42) strcmp
+0 15907
+cfn=(43) strcmp'2
+calls=1912 0 
+0 128939
+0 3364
+
+fn=(43)
+0 124195
+cfn=(43)
+calls=16093 0 
+0 739095
+0 4744
+
+fn=(44) _dl_discover_osversion
+0 21
+cfn=(46) uname
+calls=1 0 
+0 5 1
+0 67
+
+fn=(60) do_preload
+0 17
+cfn=(62) _dl_catch_error
+calls=1 0 
+0 2532 7
+0 11
+
+fn=(84) read
+0 14
+0 0 7
+0 21
+
+fn=(106) _dl_sysdep_read_whole_file
+0 11
+cfn=(82) open
+calls=1 0 
+0 5 1
+0 7
+cfn=(88) _fxstat
+calls=1 0 
+0 10 1
+0 8
+cfn=(96) close
+calls=1 0 
+0 5 1
+0 13
+cfn=(90) mmap
+calls=1 0 
+0 6 1
+0 2
+
+fn=(116) _dl_receive_error
+0 11
+cfn=(64) _dl_initial_error_catch_tsd
+calls=1 0 
+0 2
+0 7
+cfn=(118) version_check_doit
+calls=1 0 
+0 18156 1
+0 10
+
+fn=(118)
+0 6
+cfn=(120) _dl_check_all_versions
+calls=1 0 
+0 18146 1
+0 4
+
+fn=(128) _dl_determine_tlsoffset
+0 102
+
+fn=(130) _dl_allocate_tls_storage
+0 7
+cfn=(32)
+calls=1 0 
+0 49 1
+0 1
+0 303
+cfn=(132) allocate_dtv
+calls=1 0 
+0 58
+0 6
+
+fn=(134) _dl_relocate_object
+0 14224
+cob=(4)
+cfi=(4)
+cfn=(198)
+calls=1 0 
+0 16
+cob=(4)
+cfi=(4)
+cfn=(196)
+calls=1 0 
+0 16
+cob=(4)
+cfi=(4)
+cfn=(194)
+calls=1 0 
+0 13
+cob=(4)
+cfi=(4)
+cfn=(192)
+calls=1 0 
+0 12
+cob=(4)
+cfi=(4)
+cfn=(190)
+calls=1 0 
+0 12
+cob=(4)
+cfi=(4)
+cfn=(188)
+calls=1 0 
+0 13
+cob=(4)
+cfi=(4)
+cfn=(186)
+calls=1 0 
+0 12
+cob=(4)
+cfi=(4)
+cfn=(184)
+calls=1 0 
+0 16
+cob=(4)
+cfi=(4)
+cfn=(182)
+calls=1 0 
+0 13
+cob=(4)
+cfi=(4)
+cfn=(180)
+calls=1 0 
+0 12
+cob=(4)
+cfi=(4)
+cfn=(178)
+calls=1 0 
+0 12
+cob=(4)
+cfi=(4)
+cfn=(176)
+calls=1 0 
+0 12
+cob=(4)
+cfi=(4)
+cfn=(174)
+calls=1 0 
+0 16
+cob=(4)
+cfi=(4)
+cfn=(160)
+calls=1 0 
+0 1466
+0 226
+cfn=(156) _dl_protect_relro
+calls=8 0 
+0 200 8
+0 129803
+cfn=(136) _dl_lookup_symbol_x
+calls=1292 0 
+0 1160433 1
+0 56183
+cob=(3)
+cfi=(3)
+cfn=(154)
+calls=1 0 
+0 13
+cob=(3)
+cfi=(3)
+cfn=(152)
+calls=1 0 
+0 66
+cob=(3)
+cfi=(3)
+cfn=(150)
+calls=1 0 
+0 6
+cob=(3)
+cfi=(3)
+cfn=(146)
+calls=1 0 
+0 66
+cob=(3)
+cfi=(3)
+cfn=(142)
+calls=1 0 
+0 87
+0 13435
+cfn=(136)
+calls=5 0 
+0 3686
+0 5064
+
+fn=(158) _dl_add_to_slotinfo
+0 40
+
+fn=(62)
+0 247
+cfn=(64)
+calls=19 0 
+0 38
+0 152
+cfn=(66) __sigsetjmp
+calls=19 0 
+0 361
+0 114
+cfn=(102) openaux
+calls=18 0 
+0 39768 50 36
+cfn=(68) map_doit
+calls=1 0 
+0 2471 7
+0 247
+
+fn=(64)
+0 40
+
+fn=(86) _dl_map_object_from_fd
+0 126
+cfn=(54) _dl_debug_initialize
+calls=7 0 
+0 56
+0 35
+cfn=(88)
+calls=7 0 
+0 70 7
+0 525
+cfn=(20) _dl_new_object
+calls=7 0 
+0 3135 2
+0 1850
+cfn=(110) _dl_next_tls_modid
+calls=2 0 
+0 16
+0 245
+cfn=(90)
+calls=7 0 
+0 42 7 1
+0 385
+cfn=(94) memset
+calls=7 0 
+0 6414
+0 1932
+cfn=(92) mprotect
+calls=7 0 
+0 35 7
+0 581
+cfn=(96)
+calls=2 0 
+0 10 2
+0 10
+cfn=(96)
+calls=5 0 
+0 25 5
+0 119
+cfn=(4)
+calls=7 0 
+0 161
+0 105
+cfn=(36) _dl_add_to_namespace_list
+calls=7 0 
+0 364
+0 81
+cfn=(90)
+calls=2 0 
+0 12 2
+0 180
+cfn=(90)
+calls=7 0 
+0 42 7 35
+0 21
+
+fn=(98) access
+0 2
+0 0 1
+0 7
+
+fn=(108) _dl_cache_libcmp
+0 1460
+cfn=(109) _dl_cache_libcmp'2
+calls=7 0 
+0 42
+0 3919
+
+fn=(109)
+0 42
+
+fn=(110)
+0 16
+
+fn=(216) call_init.part.0
+0 227
+cob=(2)
+cfi=(2)
+cfn=(422)
+calls=1 0 
+0 6
+cob=(2)
+cfi=(2)
+cfn=(410)
+calls=1 0 
+0 6
+cob=(2)
+cfi=(2)
+cfn=(280)
+calls=1 0 
+0 6
+cob=(2)
+cfi=(2)
+cfn=(256)
+calls=1 0 
+0 6
+cob=(2)
+cfi=(2)
+cfn=(244)
+calls=1 0 
+0 6
+cob=(3)
+cfi=(3)
+cfn=(230)
+calls=1 0 
+0 209
+cob=(2)
+cfi=(2)
+cfn=(218)
+calls=1 0 
+0 6
+0 119
+cob=(9)
+cfi=(9)
+cfn=(426)
+calls=1 0 
+0 17
+cob=(8)
+cfi=(8)
+cfn=(414)
+calls=1 0 
+0 16
+cob=(7)
+cfi=(7)
+cfn=(284)
+calls=1 0 
+0 17
+cob=(6) /usr/lib/libgcc_s.so.1
+cfi=(6) ???
+cfn=(260) __cpu_indicator_init
+calls=1 0 
+0 204
+cob=(4)
+cfi=(4)
+cfn=(248)
+calls=1 0 
+0 17
+cob=(3)
+cfi=(3)
+cfn=(238)
+calls=1 0 
+0 1103
+cob=(5)
+cfi=(5)
+cfn=(222)
+calls=1 0 
+0 16
+0 40
+cob=(9)
+cfi=(9)
+cfn=(562)
+calls=1 0 
+0 2308
+cob=(9)
+cfi=(9)
+cfn=(434)
+calls=1 0 
+0 68362 2
+cob=(7)
+cfi=(7)
+cfn=(406)
+calls=1 0 
+0 146
+cob=(7)
+cfi=(7)
+cfn=(404)
+calls=1 0 
+0 54
+cob=(7)
+cfi=(7)
+cfn=(378)
+calls=1 0 
+0 49
+cob=(7)
+cfi=(7)
+cfn=(352)
+calls=1 0 
+0 49
+cob=(7)
+cfi=(7)
+cfn=(326)
+calls=1 0 
+0 73
+cob=(7)
+cfi=(7)
+cfn=(324)
+calls=1 0 
+0 6
+cob=(7)
+cfi=(7)
+cfn=(292)
+calls=1 0 
+0 4039
+cob=(6)
+cfi=(6)
+cfn=(272) 0x0000000000002fe0
+calls=1 0 
+0 17
+0 111
+
+fn=(0) 0x0000000000000dc0
+0 2
+cfn=(2) _dl_start
+calls=1 0 
+0 1458212 73 36
+0 14
+cfn=(214) _dl_init
+calls=1 0 
+0 77384 2
+0 3
+cob=(10)
+cfi=(10)
+cfn=(616)
+calls=1 0 
+0 571757396 86 1
+
+fn=(34) memcpy
+0 983
+
+fn=(68)
+0 9
+cfn=(70) _dl_map_object
+calls=1 0 
+0 2459 7
+0 3
+
+fn=(78) local_strdup
+0 35
+cfn=(10)
+calls=7 0 
+0 482
+0 21
+cfn=(28)
+calls=7 0 
+0 203
+0 7
+0 63
+cfn=(34)
+calls=7 0 
+0 237
+
+fn=(82)
+0 16
+0 0 8
+0 24
+
+fn=(92)
+0 30
+0 0 15
+0 45
+
+fn=(94)
+0 6814
+
+fn=(96)
+0 16
+0 0 8
+0 24
+
+fn=(208) _dl_unload_cache
+0 7
+cfn=(210) munmap
+calls=1 0 
+0 5 1
+0 3
+
+fn=(214)
+0 127
+cfn=(216)
+calls=8 0 
+0 77159 2
+0 21
+cfn=(216)
+calls=1 0 
+0 76
+0 1
+
+fn=(2)
+0 362
+cfn=(4)
+calls=1 0 
+0 23
+0 17
+cfn=(6) _dl_sysdep_start
+calls=1 0 
+0 1457369 73 36
+0 441
+
+fn=(6)
+0 338
+cfn=(8)
+calls=1 0 
+0 12 1
+0 7
+cfn=(12)
+calls=1 0 
+0 17
+0 12
+cfn=(14) dl_main
+calls=1 0 
+0 1456912 72 36
+0 28
+cfn=(10)
+calls=1 0 
+0 41
+0 2
+
+fn=(20)
+0 120
+cfn=(10)
+calls=8 0 
+0 460
+0 72
+cfn=(24)
+calls=8 0 
+0 358 2
+0 8
+0 96
+cfn=(34)
+calls=8 0 
+0 215
+0 487
+cfn=(10)
+calls=7 0 
+0 351
+0 254
+cfn=(52) mempcpy
+calls=7 0 
+0 233
+0 490
+cfn=(28)
+calls=7 0 
+0 203
+0 7
+0 35
+
+fn=(56) _dl_debug_state
+0 2
+
+fn=(80) open_verify
+0 144
+cfn=(82)
+calls=7 0 
+0 35 7
+0 84
+cfn=(84)
+calls=7 0 
+0 35 7
+0 98
+cfn=(18) bcmp
+calls=7 0 
+0 670
+0 63
+cfn=(18)
+calls=7 0 
+0 609
+0 809
+cfn=(18)
+calls=2 0 
+0 144
+0 28
+cfn=(18)
+calls=7 0 
+0 560
+0 121
+cfn=(18)
+calls=1 0 
+0 96
+0 2
+
+fn=(138) do_lookup_x
+0 369482
+cfn=(72) _dl_name_match_p
+calls=403 0 
+0 21675
+0 48875
+cfn=(38)
+calls=54 0 
+0 108
+0 3989
+cfn=(200) _dl_higher_prime_number
+calls=2 0 
+0 144
+0 8
+cfn=(24)
+calls=2 0 
+0 100 1
+0 2
+0 2392
+cfn=(202) free
+calls=2 0 
+0 6
+0 606
+cfn=(40)
+calls=54 0 
+0 108
+0 63905
+cfn=(140) check_match.9476
+calls=1382 0 
+0 197652
+0 5290
+cfn=(24)
+calls=1 0 
+0 38
+0 1
+0 2774
+
+fn=(14)
+0 39
+cfn=(16) _dl_next_ld_env_entry
+calls=1 0 
+0 62
+0 2
+cfn=(16)
+calls=1 0 
+0 183
+0 65
+cfn=(18)
+calls=1 0 
+0 27
+0 18
+cfn=(20)
+calls=1 0 
+0 254
+0 11
+cfn=(36)
+calls=1 0 
+0 34
+0 140
+cfn=(42)
+calls=1 0 
+0 7
+0 269
+cfn=(4)
+calls=1 0 
+0 23
+0 7
+cfn=(44)
+calls=1 0 
+0 93 1
+0 80
+cfn=(18)
+calls=1 0 
+0 87
+0 7
+cfn=(48) _dl_init_paths
+calls=1 0 
+0 479
+0 3
+cfn=(54)
+calls=1 0 
+0 17
+0 62
+cfn=(56)
+calls=1 0 
+0 1
+0 13
+cfn=(98)
+calls=1 0 
+0 9 1
+0 20
+cfn=(100) _dl_map_object_deps
+calls=1 0 
+0 46299 50 36
+0 155
+cfn=(116)
+calls=1 0 
+0 18186 1
+0 5
+cfn=(126) init_tls
+calls=1 0 
+0 669 2
+0 26
+cfn=(204) _dl_allocate_tls_init
+calls=1 0 
+0 316
+0 18
+cfn=(134)
+calls=1 0 
+0 8359 1
+0 7
+cfn=(206) _dl_sysdep_start_cleanup
+calls=1 0 
+0 1
+0 6
+cfn=(54)
+calls=1 0 
+0 8
+0 2
+cfn=(56)
+calls=1 0 
+0 1
+0 1
+cfn=(208)
+calls=1 0 
+0 15 1
+0 175
+cfn=(134)
+calls=8 0 
+0 1376774 8
+0 78
+cfn=(158)
+calls=2 0 
+0 40
+0 6
+cfn=(10)
+calls=1 0 
+0 100
+0 9
+cfn=(34)
+calls=1 0 
+0 78
+0 10
+cfn=(58) strsep
+calls=1 0 
+0 919
+0 6
+cfn=(58)
+calls=2 0 
+0 20
+0 20
+cfn=(60)
+calls=1 0 
+0 2560 7
+0 31
+
+fn=(32)
+0 895
+cfn=(90)
+calls=5 0 
+0 30 5
+0 376
+
+fn=(46)
+0 2
+0 0 1
+0 3
+
+fn=(72)
+0 4340
+cfn=(42)
+calls=620 0 
+0 4347
+0 7485
+cfn=(42)
+calls=641 0 
+0 14194
+0 5002
+
+fn=(90)
+0 66
+0 0 22 36
+0 66
+
+fn=(104) _dl_load_cache_lookup
+0 1137
+cfn=(108)
+calls=59 0 
+0 4809
+0 306
+cfn=(108)
+calls=1 0 
+0 71
+0 30
+cfn=(108)
+calls=6 0 
+0 541
+0 318
+cfn=(106)
+calls=1 0 
+0 67 4
+0 10
+cfn=(18)
+calls=1 0 
+0 123
+0 15
+cfn=(18)
+calls=1 0 
+0 112
+0 4
+
+fn=(120)
+0 75
+cfn=(122) _dl_check_map_versions
+calls=9 0 
+0 18001 1
+0 70
+
+fn=(136)
+0 499438
+cfn=(138)
+calls=1410 0 
+0 717155 1
+0 49016
+
+fn=(470)
+0 74
+
+fn=(18)
+0 2428
+
+fn=(36)
+0 56
+cfn=(38)
+calls=8 0 
+0 16
+0 295
+cfn=(40)
+calls=7 0 
+0 14
+0 13
+cfn=(40)
+calls=1 0 
+0 2
+0 2
+
+fn=(40)
+0 128
+
+fn=(48)
+0 14
+cfn=(50) _dl_important_hwcaps
+calls=1 0 
+0 328
+0 3
+cfn=(28)
+calls=1 0 
+0 29
+0 1
+0 13
+cfn=(28)
+calls=1 0 
+0 29
+0 1
+0 61
+
+fn=(54)
+0 81
+
+fn=(74) index
+0 670
+
+fn=(76) expand_dynamic_string_token
+0 11
+cfn=(74)
+calls=1 0 
+0 47
+0 9
+cfn=(78)
+calls=1 0 
+0 175
+
+fn=(102)
+0 252
+cfn=(70)
+calls=18 0 
+0 39462 50 36
+0 54
+
+fn=(114) memmove
+0 212
+
+fn=(122)
+0 992
+cfn=(72)
+calls=104 0 
+0 6617
+0 790
+cfn=(124) match_symbol
+calls=5 0 
+0 852
+0 104
+cfn=(124)
+calls=26 0 
+0 4533
+0 1240
+cfn=(24)
+calls=8 0 
+0 328 1
+0 8
+0 2537
+
+fn=(156)
+0 128
+cfn=(92)
+calls=8 0 
+0 40 8
+0 32
+
+fn=(202)
+0 6
+
+fn=(2072) _dl_sort_fini
+0 29
+cfn=(94)
+calls=1 0 
+0 24
+0 92
+cfn=(94)
+calls=7 0 
+0 98
+0 794
+cfn=(114)
+calls=1 0 
+0 68
+0 210
+cfn=(114)
+calls=1 0 
+0 38
+0 3
+
+fn=(124)
+0 2647
+cfn=(42)
+calls=31 0 
+0 2428
+0 310
+
+fn=(126)
+0 10
+cfn=(24)
+calls=1 0 
+0 38
+0 1
+0 77
+cfn=(128)
+calls=1 0 
+0 102
+0 1
+cfn=(130)
+calls=1 0 
+0 424 1
+0 10
+0 0 1
+0 6
+
+fn=(200)
+0 144
+
+fn=(210)
+0 2
+0 0 1
+0 3
+
+fn=(2068)
+0 11
+
+fn=(2070)
+0 29
+cfn=(38)
+calls=1 0 
+0 2
+0 153
+cfn=(2072)
+calls=1 0 
+0 1356
+0 2
+cfn=(40)
+calls=1 0 
+0 2
+0 178
+cob=(4)
+cfi=(4)
+cfn=(2214)
+calls=1 0 
+0 1602
+cob=(6)
+cfi=(6)
+cfn=(2192) 0x0000000000002fa0
+calls=1 0 
+0 1602
+cob=(7)
+cfi=(7)
+cfn=(2160)
+calls=1 0 
+0 2559
+cob=(8)
+cfi=(8)
+cfn=(2140)
+calls=1 0 
+0 1602
+cob=(9)
+cfi=(9)
+cfn=(2112)
+calls=1 0 
+0 2047
+cob=(5)
+cfi=(5)
+cfn=(2086)
+calls=1 0 
+0 1123
+cob=(10)
+cfi=(10)
+cfn=(2074)
+calls=1 0 
+0 16
+0 63
+cob=(2)
+cfi=(2)
+cfn=(2232)
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(2212)
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(2190)
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(2158)
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(2138)
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(2110)
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(2084)
+calls=1 0 
+0 3
+0 113
+
+fn=(16)
+0 245
+
+fn=(50)
+0 82
+cfn=(28)
+calls=1 0 
+0 29
+0 1
+0 163
+cfn=(52)
+calls=1 0 
+0 22
+0 5
+cfn=(52)
+calls=1 0 
+0 22
+0 4
+
+fn=(52)
+0 314
+
+fn=(58)
+0 939
+
+fn=(66)
+0 361
+
+fn=(70)
+0 1644
+cfn=(72)
+calls=113 0 
+0 7076
+0 1127
+cfn=(42)
+calls=66 0 
+0 1617
+0 394
+cfn=(74)
+calls=7 0 
+0 161
+0 20
+cfn=(76)
+calls=1 0 
+0 242
+0 12
+cfn=(80)
+calls=1 0 
+0 460 2
+0 104
+cfn=(86)
+calls=7 0 
+0 16577 39 36
+0 26
+cfn=(10)
+calls=6 0 
+0 359
+0 134
+cfn=(104)
+calls=6 0 
+0 7543 4
+0 90
+cfn=(80)
+calls=6 0 
+0 3038 12
+0 30
+cfn=(78)
+calls=6 0 
+0 873
+0 240
+cfn=(112)
+calls=1 0 
+0 8
+0 135
+cfn=(112)
+calls=1 0 
+0 8
+0 3
+
+fn=(88)
+0 56
+0 0 8
+0 24
+
+fn=(100)
+0 1564
+cfn=(74)
+calls=18 0 
+0 462
+0 162
+cfn=(62)
+calls=18 0 
+0 40866 50 36
+0 789
+cfn=(28)
+calls=7 0 
+0 203
+0 7
+0 63
+cfn=(34)
+calls=7 0 
+0 199
+0 35
+cfn=(34)
+calls=7 0 
+0 199
+0 133
+cfn=(28)
+calls=1 0 
+0 29
+0 1
+0 141
+cfn=(94)
+calls=1 0 
+0 24
+0 724
+cfn=(114)
+calls=1 0 
+0 68
+0 73
+cfn=(94)
+calls=7 0 
+0 98
+0 164
+cfn=(114)
+calls=1 0 
+0 38
+0 198
+cfn=(34)
+calls=1 0 
+0 55
+0 4
+
+fn=(132)
+0 9
+cfn=(24)
+calls=1 0 
+0 38
+0 1
+0 10
+
+fn=(140)
+0 32248
+cfn=(42)
+calls=117 0 
+0 14885
+0 35973
+cfn=(42)
+calls=1277 0 
+0 110732
+0 3814
+
+fn=(168)
+0 1243
+cfn=(170) _dl_fixup
+calls=113 0 
+0 111096
+0 1130
+
+fn=(170)
+0 6205
+cfn=(136)
+calls=113 0 
+0 101490
+0 3393
+cob=(3)
+cfi=(3)
+cfn=(1102)
+calls=1 0 
+0 7
+0 1
+
+fn=(204)
+0 66
+cfn=(52)
+calls=2 0 
+0 37
+0 10
+cfn=(94)
+calls=2 0 
+0 156
+0 47
+
+fn=(206)
+0 1
+
+ob=(6)
+fl=(6)
+fn=(266) 0x0000000000002ab0
+0 75
+
+fn=(260)
+0 32
+cfn=(262) 0x0000000000002bc0
+calls=1 0 
+0 20
+0 13
+cfn=(262)
+calls=1 0 
+0 20
+0 34
+cfn=(266)
+calls=1 0 
+0 75
+0 10
+
+fn=(262)
+0 40
+
+fn=(2192)
+0 8
+cob=(3)
+cfi=(3)
+cfn=(2098)
+calls=1 0 
+0 220
+cob=(1)
+cfi=(1)
+cfn=(168)
+calls=1 0 
+0 1356
+0 5
+0 1
+cfn=(2206) 0x0000000000002f10
+calls=1 0 
+0 9
+0 3
+
+fn=(272)
+0 17
+
+fn=(2206)
+0 9
+
+totals: 573293011 160 37

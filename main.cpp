@@ -589,7 +589,7 @@ int parseSolution(string solution, int values[]) {
 					skip = 0;
 					if (!number.empty()) {
 						Field cell = decode(atoi(number.c_str()));
-	//										cout << cell.x << "," << cell.y   << " -> " << number << endl;
+						//										cout << cell.x << "," << cell.y   << " -> " << number << endl;
 						values[(cell.x - 1)] = cell.y;
 						number.clear();
 					}
@@ -882,57 +882,89 @@ bool compareFields (Field i,Field j) {
 int main(int argc, char* argv[]) {
 
 
-
 	parseHidoku(argv[1]);
 
-
-	//sort values
-	vector<Field>* sortedValues = new vector<Field>();
-
-	int tmp;
+	int newValues[size*size];
+	//test auf triviales hidoku
+	int linecounter = -1;
+	bool test = true;
 	for(int i=0; i<values.size(); i++) {
-		tmp = values.at(i);
-		if(tmp == 0) {
-			continue;
+		if(i%size == 0)
+			linecounter++;
+		if(linecounter%2 == 1) {
+			if(values.at(i) != 0 && values.at(i) != i+1) {
+				test = false;
+				break;
+			}
+		} else {
+			if(values.at(i) != 0 && values.at(i) != size*linecounter-i%size) {
+				test = false;
+				break;
+			}
 		}
-		Field x = {i+1, tmp};
-		sortedValues->push_back(x);
 	}
 
-	sort (sortedValues->begin(), sortedValues->end(), compareFields);
-
-	encoding = new Field[size * size * size * size]();
-	encodingReverse = new int[size * size * size * size * size]();
-
-
-	string clauses = computeClauses(sortedValues);
-	if(clauses == "ausDieMaus") {
-		cout << "unsatAusDieMaus";
-		return 20;
-	}
-	ofstream outfile;
-	outfile.open("out.txt");
-	outfile << "p cnf " << encodingCount - 1 << " " << andCtr << " \n" + clauses;
-	outfile.close();
-
-	int n = size * size;
-	int newValues[n];
-	system("minisat out.txt result.txt > stat.txt");
-
-	int res = parseSolution("result.txt", newValues);
-
-	/*  	cout <<"newvalues" <<endl;
-		for(int i=0; i<n; i++) {
-			cout << newValues[i] << ", ";
+	linecounter = 0;
+	if(test == true) {
+		for(int i=0; i<size*size; i++) {
+			if(i%size == 0) {
+				linecounter++;
+			}
+			if(linecounter %2 == 0) {
+				newValues[i] = size*(linecounter-1) + i%size+  1;
+			} else {
+				newValues[i] = size*linecounter - i%size ;
+			}
 		}
-		cout <<"fertsch" <<endl;*/
-	delete[] encoding;
-	delete[] encodingReverse;
+	} else {
+
+		//sort values
+		vector<Field>* sortedValues = new vector<Field>();
+
+		int tmp;
+		for(int i=0; i<values.size(); i++) {
+			tmp = values.at(i);
+			if(tmp == 0) {
+				continue;
+			}
+			Field x = {i+1, tmp};
+			sortedValues->push_back(x);
+		}
+
+		sort (sortedValues->begin(), sortedValues->end(), compareFields);
+
+		encoding = new Field[size * size * size * size*size]();
+		encodingReverse = new int[size * size * size * size *size* size]();
+
+
+		string clauses = computeClauses(sortedValues);
+		if(clauses == "ausDieMaus") {
+			cout << "unsatAusDieMaus";
+			return 20;
+		}
+		ofstream outfile;
+		outfile.open("out.txt");
+		outfile << "p cnf " << encodingCount - 1 << " " << andCtr << " \n" + clauses;
+		outfile.close();
+
+		int n = size * size;
+		system("minisat out.txt result.txt > stat.txt");
+
+		int res = parseSolution("result.txt", newValues);
+
+		/*  	cout <<"newvalues" <<endl;
+			for(int i=0; i<n; i++) {
+				cout << newValues[i] << ", ";
+			}
+			cout <<"fertsch" <<endl;*/
+		delete[] encoding;
+		delete[] encodingReverse;
 
 //weil es nachts um fünfe ist - UND SCHON DRAUẞEN DIE SONNE SCHEINT!!!!
-	if (res == 0) {
-		cout << "unsat";
-		return 20;
+		if (res == 0) {
+			cout << "unsat";
+			return 20;
+		}
 	}
 
 	drawBoard(newValues, size);
