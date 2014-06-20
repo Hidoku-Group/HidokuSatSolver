@@ -204,6 +204,25 @@ int dist(int a, int b) {
 		return ydif;
 }
 
+int xdiff(int a, int b) {
+	int xa = getXPos(a);
+	int xb = getXPos(b);
+	if(xa > xb) {
+		return xa-xb;
+	}
+	return xb-xa;
+}
+
+
+int ydiff(int a, int b) {
+	int xa = getYPos(a);
+	int xb = getYPos(b);
+	if(xa > xb) {
+		return xa-xb;
+	}
+	return xb-xa;
+
+}
 //a=6, b=1
 //ceil((6-1)-dist(a,b))
 //---------------------
@@ -217,7 +236,7 @@ int max(int a, int b) {
 		return floor((float) ((valueA - valueB) - distance) / 2);
 
 	} else {
-		return ceil((float) ((valueB - valueA) - distance) / 2);
+		return floor((float) ((valueB - valueA) - distance) / 2);
 	}
 }
 
@@ -237,6 +256,10 @@ void getRectangle(int a, int b, int valuesMap[], int order, int x, int y) {
 				index = convertXYToIndex(i, j);
 				if(values.at(index-1) == 0) {
 					for(int k = x+1; k<y; k++) {
+						if(valuesMap[index*size*size+k] == 2) {
+							cout <<"break"<< endl;
+							break;
+						}
 						valuesMap[index*size*size + k] = 1;
 					}
 				}
@@ -248,6 +271,10 @@ void getRectangle(int a, int b, int valuesMap[], int order, int x, int y) {
 				index = convertXYToIndex(i, j);
 				if(values.at(index-1) == 0) {
 					for(int k = x+1; k<y; k++) {
+						if(valuesMap[index*size*size+k] == 2) {
+							cout <<"break"<<endl;
+							break;
+						}
 						valuesMap[index*size*size + k] = 1;
 					}
 				}
@@ -264,6 +291,76 @@ void getMaxRange(int a, int b, int valuesMap[]) {
 	int xb = getXPos(b);
 	int yb = getYPos(b);
 	int m = max(a, b);
+	int valDif;
+	int valA = values.at(a-1);
+	int valB = values.at(b-1);
+	if(valA > valB)
+		valDif = valA-valB;
+	else valDif = valB - valA;
+	int xdif = xdiff(a,b);
+	if(m == 0 && (xdif == ydiff(a,b) && valDif == xdif )) {
+		//a links
+		if(xa <= xb) {
+			//a links oben
+			if(ya <= yb) {
+				if(valA>valB) {
+					for(int i=1; i<xb-xa; i++) {
+						values.at(a+(size+1)*i-1) = valA-i;
+						valuesMap[size*size*(a+(size+1)*i) + valA-i] = 2;
+					}
+				} else {
+					for(int i=1; i<xb-xa; i++) {
+						values.at(a+(size+1)*i-1) = valA+i;
+						valuesMap[size*size*(a+(size+1)*i) + valA+i] = 2;
+					}
+				}
+			} else { //a links unten
+				if(valA>valB) {
+					for(int i=1; i<xb-xa; i++) {
+						values.at(a+(-size+1)*i-1) = valA-i;
+						valuesMap[size*size*(a+(-size+1)*i) + valA-i] = 2;
+					}
+				} else {
+					for(int i=1; i<xb-xa; i++) {
+						values.at(a+(-size+1)*i-1) = valA+i;
+						valuesMap[size*size*(a+(-size+1)*i) + valA+i] = 2;
+					}
+				}
+
+			}
+		} else {//a rechts
+			if(ya<=yb) { //a rechts oben
+				if(valA>valB) {
+					for(int i=1; i<xa-xb; i++) {
+						values.at(a+(size-1)*i-1)= valA-i;
+						valuesMap[size*size*(a+(size-1)*i) + valA-i] = 2;
+					}
+				} else {
+					for(int i=1; i<xa-xb; i++) {
+						values.at(a+(size-1)*i-1)= valA+i;
+						valuesMap[size*size*(a+(size-1)*i) + valA+i] = 2;
+					}
+				}
+
+			} else { // a rechtes unten
+				if(valA>valB) {
+					for(int i=1; i<xa-xb; i++) {
+						values.at(a+(-size-1)*i-1)= valA-i;
+						valuesMap[size*size*(a+(-size-1)*i) + valA-i] = 2;
+					}
+				} else {
+					for(int i=1; i<xa-xb; i++) {
+						values.at(a+(-size-1)*i-1)= valA+i;
+						valuesMap[size*size*(a+(-size-1)*i) + valA+i] = 2;
+					}
+				}
+			}
+
+		}
+		return;
+
+	}
+
 
 	int cornerA;
 	int cornerB;
@@ -492,7 +589,7 @@ int parseSolution(string solution, int values[]) {
 					skip = 0;
 					if (!number.empty()) {
 						Field cell = decode(atoi(number.c_str()));
-						//					cout << cell.x << "," << cell.y   << " -> " << number << endl;
+	//										cout << cell.x << "," << cell.y   << " -> " << number << endl;
 						values[(cell.x - 1)] = cell.y;
 						number.clear();
 					}
@@ -532,6 +629,7 @@ string getExactlyOne(vector<int>* vars) {
 
 string computeClauses(vector<Field>*sortedValues) {
 	int n = size * size;
+
 
 	vector<int>* possibleValues = new vector<int>();
 
@@ -583,44 +681,50 @@ string computeClauses(vector<Field>*sortedValues) {
 
 
 		getMaxRange(a.x, b.x, valueMap);
+
+		/*
+				cout <<"val map:" <<endl;
+			for(int k=1; k<=size*size; k++) {
+				for(int j=1; j<=size*size; j++) {
+					if(valueMap[size*size*k+j] !=0)
+						cout << "(" << k << ", " << j << ") \t-> " << valueMap[size*size*k + j] << endl;
+				}
+				cout << endl;
+			}*/
+
 	}
-	int ctr = 0, tmp=0;
+
+	int ctr = 0, tmp=0, ctr2 =0, v;
 	for(int i=0; i<n; i++) {
 		for(int j=0; j<n; j++) {
-			if(valueMap[n*i+j] == 1) {
+			v = valueMap[n*i+j];
+			if(v == 1) {
 				if(ctr == 0) {
 					tmp=j;
-				} else if (ctr == 2) {
-					break;
 				}
 				ctr++;
 			}
-		}
-			if(ctr == 1) {
-				values.insert(values.begin() + i, tmp);
+			if(v == 2) {
+				if(ctr2 == 1) {
+					return "ausDieMaus";
+				}
+				ctr2++;
 			}
+		}
+		if(ctr == 1) {
+			values.at(i)= tmp;
+		}
+		ctr2 = 0;
 		ctr = 0;
 	}
 
-
-
-	/*
-	cout <<"val map:" <<endl;
-	for(int k=1; k<=size*size; k++) {
-		for(int j=1; j<=size*size; j++) {
-			if(valueMap[size*size*k+j] !=0)
-				cout << "(" << k << ", " << j << ") \t-> " << valueMap[size*size*k + j] << endl;
-		}
-		cout << endl;
-	}
-	*/
 	//result = "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
 
 	//nach sortieren wird diese for schleife nicht von k=0 bis possibleValues->size() gehen, sondern in einzelnen
 	//schritten von a bis b, und so weiter
 	for (int k = 1; k <= size*size; k++) { //possible Value
 		for (int i = 1; i <=size*size; i++) { //empty Fields
-			if(valueMap[i*size*size + k] == 1) {
+			if(valueMap[i*size*size + k] != 0) {
 				vars->push_back(encode(i, k));
 			}
 		}
@@ -663,7 +767,7 @@ ende:
 				if(find(possibleValues->begin(), possibleValues->end(), j-1) == possibleValues->end()) {
 					continue;
 				}
-				if(valueMap[size*size*i + j] == 1) {
+				if(valueMap[size*size*i + j] != 0) {
 					//wenn der mögliche kleinere nachbar sowieso kein möglicher wert ist
 					//die eins hat keinen unteren nachbarn
 					if (j < 2) {
@@ -694,7 +798,7 @@ ende:
 					for (int k = 0; k < 8; k++) {
 						nk = neighbours[k];
 						if(nk != 0) {
-							if ( values.at(nk-1) ==  0  && valueMap[size*size*nk + j-1] == 1) {
+							if ( values.at(nk-1) ==  0  && valueMap[size*size*nk + j-1] != 0) {
 								result += OR
 								          + to_string(
 								              encode(nk, j - 1));
@@ -713,7 +817,7 @@ ende:
 				for (int k = 0; k < 8; k++) {
 					nk = neighbours[k];
 					if(nk != 0) {
-						if (  valueMap[size*size*nk + values.at(i-1)-1] == 1) {
+						if (  valueMap[size*size*nk + values.at(i-1)-1] != 0) {
 							if (tmp == 1) {
 								result += OR;
 							}
@@ -732,7 +836,7 @@ ende:
 				for (int k = 0; k < 8; k++) {
 					nk = neighbours[k];
 					if(nk != 0) {
-						if (  valueMap[size*size*nk + values.at(i-1)+1] == 1) {
+						if (  valueMap[size*size*nk + values.at(i-1)+1] != 0) {
 							if (tmp == 1) {
 								result += OR;
 							}
@@ -800,11 +904,15 @@ int main(int argc, char* argv[]) {
 	encoding = new Field[size * size * size * size]();
 	encodingReverse = new int[size * size * size * size * size]();
 
+
+	string clauses = computeClauses(sortedValues);
+	if(clauses == "ausDieMaus") {
+		cout << "unsatAusDieMaus";
+		return 20;
+	}
 	ofstream outfile;
 	outfile.open("out.txt");
-
-	outfile << "p cnf " << encodingCount - 1 << " " << andCtr << " \n"
-	        << computeClauses(sortedValues);
+	outfile << "p cnf " << encodingCount - 1 << " " << andCtr << " \n" + clauses;
 	outfile.close();
 
 	int n = size * size;
@@ -821,6 +929,7 @@ int main(int argc, char* argv[]) {
 	delete[] encoding;
 	delete[] encodingReverse;
 
+//weil es nachts um fünfe ist - UND SCHON DRAUẞEN DIE SONNE SCHEINT!!!!
 	if (res == 0) {
 		cout << "unsat";
 		return 20;
