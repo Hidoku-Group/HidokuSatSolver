@@ -224,7 +224,7 @@ int max(int a, int b) {
 
 // order = 0: a tl, b br
 // order = 1: a bl, b tr
-void getRectangle(int a, int b, vector<int>*possibleValues, int order) {
+void getRectangle(int a, int b, int valuesMap[], int order, int x, int y) {
 	int xa = getXPos(a);
 	int ya = getYPos(a);
 	int xb = getXPos(b);
@@ -236,7 +236,9 @@ void getRectangle(int a, int b, vector<int>*possibleValues, int order) {
 			for(int i=xa; i<=xb; i++) {
 				index = convertXYToIndex(i, j);
 				if(values.at(index-1) == 0) {
-					possibleValues->push_back(index);
+					for(int k = x+1; k<y; k++) {
+						valuesMap[index*size*size + k] = 1;
+					}
 				}
 			}
 		}
@@ -245,7 +247,9 @@ void getRectangle(int a, int b, vector<int>*possibleValues, int order) {
 			for(int j=yb; j<=ya; j++) {
 				index = convertXYToIndex(i, j);
 				if(values.at(index-1) == 0) {
-					possibleValues->push_back(index);
+					for(int k = x+1; k<y; k++) {
+						valuesMap[index*size*size + k] = 1;
+					}
 				}
 
 			}
@@ -254,7 +258,7 @@ void getRectangle(int a, int b, vector<int>*possibleValues, int order) {
 
 }
 
-void getMaxRange(int a, int b, vector<int>* possibleValues) {
+void getMaxRange(int a, int b, int valuesMap[]) {
 	int xa = getXPos(a);
 	int ya = getYPos(a);
 	int xb = getXPos(b);
@@ -270,21 +274,21 @@ void getMaxRange(int a, int b, vector<int>* possibleValues) {
 			cornerA = topM(leftM(a, m), m);
 
 			cornerB = bottomM(rightM(b,m), m);
-			getRectangle(cornerA, cornerB, possibleValues, 0);
+			getRectangle(cornerA, cornerB, valuesMap, 0, values.at(a-1), values.at(b-1));
 		} else { //a links unten
 			cornerA = bottomM(leftM(a, m), m);
 			cornerB = topM(rightM(b, m), m);
-			getRectangle(cornerA, cornerB, possibleValues, 1);
+			getRectangle(cornerA, cornerB, valuesMap, 1, values.at(a-1), values.at(b-1));
 		}
 	} else {//a rechts
 		if(ya<=yb) { //a rechts oben
 			cornerA = topM(rightM(a, m), m);
 			cornerB = bottomM(leftM(b, m), m);
-			getRectangle(cornerB, cornerA, possibleValues, 1);
+			getRectangle(cornerB, cornerA, valuesMap, 1, values.at(a-1), values.at(b-1));
 		} else { // a rechtes unten
 			cornerA = bottomM(rightM(a, m), m);
 			cornerB = topM(leftM(b, m), m);
-			getRectangle(cornerB, cornerA, possibleValues, 0);
+			getRectangle(cornerB, cornerA, valuesMap, 0, values.at(a-1), values.at(b-1));
 		}
 
 	}
@@ -312,7 +316,7 @@ int encode(int index, int value) {
 }
 
 Field decode(int number) {
-	cout <<number << "\t\t-> (" << encoding[number].x << ", " << encoding[number].y << ")" << endl;
+	//cout <<number << "\t\t-> (" << encoding[number].x << ", " << encoding[number].y << ")" << endl;
 	return encoding[number];
 }
 
@@ -322,8 +326,6 @@ void fillData(vector<int> * possibleValues, vector<int>* emptyFields) {
 	for (int j = 1; j <= size * size; j++) {
 		possibleValues->push_back(j);
 	}
-	//erasecounter necessary because of erasing elements is changing the index
-	int erasecounter = 1;
 	for (int i = 1; i < size * size + 1; i++) {
 		int value = values.at(i - 1);
 		//if field is empty add it to emptyField
@@ -335,7 +337,6 @@ void fillData(vector<int> * possibleValues, vector<int>* emptyFields) {
 			possibleValues->erase(
 			    remove(possibleValues->begin(), possibleValues->end(),
 			           value), possibleValues->end());
-			erasecounter++;
 		}
 	}
 }
@@ -491,7 +492,7 @@ int parseSolution(string solution, int values[]) {
 					skip = 0;
 					if (!number.empty()) {
 						Field cell = decode(atoi(number.c_str()));
-						cout << cell.x << "," << cell.y   <<endl;
+						//					cout << cell.x << "," << cell.y   << " -> " << number << endl;
 						values[(cell.x - 1)] = cell.y;
 						number.clear();
 					}
@@ -510,46 +511,130 @@ int parseSolution(string solution, int values[]) {
 	}
 }
 
-string getAtMostOne(vector<int>*vars) {
-	string result = "atmost\n";
-	for (int i = 0; i < vars->size(); i++) {
-		for (int j = i + 1; j < vars->size(); j++) {
-			result += NOT + to_string(vars->at(i)) + OR + NOT
-			          + to_string(vars->at(j)) + AND();
-		}
-	}
-	return result;//+ "atmost" +  AND();
-}
-
 string getExactlyOne(vector<int>* vars) {
 	Field a = decode(vars->at(0));
 	string result = to_string(vars->at(0));
-	result += ": (" + to_string(a.x) + ", " + to_string(a.y) + ") ";
+//	result += ": (" + to_string(a.x) + ", " + to_string(a.y) + ") ";
 	for (int i = 1; i < vars->size(); i++) {
 		a = decode(vars->at(i));
-
 		result += OR + to_string(vars->at(i));
-		result += ": (" + to_string(a.x) + ", " + to_string(a.y) + ") ";
+		//	result += ": (" + to_string(a.x) + ", " + to_string(a.y) + ") ";
 	}
-	result += AND();
-	return result + getAtMostOne(vars);
 
+	for (int i = 0; i < vars->size(); i++) {
+		for (int j = i + 1; j < vars->size(); j++) {
+			result += AND() + NOT + to_string(vars->at(i)) + OR + NOT
+			          + to_string(vars->at(j));
+		}
+	}
+	return result + AND();
 }
 
-string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields, vector<Field>*sortedValues) {
-	//a, b für getMaxRange holen
-	//b-a für possibleValues nehmen
-	//range als emptyFields nehmen
-	//
-	//
-
+string computeClauses(vector<Field>*sortedValues) {
 	int n = size * size;
+
+	vector<int>* possibleValues = new vector<int>();
+
+	for (int j = 1; j <= size * size; j++) {
+		possibleValues->push_back(j);
+	}
+	for (int i = 1; i < size * size + 1; i++) {
+		int value = values.at(i - 1);
+		possibleValues->erase(
+		    remove(possibleValues->begin(), possibleValues->end(),
+		           value), possibleValues->end());
+	}
+
 	string result;
+
 	for (int i = 1; i <= n; i++) {
 		if (values.at(i - 1) != 0) {
 			result += to_string(encode(i, values.at(i - 1))) + AND();
 		}
 	}
+
+
+	Field a,b;
+	vector<int>* vars = new vector<int>();
+
+	int valueMap[size*size*size*size*size] = {0};
+
+	for(int i=0; i<sortedValues->size()-1; i++) {
+		a=sortedValues->at(i);
+		b=sortedValues->at(i+1);
+		if(i == 0) {
+			for(int k=1; k<a.y+1-1; k++) {
+				for(int l=1; l<=size*size; l++) {
+					valueMap[l*size*size + k] = 1;
+				}
+			}
+		} else if (i == sortedValues->size()-2) {
+			for(int k=b.y+1; k<=size*size; k++) {
+				for(int l=1; l<=size*size; l++) {
+					valueMap[l*size*size + k] = 1;
+				}
+			}
+		}
+
+		if(a.y+1 == b.y) {
+			continue;
+		}
+//		cout << "a: " << a.y << " b: " << b.y << endl;
+
+
+		getMaxRange(a.x, b.x, valueMap);
+	}
+	int ctr = 0, tmp=0;
+	for(int i=0; i<n; i++) {
+		for(int j=0; j<n; j++) {
+			if(valueMap[n*i+j] == 1) {
+				if(ctr == 0) {
+					tmp=j;
+				} else if (ctr == 2) {
+					break;
+				}
+				ctr++;
+			}
+		}
+			if(ctr == 1) {
+				values.insert(values.begin() + i, tmp);
+			}
+		ctr = 0;
+	}
+
+
+
+	/*
+	cout <<"val map:" <<endl;
+	for(int k=1; k<=size*size; k++) {
+		for(int j=1; j<=size*size; j++) {
+			if(valueMap[size*size*k+j] !=0)
+				cout << "(" << k << ", " << j << ") \t-> " << valueMap[size*size*k + j] << endl;
+		}
+		cout << endl;
+	}
+	*/
+	//result = "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
+
+	//nach sortieren wird diese for schleife nicht von k=0 bis possibleValues->size() gehen, sondern in einzelnen
+	//schritten von a bis b, und so weiter
+	for (int k = 1; k <= size*size; k++) { //possible Value
+		for (int i = 1; i <=size*size; i++) { //empty Fields
+			if(valueMap[i*size*size + k] == 1) {
+				vars->push_back(encode(i, k));
+			}
+		}
+		if(vars->size() > 0) {
+			result += getExactlyOne(vars);
+			vars->clear();
+		}
+	}
+
+	result += "\n";
+
+
+
+
 
 //	result = result + "schritt 2: Jedes Feld hat einen Nachbarn mit einer kleineren Zahl:" + "\n";
 	for (int i = 1; i <= n; i++) { //i represents the field index
@@ -564,99 +649,98 @@ string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields, vect
 			 *7-br
 			 *
 			 */
+ende2:
 		int neighbours[8] = { top(i, 1), left(i, 1), right(i, 1), bottom(i, 1) };
 
 		neighbours[4] = top(neighbours[1], 1);
 		neighbours[5] = top(neighbours[2], 1);
 		neighbours[6] = bottom(neighbours[1], 1);
 		neighbours[7] = bottom(neighbours[2], 1);
-
+//	cout << i << ": "<< values.at(i-1) <<endl;
 		if (values.at(i - 1) == 0) {
-
-			for (int j = 0; j < possibleValues->size(); j++) { // j stands for the value of the field i
-				if (possibleValues->at(j) < 2
-				        || find(possibleValues->begin(), possibleValues->end(),
-				                possibleValues->at(j) - 1)
-				        == possibleValues->end()) {
+			for (int j = 2; j <=size*size; j++) { // possible values
+ende:
+				if(find(possibleValues->begin(), possibleValues->end(), j-1) == possibleValues->end()) {
 					continue;
 				}
-
-				//result = result + "( " + NOT + "("  + to_string( i ) +  ", "  + to_string( j ) +  ") ";
-
-				for (int k = 0; k < 8; k++) {
-					//	if(neighbours[k] != 0)
-					//	result += to_string(possibleValues->at(j)) + " ?= " + to_string(values.at(neighbours[k]-1)+1);
-					if (neighbours[k] != 0
-					        && ((possibleValues->at(j)
-					             == values.at(neighbours[k] - 1) + 1))) {
-						//result += "weg";
-						/* j++;
-						 if(j>= possibleValues->size()) {
-						 i++;
-						 goto ende;
-						 }
-						 goto hinfort;*/
-					}
-				}
-
-				result += NOT + to_string(encode(i, possibleValues->at(j)));
-				//	result += "(" + to_string(i) + ", " + to_string(possibleValues->at(j)) + ")";
-
-				int nk;
-
-				for (int k = 0; k < 8; k++) {
-					nk = neighbours[k];
-					if (find(emptyFields->begin(), emptyFields->end(), nk)
-					        != emptyFields->end()) {
-						result += OR
-						          + to_string(
-						              encode(nk, possibleValues->at(j) - 1));
-						//	result += "(" + to_string(nk) + ", " + to_string(possibleValues->at(j) -1) + ")";
-
+				if(valueMap[size*size*i + j] == 1) {
+					//wenn der mögliche kleinere nachbar sowieso kein möglicher wert ist
+					//die eins hat keinen unteren nachbarn
+					if (j < 2) {
+						//cout << "lasse aus: (" << i << ", " << j-1 << "), " << endl;
+						continue;
 					}
 
+					int nk;
+					for (int k = 0; k < 8; k++) {
+						nk = neighbours[k];
+						if(nk != 0) {
+							//wenn es bereits einen unteren nachbarn gibt, oder es keinen geben kann, kannstes lassen
+							if(values.at(nk-1) == j-1) {
+								//cout << "lasse aus: (" << nk << ", " << j-1 << "), " << endl;
+								j++;
+								if(j > size*size) {
+									i++;
+									goto ende2;
+								}
+								goto ende;
+							}
+						}
+					}
+
+					result += NOT + to_string(encode(i, j));
+					//	result += ":(" + to_string(i) + ", " + to_string(j) + ") ";
+
+					for (int k = 0; k < 8; k++) {
+						nk = neighbours[k];
+						if(nk != 0) {
+							if ( values.at(nk-1) ==  0  && valueMap[size*size*nk + j-1] == 1) {
+								result += OR
+								          + to_string(
+								              encode(nk, j - 1));
+
+								//result += ":(" + to_string(nk) + ", " + to_string(j-1) + ") ";
+							}
+						}
+
+					}
+					result += AND();
 				}
-				result += AND();
 			}
 		} else {
-			if (values.at(i - 1) > 1
-			        && find(possibleValues->begin(), possibleValues->end(),
-			                values.at(i - 1) - 1) != possibleValues->end()) {
-
+			if (values.at(i - 1) > 1 && find(values.begin(), values.end(), values.at(i - 1) - 1) == values.end()) {
 				int tmp = 0, nk;
 				for (int k = 0; k < 8; k++) {
 					nk = neighbours[k];
-					if (nk != 0
-					        && find(emptyFields->begin(), emptyFields->end(),
-					                nk) != emptyFields->end()) {
-						if (tmp == 1) {
-							result += OR;
+					if(nk != 0) {
+						if (  valueMap[size*size*nk + values.at(i-1)-1] == 1) {
+							if (tmp == 1) {
+								result += OR;
+							}
+							result += to_string(encode(nk, values.at(i - 1) - 1));
+							//result += "(" + to_string(nk) + ", " + to_string(values.at(i-1)-1) + ") ";
+							tmp = 1;
 						}
-						result += to_string(encode(nk, values.at(i - 1) - 1));
-						//	result += "(" + to_string(nk) + ", " + to_string(values.at(i-1)-1) + ") ";
-						tmp = 1;
 					}
 
 				}
 				result += AND();
 			}
 
-			if (values.at(i - 1) < n
-			        && find(possibleValues->begin(), possibleValues->end(),
-			                values.at(i - 1) + 1) != possibleValues->end()) {
-
+			if (values.at(i - 1) < n && find(values.begin(), values.end(), values.at(i - 1) + 1) == values.end()) {
 				int tmp = 0, nk;
 				for (int k = 0; k < 8; k++) {
 					nk = neighbours[k];
-					if (nk != 0
-					        && find(emptyFields->begin(), emptyFields->end(),
-					                nk) != emptyFields->end()) {
-						if (tmp == 1) {
-							result += OR;
+					if(nk != 0) {
+						if (  valueMap[size*size*nk + values.at(i-1)+1] == 1) {
+							if (tmp == 1) {
+								result += OR;
+							}
+							result +=to_string(
+							             encode(nk, values.at(i - 1) + 1));
+							//result += "(" + to_string(nk) + ", " + to_string(values.at(i-1)+1) + ") ";
+							tmp = 1;
 						}
-						result += to_string(encode(nk, values.at(i - 1) + 1));
-						//result += "(" + to_string(nk) + ", " + to_string(values.at(i-1)+1) + ") ";
-						tmp = 1;
 					}
 
 				}
@@ -667,62 +751,21 @@ string computeClauses(vector<int>* possibleValues, vector<int>*emptyFields, vect
 	}
 
 
+//result = result + "\n" + "schritt 3: Nur 1 Zahl pro Feld" + "\n";
 
-	Field a,b;
-	vector<int>* vars = new vector<int>();
-	for(int i=0; i<sortedValues->size()-1; i++) {
-		a=sortedValues->at(i);
-		b=sortedValues->at(i+1);
-
-		if(a.y+1 == b.y) {
-			continue;
-		}
-		cout << "a: " << a.y << " b: " << b.y << endl;
-		emptyFields->clear();
-		getMaxRange(a.x, b.x, emptyFields);
-
-		possibleValues->clear();
-
-		for(int i=a.y+1; i<b.y; i++) {
-			possibleValues->push_back(i);
-		}
-		//result = "schritt 1: jede zahl kommt im Spielfeld genau einmal vor";
-
-		//nach sortieren wird diese for schleife nicht von k=0 bis possibleValues->size() gehen, sondern in einzelnen
-		//schritten von a bis b, und so weiter
-		for (int k = 0; k < possibleValues->size(); k++) { //toggle of ¬
-			for (int i = 0; i < emptyFields->size(); i++) { //value
-				vars->push_back(encode(emptyFields->at(i), possibleValues->at(k)));
+	for (int i = 1; i <=size*size; i++) { //empty fields
+		for (int k = 1; k <= size*size; k++) { //possibleValues
+			if(valueMap[i*size*size + k] == 1) {
+				vars->push_back(encode(i,k));
 			}
+		}
+		if(vars->size() > 0) {
 			result += getExactlyOne(vars);
 			vars->clear();
 		}
 
-		result += "\n";
-
-		//if just one value is possible it should be clear that step 3 is nonsense
-		if(possibleValues->size() > 1) {
-//result = result + "\n" + "schritt 3: Nur 1 Zahl pro Feld" + "\n";
-			cout << "empty"<<endl ;
-			for(int i=0; i<emptyFields->size(); i++ ) {
-				cout << "(" << i << ", " << emptyFields->at(i) << ")" << endl;
-			}
-			cout << "poss"<< endl;
-			for(int i=0; i<possibleValues->size(); i++ ) {
-				cout << "(" << i << ", " << possibleValues->at(i) << ")" << endl;
-			}
-
-
-			for (int i = 0; i < emptyFields->size(); i++) {
-				for (int k = 0; k < possibleValues->size(); k++) {
-					vars->push_back(encode(emptyFields->at(i), possibleValues->at(k)));
-				}
-				result += getAtMostOne(vars);
-				vars->clear();
-
-			}
-		}
 	}
+
 	return result;
 
 }
@@ -734,9 +777,7 @@ bool compareFields (Field i,Field j) {
 
 int main(int argc, char* argv[]) {
 
-    int valueMap[size*size][size*size] = {0};
 
-	valueMap[6][5] = 1;
 
 	parseHidoku(argv[1]);
 
@@ -756,18 +797,14 @@ int main(int argc, char* argv[]) {
 
 	sort (sortedValues->begin(), sortedValues->end(), compareFields);
 
-	vector<int>* possibleValues = new vector<int>();
-	vector<int>* emptyFields = new vector<int>();
 	encoding = new Field[size * size * size * size]();
 	encodingReverse = new int[size * size * size * size * size]();
-
-	fillData(possibleValues, emptyFields);
 
 	ofstream outfile;
 	outfile.open("out.txt");
 
 	outfile << "p cnf " << encodingCount - 1 << " " << andCtr << " \n"
-	        << computeClauses(possibleValues, emptyFields, sortedValues);
+	        << computeClauses(sortedValues);
 	outfile.close();
 
 	int n = size * size;
@@ -776,10 +813,11 @@ int main(int argc, char* argv[]) {
 
 	int res = parseSolution("result.txt", newValues);
 
-	for(int i=0;i<n;i++) {
-		cout << newValues[i] << ", ";
-	}
-
+	/*  	cout <<"newvalues" <<endl;
+		for(int i=0; i<n; i++) {
+			cout << newValues[i] << ", ";
+		}
+		cout <<"fertsch" <<endl;*/
 	delete[] encoding;
 	delete[] encodingReverse;
 
