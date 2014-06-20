@@ -43,6 +43,7 @@ struct Field {
 
 vector<int> values;
 
+int* valueMap;
 /**
  * returns the number of the field that is "steps" steps in the left direction of "from"
  * if there is no such field in this direction simply 0 will be returned
@@ -655,7 +656,8 @@ string computeClauses(vector<Field>*sortedValues) {
 	Field a,b;
 	vector<int>* vars = new vector<int>();
 
-	int valueMap[size*size*size*size*size] = {0};
+	valueMap = new int[size*size*size*size*size];
+
 
 	for(int i=0; i<sortedValues->size()-1; i++) {
 		a=sortedValues->at(i);
